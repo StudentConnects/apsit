@@ -3,9 +3,8 @@
 /**
  * Module dependencies.
  */
-if(process.env.NODE_ENV && process.env.NODE_ENV == "dev") {
-  // const 
-  console.log("DEV");
+if(! process.env.NODE_ENV || process.env.NODE_ENV !== "production") {
+  const dotenv = require("dotenv").config()
 }
 const app = require('../app');
 const debug = require('debug')('backend:server');
