@@ -40,9 +40,11 @@ app.use((req, res, next) => {
 // passport.use(new passport_local(
 
 // ))
-app.use(session({
-    
-}))
+// app.use(session({
+//     secret: "APSIT-temp-SECRET",
+//     name: "defaultID",
+
+// }))
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
