@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png">
+    <link rel="icon" type="image/png" href="assets/img/logo/logo1.png">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>
+        Apsit - Admin Dashboard
+    </title>
+    <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
+    <!--     Fonts and icons     -->
+    <link rel="stylesheet" type="text/css"
+        href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+    <!-- CSS Files -->
+    <link href="assets/css/material-dashboard.css?v=2.1.2" rel="stylesheet" />
+    <link href="assets/css/add_quiz.css" rel="stylesheet">
+</head>
+
+<body class="">
+    <div class="wrapper ">
+        <div class="sidebar" data-color="purple" data-background-color="white" data-image="assets/img/sidebar-1.jpg">
+            <!--
+        Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
+
+        Tip 2: you can also add an image using data-image tag
+    -->
+
+
+            <div class="logo">
+                <a href="#" class="simple-text logo-normal">
+                    <div class="logo_text">Aps<span>it</span></div>
+                </a>
+            </div>
+            <div class="sidebar-wrapper">
+                <ul class="nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="dashboard.html">
+                            <i class="material-icons">dashboard</i>
+                            <p>Dashboard</p>
+                        </a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link" href="user.html">
+                            <i class="material-icons">person</i>
+                            <p>User Profile</p>
+                        </a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link" href="student_list.html">
+                            <i class="material-icons">content_paste</i>
+                            <p>Students List</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="companies.html">
+                            <i class="material-icons">card_travel</i>
+                            <p>Companies</p>
+                        </a>
+                    </li>
+                    <li class="nav-item active ">
+                        <a class="nav-link" href="add_quiz.html">
+                            <i class="material-icons">school</i>
+                            <p>Add Quiz</p>
+                        </a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link" href="results.html">
+                            <i class="material-icons">emoji_events</i>
+                            <p>Results</p>
+                        </a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link" href="settings.html">
+                            <i class="material-icons">settings</i>
+                            <p>Settings</p>
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+        <div class="main-panel">
+            <!-- Navbar -->
+            <div class="card-body">
+                <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
+                    <a class="navbar-brand" href="javascript:;" style="font-family: Roboto Slab; font-size: 25px">Add
+                        Quiz</a>
+                </nav>
+            </div>
+            <!-- End Navbar -->
+            <!--
+            <div class="content">
+                <div class="col-12">
+                    <div class="card-body sidebar_quiz d-flex align-items-center" style="margin-right:20px">
+                        <button onclick="addquestion()" class="side_button add_question">Add Question</button>
+                        <button onclick="deletequestion()" class="side_button add_question">Delete Question</button>
+                        <button class="submit_quiz_button">Submit Quiz</button>
+                    </div>
+                </div>
+-->
+
+            <div class="container-fluid">
+                <div class="container-fluid">
+                    <div class="card">
+                        <div class="card-header card-header-primary">
+                            <h4 id="ques_no" class="card-title">Question no 1</h4>
+                        </div>
+                        <div class="card-body">
+                            <form>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-group mt-3">
+                                            <label class="bmd-label-floating">Type your question here</label>
+                                            <textarea id="txtarea" class="form-control" rows="5"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="container-fluid mt-4">
+                                        <div class="row">
+                                            <div class="col-12 col-sm-12 col-md-5 col-lg-5">
+                                                <div class="row">
+                                                    <div class="col-12 col-sm-12 col-md-8 m-auto">
+                                                        <div class="form-group mt-3">
+                                                            <label class="bmd-label-floating">Time limit</label>
+                                                            <input id="time_limit" type="number" class="form-control" />
+                                                        </div>
+                                                        <div class="form-group mt-4">
+                                                            <label for="name">Answer Type</label>
+                                                            <div class="checkboxes mt-2">
+                                                                <label for="x"><input type="radio" id="sel_single"
+                                                                        name="usage_commit" value="Single" checked />
+                                                                    <span>Single Select</span></label>
+                                                                <label for="z" class="ml-2"><input type="radio"
+                                                                        id="sel_multi" name="usage_commit"
+                                                                        value="Multiple" />
+                                                                    <span>Multiple Select</span></label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+                                            <div class="col-12 col-sm-12 col-md-7 col-lg-7">
+                                                <div class="upload_img m-auto">
+                                                    <img id="upload_questiom" src="assets/img/add-image_lg.png"
+                                                        class="add_image_icon" />
+                                                    <div class="edit_icon">
+                                                        <i class="material-icons">edit</i>
+                                                        <input type="file" id="image_uploader"
+                                                            class="upload-image-input"
+                                                            accept=".jpg,.png,.gif,.jpeg,.bmp,.svg,.giphy"></input>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="d-flex flex-wrap align-items-center w-100 mt-5">
+                                        <div class="col-12 col-md-6">
+                                            <div class="form-row  mt-3">
+                                                <div class="form-group col-lg-10 m-lg-auto">
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon">
+                                                            <input type="checkbox" id="checkbox_1" aria-label="123"
+                                                                style="width:40px; height:40px">
+                                                        </span>
+                                                        <input id="option_1" type="text" class="form-control"
+                                                            aria-label="123">
+                                                        <label class="bmd-label-floating"
+                                                            style="margin-left:50px">Option 1</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6">
+                                            <div class="form-row  mt-3">
+                                                <div class="form-group col-lg-10 m-lg-auto">
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon">
+                                                            <input type="checkbox" id="checkbox_2" aria-label="123"
+                                                                style="width:40px; height:40px">
+                                                        </span>
+                                                        <input id="option_2" type="text" class="form-control"
+                                                            aria-label="123">
+                                                        <label class="bmd-label-floating"
+                                                            style="margin-left:50px">Option 2</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6">
+                                            <div class="form-row  mt-3">
+                                                <div class="form-group col-lg-10 m-lg-auto">
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon">
+                                                            <input type="checkbox" id="checkbox_3" aria-label="123"
+                                                                style="width:40px; height:40px">
+                                                        </span>
+                                                        <input id="option_3" type="text" class="form-control"
+                                                            aria-label="123">
+                                                        <label class="bmd-label-floating"
+                                                            style="margin-left:50px">Option 3</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6">
+                                            <div class="form-row  mt-3">
+                                                <div class="form-group col-lg-10 m-lg-auto">
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon">
+                                                            <input type="checkbox" id="checkbox_4" aria-label="123"
+                                                                style="width:40px; height:40px">
+                                                        </span>
+                                                        <input id="option_4" type="text" class="form-control"
+                                                            aria-label="123">
+                                                        <label class="bmd-label-floating"
+                                                            style="margin-left:50px">Option 4</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="margin-top:20px">
+                                        <button type="button" onclick="save_question()"
+                                            class="submit_button">Save</button>
+                                        <button class="submit_quiz_button">Submit Quiz</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div id="questions" class="card-body sidebar_quiz d-flex align-items-center"
+                            style="margin-right:20px">
+                            <!-- question button comes here -->
+
+                            <table class="table" id="quiz_table">
+                                <tbody>
+                                    <!-- question list -->
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <footer class="footer">
+            <div class="container-fluid">
+                <nav class="float-left">
+                    <ul>
+                        <li>
+                            <a href="#">
+                                About Us
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+                <div class="copyright">Copyright &copy;
+                    <script>
+                        document.write(new Date().getFullYear());
+                    </script> All rights reserved
+                </div>
+            </div>
+        </footer>
+    </div>
+    </div>
+
+    <!--   Core JS Files   -->
+    <script src="assets/js/core/jquery.min.js"></script>
+    <script src="assets/js/core/popper.min.js"></script>
+    <script src="assets/js/core/bootstrap-material-design.min.js"></script>
+    <script src="assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+
+    <!-- Include a polyfill for ES6 Promises (optional) for IE11, UC Browser and Android browser support SweetAlert -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
+
+    <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
+    <script src="assets/js/material-dashboard.js?v=2.1.2" type="text/javascript"></script>
+
+
+    <script src="assets/js/add_quiz.js"></script>
+
+</body>
+
+</html>
