@@ -18,25 +18,25 @@ const app = express();
 
 app.use(compression());
 app.use(helmet());
-app.use(csurf());
+// app.use(csurf());
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-const pool = mysql.createPool({
-    host: process.env.db_host,
-    user: process.env.db_user,
-    password: process.env.db_password,
-    database: process.env.db_dbName,
-    waitForConnections: true,
-});
+// const pool = mysql.createPool({
+//     host: process.env.db_host,
+//     user: process.env.db_user,
+//     password: process.env.db_password,
+//     database: process.env.db_dbName,
+//     waitForConnections: true,
+// });
 
-const db = pool.promise();
-app.use((req, res, next) => {
-    req.db = db;
-    next();
-})
+// const db = pool.promise();
+// app.use((req, res, next) => {
+//     req.db = db;
+//     next();
+// });
 // passport.use(new passport_local(
 
 // ))
