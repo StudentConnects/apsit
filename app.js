@@ -19,7 +19,7 @@ const app = express();
 app.use(compression());
 app.use(helmet());
 // app.use(csurf());
-app.use(logger('dev'));
+//app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -45,7 +45,20 @@ app.use(express.static(path.join(__dirname, 'public')));
 //     name: "defaultID",
 
 // }))
+
+app.use(session({
+    secret: 'A6HD62NJ28YW92090JHWHW7W02HW27WY9268NDUW6988786GVD3F76AQ23Q',
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+        maxAge: 1000*60*60*24
+    }
+}));
+
+
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+
+app.listen(8080);
 
 module.exports = app;

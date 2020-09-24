@@ -10,10 +10,18 @@ router.all("/", (req, res) => {
     console.log("into /");
     res.send(path.join(__dirname, "..", "public", "index.html"));
 });
+
 router.all('/test', function (req, res) {
     debug("into /test");
     console.log("into /test");
-    res.send("TEST SUCCESS");
+    if(req.session.viewCount)
+    {
+        req.session.viewCount++;
+    }
+    else{
+        req.session.viewCount=1;
+    }
+    res.send(`<h1>you visited ${req.session.viewCount}</h1>`);
 });
 
 module.exports = router;
