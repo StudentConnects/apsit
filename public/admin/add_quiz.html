@@ -104,147 +104,172 @@
 
             <div class="container-fluid">
                 <div class="container-fluid">
-                    <div class="card">
-                        <div class="card-header card-header-primary">
-                            <h4 id="ques_no" class="card-title">Question no 1</h4>
-                        </div>
-                        <div class="card-body">
-                            <form>
-                                <div class="row">
-                                    <div class="col-12">
-                                        <div class="form-group mt-3">
-                                            <label class="bmd-label-floating">Type your question here</label>
-                                            <textarea id="txtarea" class="form-control" rows="5"></textarea>
+                    <div id="addquestioncontainer" class="hidden">
+                        <div class="card">
+                            <div class="card-header card-header-primary">
+                                <h4 id="ques_no" class="card-title">Add Question</h4>
+                            </div>
+                            <div class="card-body">
+                                <form>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-group mt-3">
+                                                <label class="bmd-label-floating">Type your question here</label>
+                                                <textarea id="txtarea" class="form-control" rows="5"></textarea>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="container-fluid mt-4">
-                                        <div class="row">
-                                            <div class="col-12 col-sm-12 col-md-5 col-lg-5">
-                                                <div class="row">
-                                                    <div class="col-12 col-sm-12 col-md-8 m-auto">
-                                                        <div class="form-group mt-3">
-                                                            <label class="bmd-label-floating">Time limit</label>
-                                                            <input id="time_limit" type="number" class="form-control" />
-                                                        </div>
-                                                        <div class="form-group mt-4">
-                                                            <label for="name">Answer Type</label>
-                                                            <div class="checkboxes mt-2">
-                                                                <label for="x"><input type="radio" id="sel_single"
-                                                                        name="usage_commit" value="Single" checked />
-                                                                    <span>Single Select</span></label>
-                                                                <label for="z" class="ml-2"><input type="radio"
-                                                                        id="sel_multi" name="usage_commit"
-                                                                        value="Multiple" />
-                                                                    <span>Multiple Select</span></label>
+                                        <div class="container-fluid mt-4">
+                                            <div class="row">
+                                                <div class="col-12 col-sm-12 col-md-5 col-lg-5">
+                                                    <div class="row">
+                                                        <div class="col-12 col-sm-12 col-md-8 m-auto">
+                                                            <div class="form-group mt-3">
+                                                                <label class="bmd-label-floating">Time limit</label>
+                                                                <input id="time_limit" type="number"
+                                                                    class="form-control" />
+                                                            </div>
+                                                            <div class="form-group mt-4">
+                                                                <label for="name">Answer Type</label>
+                                                                <div class="checkboxes mt-2">
+                                                                    <label for="x"><input type="radio" id="sel_single"
+                                                                            name="usage_commit" value="Single"
+                                                                            checked />
+                                                                        <span>Single Select</span></label>
+                                                                    <label for="z" class="ml-2"><input type="radio"
+                                                                            id="sel_multi" name="usage_commit"
+                                                                            value="Multiple" />
+                                                                        <span>Multiple Select</span></label>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
 
 
-                                            </div>
-                                            <div class="col-12 col-sm-12 col-md-7 col-lg-7">
-                                                <div class="upload_img m-auto">
-                                                    <img id="upload_questiom" src="assets/img/add-image_lg.png"
-                                                        class="add_image_icon" />
-                                                    <div class="edit_icon">
-                                                        <i class="material-icons">edit</i>
-                                                        <input type="file" id="image_uploader"
-                                                            class="upload-image-input"
-                                                            accept=".jpg,.png,.gif,.jpeg,.bmp,.svg,.giphy"></input>
+                                                </div>
+                                                <div class="col-12 col-sm-12 col-md-7 col-lg-7">
+                                                    <div class="upload_img m-auto">
+                                                        <img id="upload_questiom" src="assets/img/add-image_lg.png"
+                                                            class="add_image_icon" />
+                                                        <div class="edit_icon">
+                                                            <i class="material-icons">edit</i>
+                                                            <input type="file" id="image_uploader"
+                                                                class="upload-image-input"
+                                                                accept=".jpg,.png,.gif,.jpeg,.bmp,.svg,.giphy"></input>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
 
+                                        </div>
+                                        <div class="d-flex flex-wrap align-items-center w-100 mt-5">
+                                            <div class="col-12 col-md-6">
+                                                <div class="form-row  mt-3">
+                                                    <div class="form-group col-lg-10 m-lg-auto">
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon">
+                                                                <input type="checkbox" id="checkbox_1" aria-label="123"
+                                                                    style="width:40px; height:40px">
+                                                            </span>
+                                                            <input id="option_1" type="text" class="form-control"
+                                                                aria-label="123">
+                                                            <label class="bmd-label-floating"
+                                                                style="margin-left:50px">Option 1</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-6">
+                                                <div class="form-row  mt-3">
+                                                    <div class="form-group col-lg-10 m-lg-auto">
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon">
+                                                                <input type="checkbox" id="checkbox_2" aria-label="123"
+                                                                    style="width:40px; height:40px">
+                                                            </span>
+                                                            <input id="option_2" type="text" class="form-control"
+                                                                aria-label="123">
+                                                            <label class="bmd-label-floating"
+                                                                style="margin-left:50px">Option 2</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-6">
+                                                <div class="form-row  mt-3">
+                                                    <div class="form-group col-lg-10 m-lg-auto">
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon">
+                                                                <input type="checkbox" id="checkbox_3" aria-label="123"
+                                                                    style="width:40px; height:40px">
+                                                            </span>
+                                                            <input id="option_3" type="text" class="form-control"
+                                                                aria-label="123">
+                                                            <label class="bmd-label-floating"
+                                                                style="margin-left:50px">Option 3</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-6">
+                                                <div class="form-row  mt-3">
+                                                    <div class="form-group col-lg-10 m-lg-auto">
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon">
+                                                                <input type="checkbox" id="checkbox_4" aria-label="123"
+                                                                    style="width:40px; height:40px">
+                                                            </span>
+                                                            <input id="option_4" type="text" class="form-control"
+                                                                aria-label="123">
+                                                            <label class="bmd-label-floating"
+                                                                style="margin-left:50px">Option 4</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div style="margin-top:20px">
+                                            <button type="button" onclick="save_question()"
+                                                class="submit_button">Save</button>
+                                            <button class="submit_quiz_button" onclick="">Submit Quiz</button>
+                                        </div>
                                     </div>
-                                    <div class="d-flex flex-wrap align-items-center w-100 mt-5">
-                                        <div class="col-12 col-md-6">
-                                            <div class="form-row  mt-3">
-                                                <div class="form-group col-lg-10 m-lg-auto">
-                                                    <div class="input-group">
-                                                        <span class="input-group-addon">
-                                                            <input type="checkbox" id="checkbox_1" aria-label="123"
-                                                                style="width:40px; height:40px">
-                                                        </span>
-                                                        <input id="option_1" type="text" class="form-control"
-                                                            aria-label="123">
-                                                        <label class="bmd-label-floating"
-                                                            style="margin-left:50px">Option 1</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-md-6">
-                                            <div class="form-row  mt-3">
-                                                <div class="form-group col-lg-10 m-lg-auto">
-                                                    <div class="input-group">
-                                                        <span class="input-group-addon">
-                                                            <input type="checkbox" id="checkbox_2" aria-label="123"
-                                                                style="width:40px; height:40px">
-                                                        </span>
-                                                        <input id="option_2" type="text" class="form-control"
-                                                            aria-label="123">
-                                                        <label class="bmd-label-floating"
-                                                            style="margin-left:50px">Option 2</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-md-6">
-                                            <div class="form-row  mt-3">
-                                                <div class="form-group col-lg-10 m-lg-auto">
-                                                    <div class="input-group">
-                                                        <span class="input-group-addon">
-                                                            <input type="checkbox" id="checkbox_3" aria-label="123"
-                                                                style="width:40px; height:40px">
-                                                        </span>
-                                                        <input id="option_3" type="text" class="form-control"
-                                                            aria-label="123">
-                                                        <label class="bmd-label-floating"
-                                                            style="margin-left:50px">Option 3</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-md-6">
-                                            <div class="form-row  mt-3">
-                                                <div class="form-group col-lg-10 m-lg-auto">
-                                                    <div class="input-group">
-                                                        <span class="input-group-addon">
-                                                            <input type="checkbox" id="checkbox_4" aria-label="123"
-                                                                style="width:40px; height:40px">
-                                                        </span>
-                                                        <input id="option_4" type="text" class="form-control"
-                                                            aria-label="123">
-                                                        <label class="bmd-label-floating"
-                                                            style="margin-left:50px">Option 4</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div style="margin-top:20px">
-                                        <button type="button" onclick="save_question()"
-                                            class="submit_button">Save</button>
-                                        <button class="submit_quiz_button">Submit Quiz</button>
-                                    </div>
-                                </div>
-                            </form>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div id="questions" class="card-body sidebar_quiz d-flex align-items-center"
+                                style="margin-right:20px">
+                                <!-- question button comes here -->
+
+                                <table class="table" id="quiz_table">
+                                    <tbody>
+                                        <!-- question list -->
+                                    </tbody>
+                                </table>
+
+                            </div>
                         </div>
                     </div>
 
-                    <div class="card">
-                        <div id="questions" class="card-body sidebar_quiz d-flex align-items-center"
-                            style="margin-right:20px">
-                            <!-- question button comes here -->
-
-                            <table class="table" id="quiz_table">
-                                <tbody>
-                                    <!-- question list -->
-                                </tbody>
-                            </table>
-
+                    <div id="companyformcontainer" class="card">
+                        <div class="card-header card-header-primary">
+                            <h4 class="card-title">Enter Company Details</h4>
+                        </div>
+                        <div class="card-body">
+                            <form>
+                                <div class="form-group">
+                                    <label for="company">Choose Company:</label>
+                                    <select class="form-control" data-style="btn btn-link" id="company">
+                                        <option value="IBM">IBM</option>
+                                        <option value="Google">Google</option>
+                                        <option value="Apple">Apple</option>
+                                        <option value="Infosys">Infosys</option>
+                                    </select>
+                                    <br><br>
+                                    <input type="button" class="submit_button" value="Select" onclick="toggleQuiz()">
+                                </div>
+                            </form>
                         </div>
                     </div>
 

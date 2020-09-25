@@ -232,3 +232,10 @@ $('input[type=checkbox]').change(function(e){
          alert("Only Single Select Possible");
     }
  })
+
+ function toggleQuiz() {
+    var xlogin = document.getElementById("companyformcontainer");
+    var yreset = document.getElementById("addquestioncontainer");
+    xlogin.classList.toggle("hidden");
+    yreset.classList.toggle("hidden");
+}
