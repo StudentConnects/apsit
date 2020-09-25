@@ -1,24 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Apsit</title>
+	<title>Apsit</title>
 
-    <link rel="stylesheet" type="text/css" href="assets/styles/bootstrap4/bootstrap.min.css">
-    <link href="assets/plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" type="text/css" href="assets/plugins/OwlCarousel2-2.2.1/owl.carousel.css">
-    <link rel="stylesheet" type="text/css" href="assets/plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
-    <link rel="stylesheet" type="text/css" href="assets/plugins/OwlCarousel2-2.2.1/animate.css">
-    <link rel="stylesheet" type="text/css" href="assets/styles/main_styles.css">
-    <link rel="stylesheet" type="text/css" href="assets/styles/responsive.css">
-    <link rel="stylesheet" type="text/css" href="assets/styles/Login_form.css">
+	<link rel="stylesheet" type="text/css" href="assets/styles/bootstrap4/bootstrap.min.css">
+	<link href="assets/plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" type="text/css" href="assets/plugins/OwlCarousel2-2.2.1/owl.carousel.css">
+	<link rel="stylesheet" type="text/css" href="assets/plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
+	<link rel="stylesheet" type="text/css" href="assets/plugins/OwlCarousel2-2.2.1/animate.css">
+	<link rel="stylesheet" type="text/css" href="assets/styles/main_styles.css">
+	<link rel="stylesheet" type="text/css" href="assets/styles/responsive.css">
+	<link rel="stylesheet" type="text/css" href="assets/styles/Login_form.css">
 </head>
+
 <body>
-    <header class="header">
-			
+	<script>
+		function forgotpassword() {
+			var xlogin = document.getElementById("login");
+			var yreset = document.getElementById("reset");
+			xlogin.classList.toggle("hidden");
+			yreset.classList.toggle("hidden");
+		}
+	</script>
+	<header class="header">
+
 		<!-- Top Bar -->
 		<!-- Header Content -->
 		<div class="header_container">
@@ -56,11 +66,16 @@
 		</div>
 
 		<!-- Header Search Panel -->
-			
-    </header>
-    <div class="menu d-flex flex-column align-items-end justify-content-start text-right menu_mm trans_400">
-		<div class="menu_close_container"><div class="menu_close"><div></div><div></div></div></div>
-		
+
+	</header>
+	<div class="menu d-flex flex-column align-items-end justify-content-start text-right menu_mm trans_400">
+		<div class="menu_close_container">
+			<div class="menu_close">
+				<div></div>
+				<div></div>
+			</div>
+		</div>
+
 		<nav class="menu_nav">
 			<ul class="menu_mm">
 				<li class="menu_mm"><a href="index.html">Home</a></li>
@@ -72,40 +87,64 @@
 			</ul>
 		</nav>
 	</div>
-    <div class="container-fluid">
-        <div class="row" style="margin-top: 100px;">
-            <div class="col img">
-                <img style="margin-bottom: 100px;" src="assets/images/undraw_Graduation_ktn0.svg" alt="Graduation">
-            </div>
-            <div class="col login-container">
-                <form action="Login_form.html">
-                    <img class="avatar" src="assets/images/undraw_profile_pic_ic5t.svg" alt="Profile">
-                    <h2>Welcome</h2>
-                    <div class="input-div one">
-                        <div class="i">
-                            <i class="fa fa-user"></i>
-                        </div>
-                        <div>
-                            <h5>Username</h5>
-                            <input class="input" type="text">
-                        </div>
-                    </div>
-                    <div class="input-div two">
-                        <div class="i">
-                            <i class="fa fa-lock"></i>
-                        </div>
-                        <div>
-                            <h5>Password</h5>
-                            <input class="input" type="password">
-                        </div>
-                    </div>
-                    <a href="#">Forgot Password?</a>
-                    <input type="submit" class="btn" value="Login">
-                </form>
-            </div>
-        </div>
-    </div>
-    	<!-- Footer -->
+	<div class="container-fluid">
+		<div class="row" style="margin-top: 100px;">
+			<div class="col img">
+				<img style="margin-bottom: 100px;" src="assets/images/undraw_Graduation_ktn0.svg" alt="Graduation">
+			</div>
+			<div class="col login-container">
+				<div id="login">
+					<form action="/" method="POST">
+						<img class="avatar" src="assets/images/undraw_profile_pic_ic5t.svg" alt="Profile">
+						<h2>Login</h2>
+
+						<div class="input-div one">
+							<div class="i">
+								<i class="fa fa-user"></i>
+							</div>
+							<div>
+								<h5>Email</h5>
+								<input class="input" id="email" type="text">
+							</div>
+						</div>
+						<div class="input-div two">
+							<div class="i">
+								<i class="fa fa-lock"></i>
+							</div>
+							<div>
+								<h5>Password</h5>
+								<input class="input" id="password" type="password">
+							</div>
+						</div>
+
+
+						<a href="#" onclick="forgotpassword();return false;">Forgot Password?</a>
+						<input type="submit" class="btn" value="Login">
+					</form>
+				</div>
+				<div id="reset" class="hidden">
+					<form action="/" method="POST">
+						<img class="avatar" src="assets/images/undraw_profile_pic_ic5t.svg" alt="Profile">
+						<h2>RESET PASSWORD</h2>
+
+						<div class="input-div one">
+							<div class="i">
+								<i class="fa fa-user"></i>
+							</div>
+							<div>
+								<h5>Email</h5>
+								<input class="input" id="recoveryemail" type="text">
+							</div>
+						</div>
+
+						<a href="#" onclick="forgotpassword();return false;">Back to Login</a>
+						<input type="submit" class="btn" value="Reset">
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Footer -->
 
 	<footer class="footer">
 		<div class="container">
@@ -117,15 +156,16 @@
 						<div class="logo_container">
 							<a href="#">
 								<div class="footer_logo_container">
-										<a href="#">
-                                            <div class="footer_logo_text" style="float: left;">Aps<span>it</span></div>
-                                            <br>
-										</a>
-									</div>
+									<a href="#">
+										<div class="footer_logo_text" style="float: left;">Aps<span>it</span></div>
+										<br>
+									</a>
+								</div>
 							</a>
 						</div>
 						<div class="footer_about_text">
-							<p>APSIT aspires to be a premier institute producing globally competent engineering professionals to contribute towards socio-economic growth of India.</p>
+							<p>APSIT aspires to be a premier institute producing globally competent engineering
+								professionals to contribute towards socio-economic growth of India.</p>
 						</div>
 						<div class="footer_social">
 							<ul>
@@ -135,7 +175,7 @@
 								<li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
 							</ul>
 						</div>
-						
+
 					</div>
 				</div>
 
@@ -147,9 +187,10 @@
 						<div class="footer_contact_info">
 							<div class="footer_contact_item">
 								<div class="footer_contact_title">Address:</div>
-								<div class="footer_contact_line">Survey No. 12, Opp. Hypercity Mall, Ghodbunder Rd, Kasarvadavali, Thane West, Thane, Maharashtra 400615</div>
+								<div class="footer_contact_line">Survey No. 12, Opp. Hypercity Mall, Ghodbunder Rd,
+									Kasarvadavali, Thane West, Thane, Maharashtra 400615</div>
 							</div>
-					
+
 							<div class="footer_contact_item">
 								<div class="footer_contact_title">Email:</div>
 								<div class="footer_contact_line">apsit@gmail.com</div>
@@ -160,7 +201,9 @@
 			</div>
 		</div>
 		<center>
-		<div class="copyright">Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved </div>
+			<div class="copyright">Copyright &copy;<script>
+					document.write(new Date().getFullYear());
+				</script> All rights reserved </div>
 		</center>
 	</footer>
 </body>
@@ -177,4 +220,5 @@
 <script src="assets/plugins/parallax-js-master/parallax.min.js"></script>
 <script src="assets/plugins/colorbox/jquery.colorbox-min.js"></script>
 <script src="assets/js/about.js"></script>
+
 </html>

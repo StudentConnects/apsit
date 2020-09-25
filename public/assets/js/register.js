@@ -10,7 +10,9 @@ function signup() {
         if (checkName(fullname)) {
             if (validateEmail(email)) {
                 if (checkNumber(mobile)) {
-                    // submit_details(fullname, email, mobile,  password);
+                    if (validatePassword(password)) {
+                        // submit_details(fullname, email, mobile,  password);
+                    }
                 }
             }
 
@@ -43,6 +45,18 @@ function validateEmail(email) {
 
     if (!email.match(remail)) {
         alert("Invalid email address");
+        return false;
+    }
+
+    return true;
+
+}
+
+function validatePassword(password) {
+    var rpassword = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,16}$/;
+
+    if (!password.match(rpassword)) {
+        alert("Invalid Password!! Password should contain atleast one number and one special character and should be of minimum 8 characters");
         return false;
     }
 
