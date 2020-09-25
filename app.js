@@ -3,13 +3,14 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const csurf = require("csurf");
-const mysql = require("mysql2");
+const mysql = require("mysql");
 const helmet = require("helmet");
 const passport = require("passport");
 const passport_local = require("passport-local");
 const compression = require("compression");
 const session = require('express-session');
-
+const MySQLStore = require('express-mysql-session')(session);
+const conPool = require('./dbconnection');
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 // const { session } = require('passport');
@@ -24,32 +25,32 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-// const pool = mysql.createPool({
-//     host: process.env.db_host,
-//     user: process.env.db_user,
-//     password: process.env.db_password,
-//     database: process.env.db_dbName,
-//     waitForConnections: true,
-// });
 
-// const db = pool.promise();
-// app.use((req, res, next) => {
-//     req.db = db;
-//     next();
-// });
-// passport.use(new passport_local(
-
-// ))
-// app.use(session({
-//     secret: "APSIT-temp-SECRET",
-//     name: "defaultID",
-
-// }))
-
+var options = {
+    clearExpired: true,
+    // How frequently expired sessions will be cleared; milliseconds:
+    checkExpirationInterval: 900000,
+    // The maximum age of a valid session; milliseconds:
+    expiration: 86400000,
+    // Whether or not to create the sessions database table, if one does not already exist:
+    createDatabaseTable: true,
+    // Number of connections when creating a connection pool:
+    charset: 'utf8mb4_bin',
+    schema: {
+        tableName: 'sessions',
+        columnNames: {
+            session_id: 'session_id',
+            expires: 'expires',
+            data: 'data'
+        }
+    }
+};
+const sessionStore = new MySQLStore(options,conPool);
 app.use(session({
     secret: 'A6HD62NJ28YW92090JHWHW7W02HW27WY9268NDUW6988786GVD3F76AQ23Q',
     resave: false,
     saveUninitialized: true,
+    store : sessionStore,
     cookie: {
         maxAge: 1000*60*60*24
         //1day TTL

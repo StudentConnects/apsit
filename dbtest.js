@@ -1,5 +1,5 @@
 var fs = require('fs');
-var mysql = require('mysql2');
+var mysql = require('mysql');
 var myconfig = require('./myconfig.json');
 
 
@@ -8,6 +8,7 @@ function db_test() {
       host: myconfig.host,
       user: myconfig.user,
       password: myconfig.password,
+      database :'disha',
       ssl : {
         ca: fs.readFileSync(myconfig.ssl.ca),
         key: fs.readFileSync(myconfig.ssl.key),
@@ -33,7 +34,7 @@ function db_test() {
   }
   
   function db_listDatabases(con) {
-    con.query('SHOW DATABASES', function (error, results, fields) {
+    con.query('SHOW TABLES', function (error, results, fields) {
       if (error) {
         console.log("Error: Cannot query databases");
   
@@ -47,13 +48,7 @@ function db_test() {
   
         return;
       }
-  
-      console.log('DATABASES');
-      console.log('--------------------');
-      Object.keys(results).forEach(function(key) {
-        var row = results[key];
-        console.log(row.Database)
-      });
+      console.log(results);
       con.end();
     });
   }
