@@ -1,5 +1,3 @@
-let server = ""
-
 function signup() {
 
     let fullname = document.getElementById("fullname").value;
