@@ -97,40 +97,40 @@ const mysql = require("mysql2");
 //     }).catch(error => console.log(error));
 // }).catch(error => console.log(error));
 
-(async () => {
-  let pool = mysql.createPool({
-    host: process.env.db_host,
-    user: process.env.db_user,
-    password: process.env.db_password,
-    database: process.env.db,
-    ssl: {
-      ca: process.env.db_ca,
-      key: process.env.db_key,
-      cert: process.env.db_cert
-    }
-  })
-  pool = pool.promise();
+// (async () => {
+//   let pool = mysql.createPool({
+//     host: process.env.db_host,
+//     user: process.env.db_user,
+//     password: process.env.db_password,
+//     database: process.env.db,
+//     ssl: {
+//       ca: process.env.db_ca,
+//       key: process.env.db_key,
+//       cert: process.env.db_cert
+//     }
+//   })
+//   pool = pool.promise();
 
-  console.log("\n\nBEFORE TIMEOUT\n\n")
-  setTimeout(async () => {
-    let a = await pool.query("show databases;");
-    let aa = await pool.query("show databases;");
-    let aaa = await pool.query("show databases;");
-    if(a && aa && aaa) {
-      pool.query("SHOW TABLES;")
-        .then((result) => {
-          console.log(result);
-          pool.end();
-          console.log("Pool ended successfully");
-        }).catch((err) => {
-          console.log(err);
-          pool.end();
-          console.log("Pool ended wrongly");
-        });
-      console.log(a == aa == aaa);
-    } else {
-      console.log("NOT EQUAL");
-    }
-  }, 3000);
-}
-)()
+//   console.log("\n\nBEFORE TIMEOUT\n\n")
+//   setTimeout(async () => {
+//     let a = await pool.query("show databases;");
+//     let aa = await pool.query("show databases;");
+//     let aaa = await pool.query("show databases;");
+//     if(a && aa && aaa) {
+//       pool.query("SHOW TABLES;")
+//         .then((result) => {
+//           console.log(result);
+//           pool.end();
+//           console.log("Pool ended successfully");
+//         }).catch((err) => {
+//           console.log(err);
+//           pool.end();
+//           console.log("Pool ended wrongly");
+//         });
+//       console.log(a == aa == aaa);
+//     } else {
+//       console.log("NOT EQUAL");
+//     }
+//   }, 3000);
+// }
+// )()
