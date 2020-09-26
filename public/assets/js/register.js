@@ -1,4 +1,9 @@
-function signup() {
+document.getElementById("btn_register").addEventListener("click", signup);
+
+
+function signup(event) {
+
+    event.preventDefault();
 
     let fullname = document.getElementById("fullname").value;
     let email = document.getElementById("email").value;
