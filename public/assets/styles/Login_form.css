@@ -42,8 +42,7 @@ form h2 {
     border-bottom: 2px solid #d4dee4;
 }
 
-.input-div::after,
-.input-div::before {
+.input-div::after,.input-div::before {
     content: '';
     position: absolute;
     bottom: -2px;
@@ -70,8 +69,7 @@ form h2 {
     font-size: 15px;
 }
 
-.input-div.focus::after,
-.input-div.focus::before {
+.input-div.focus::after,.input-div.focus::before {
     width: 50%;
 }
 
