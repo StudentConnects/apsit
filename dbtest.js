@@ -2,7 +2,6 @@ var fs = require('fs');
 var mysql = require('mysql');
 var myconfig = require('./myconfig.json');
 
-
 function db_test() {
     var con = mysql.createConnection({
       host: myconfig.host,
@@ -34,7 +33,7 @@ function db_test() {
   }
   
   function db_listDatabases(con) {
-    con.query('SHOW TABLES', function (error, results, fields) {
+    con.query('SELECT * FROM sessions', function (error, results, fields) {
       if (error) {
         console.log("Error: Cannot query databases");
   
