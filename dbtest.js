@@ -1,55 +1,76 @@
-var fs = require('fs');
-var mysql = require('mysql');
-var myconfig = require('./myconfig.json');
+const dotenv = require("dotenv").config()
+const mysql = require('mysql2/promise');
 
-function db_test() {
-    var con = mysql.createConnection({
-      host: myconfig.host,
-      user: myconfig.user,
-      password: myconfig.password,
-      database :'disha',
-      ssl : {
-        ca: fs.readFileSync(myconfig.ssl.ca),
-        key: fs.readFileSync(myconfig.ssl.key),
-        cert: fs.readFileSync(myconfig.ssl.cert)
-      }
-    });
-  
-    con.connect(function(error) {
-      if (error) {
-        console.log("Error: Cannot connect to server: " + myconfig.host);
-  
-        if ("sqlMessage" in error) {
-          console.log(error.errno + " : " + error.sqlMessage);
-        } else {
-          console.log(error);
-        }
-  
-        return;
-      }
-  
-      db_listDatabases(con);
-    });
+// function db_test() {
+//   var con = mysql.createConnection({
+//     host: process.env.host,
+//     user: process.env.user,
+//     password: process.env.password,
+//     database : process.env.db,
+//     ssl : {
+//       ca: process.env.db_ca,
+//       key: process.env.db_key,
+//       cert: process.env.db_cert,
+//       rejectUnauthorized: false
+//     }
+//   });
+
+//     con.connect(function(error) {
+//       if (error) {
+//         console.log("Error: Cannot connect to server: " + myconfig.host);
+
+//         if ("sqlMessage" in error) {
+//           console.log(error.errno + " : " + error.sqlMessage);
+//         } else {
+//           console.log(error);
+//         }
+
+//         return;
+//       }
+
+//       db_listDatabases(con);
+//     });
+//   }
+
+//   function db_listDatabases(con) {
+//     con.query('SELECT * FROM sessions', function (error, results, fields) {
+//       if (error) {
+//         console.log("Error: Cannot query databases");
+
+//         if ("sqlMessage" in error) {
+//           console.log(error.errno + " : " + error.sqlMessage);
+//         } else {
+//           console.log(error);
+//         }
+
+//         con.end();
+
+//         return;
+//       }
+//       console.log(results);
+//       con.end();
+//     });
+//   }
+
+//   db_test();
+
+(async () => {
+   try{ 
+const con = await mysql.createConnection({
+  host: process.env.db_host,
+  user: process.env.db_user,
+  password: process.env.db_password,
+  database: process.env.db,
+  ssl: {
+    ca: process.env.db_ca,
+    key: process.env.db_key,
+    cert: process.env.db_cert
   }
-  
-  function db_listDatabases(con) {
-    con.query('SELECT * FROM sessions', function (error, results, fields) {
-      if (error) {
-        console.log("Error: Cannot query databases");
-  
-        if ("sqlMessage" in error) {
-          console.log(error.errno + " : " + error.sqlMessage);
-        } else {
-          console.log(error);
-        }
-  
-        con.end();
-  
-        return;
-      }
-      console.log(results);
-      con.end();
-    });
-  }
-  
-  db_test();
+});
+  console.log(await con.query("show databases;"));
+} catch(e) {
+     console.log(e);
+   }
+})()
+
+// console.log()

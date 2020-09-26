@@ -1,20 +1,17 @@
 const fs = require('fs');
 const mysql = require('mysql');
-const myconfig = require('./myconfig.json');
 
 
 var conPool = mysql.createPool({
-    host: myconfig.host,
-    user: myconfig.user,
-    password: myconfig.password,
-    database :'disha',
-    connectionLimit: 15,
-    queueLimit: 0 ,
-    ssl : {
-      ca: fs.readFileSync(myconfig.ssl.ca),
-      key: fs.readFileSync(myconfig.ssl.key),
-      cert: fs.readFileSync(myconfig.ssl.cert)
-    }
+      host: process.env.db_host,
+  user: process.env.db_user,
+  password: process.env.db_password,
+  database: process.env.db,
+  ssl: {
+    ca: process.env.db_ca,
+    key: process.env.db_key,
+    cert: process.env.db_cert
+  }
   });
   
   module.exports = conPool;
