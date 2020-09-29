@@ -9,6 +9,7 @@ const compression = require("compression");
 const session = require('express-session');
 const MySQLStore = require('express-mysql-session')(session);
 const bodyParser = require('body-parser');
+const csurf = require('csurf');
 
 // Required Routers
 const indexRouter = require('./routes/index');
@@ -52,6 +53,7 @@ if (app.get('env') === 'production') {
 // attach all the middleware
 app.use(compression());
 app.use(helmet());
+// app.use(csurf());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: false
@@ -60,13 +62,15 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({
     name: "cookie_id",
-    secret: "2c68cc3448bf1254ea9b1c87dafe3054",
+    secret: process.env.sessionSecret,
     resave: false,
     saveUninitialized: false,
     store: sessionStore,
     cookie: {
         maxAge: ONE_DAY,
-        sameSite: true
+        sameSite: true,
+        secure: true,
+        httpOnly:true
     },
 }));
 app.use((req, res, next) => {

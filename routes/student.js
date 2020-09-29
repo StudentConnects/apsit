@@ -11,12 +11,12 @@ passport.use(new passportLocal({
     usernameField: 'email',
     passwordField: 'password'
   },
-    async function(username, password, done) {
+    async function(username, password, _done) {
         console.log("LINE 20");
         console.log(username, password);
         // if(username == "StudentAccount") {
         //     if(password == "123456") {
-        //         console.log("Sucess verify");
+        //         console.log("Success verify");
         //         return done(null, {"email": username, "password": password, name: "Test Account"});
         //     } else {
         //         console.log("Wrong Password")
@@ -44,7 +44,7 @@ passport.deserializeUser(function(id, done) {
     console.log(username, password);
     if(username == "DishaUser") {
         if(password == "123456") {
-            console.log("Sucess verify");
+            console.log("Success verify");
             return done(null, {"email": username, "password": password, name: "Trial User"});
         } else {
             console.log("Wrong Password")
@@ -62,7 +62,7 @@ passport.deserializeUser(function(id, done) {
 router.use(passport.initialize());
 router.use(passport.session());
 
-router.get("/", (req, res) => {
+router.get("/", (_req, res) => {
     res.sendFile(path.join(__dirname, "..", "public", "student", "user.html"));
 });
 

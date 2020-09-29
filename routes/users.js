@@ -8,12 +8,12 @@ const studentRouter = require('./student');
 const adminRouter = require('./admin');
 
 
-router.all("/", (req, res) => {
+router.all("/", (_req, res) => {
     debug("into /");
     console.log("into /");
     res.sendFile(path.join(__dirname, "..", "public", "index.html"));
 });
-router.all('/test', function(req,res) {
+router.all('/test', function(_req,res) {
     debug("into /test");
     console.log("into /test");
     res.send("TEST SUCCESS");
