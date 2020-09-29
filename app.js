@@ -1,3 +1,4 @@
+const debug = require('debug')('backend-apsit:app.js');
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
@@ -30,6 +31,7 @@ const session_options = {
         }
     }
 };
+try{
 let pool = mysql.createPool({
     host: process.env.db_host,
     user: process.env.db_user,
@@ -43,7 +45,10 @@ let pool = mysql.createPool({
 })
 pool = pool.promise();
 const sessionStore = new MySQLStore(session_options, pool);
-
+if (app.get('env') === 'production') {
+    app.set('trust proxy', 1) // trust first proxy
+    sess.cookie.secure = true // serve secure cookies
+}
 // attach all the middleware
 app.use(compression());
 app.use(helmet());
@@ -57,41 +62,23 @@ app.use(session({
     name: "cookie_id",
     secret: "2c68cc3448bf1254ea9b1c87dafe3054",
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false,
     store: sessionStore,
     cookie: {
         maxAge: ONE_DAY,
         sameSite: true
-    }
+    },
 }));
 app.use((req, res, next) => {
     req.db = pool;
     next();
 });
 
-// const redirectLogin = (req, res, next) => {
-//     if (req.session.userId) {
-//         next();}
-//     else {
-//         res.redirect('/login.html')       
-//     }
-// };
-// const redirectStudent = (req, res, next) => {
-//     if (req.session.userId) {
-//         next();}
-//     else {
-//         res.redirect('/student_dashboard.html');       
-//     }
-// };
-
-// app.use((req, res, next) => {
-//     req.db = pool;
-//     next();
-// });
-
-
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
 
+} catch(e) {
+    debug(e);
+}
 module.exports = app;
