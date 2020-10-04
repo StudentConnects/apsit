@@ -1,0 +1,10 @@
+{
+    "npm.enableRunFromFolder": true,
+    "npm.validate.enable": true,
+    "deepcode.uploadApproved": true,
+    "cSpell.words": [
+        "Disha",
+        "apsit",
+        "resave"
+    ]
+}
