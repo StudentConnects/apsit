@@ -84,7 +84,7 @@ input[type=number] {
 
 .active,
 .side_button:hover {
-    background-color: #bf7e04;
+    /* background-color: #bf7e04; */
     color: #ffffff;
 }
 
