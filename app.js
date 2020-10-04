@@ -1,28 +1,42 @@
-const debug = require('debug')('backend-apsit:app.js');
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-const mysql = require('mysql2');
+const mysql = require("mysql");
 const helmet = require("helmet");
 const compression = require("compression");
 const session = require('express-session');
 const MySQLStore = require('express-mysql-session')(session);
-const bodyParser = require('body-parser');
-const csurf = require('csurf');
-
-// Required Routers
+const conPool = require('./dbconnection');
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
-
-// Variables Required
+const registerRouter = require('./routes/register');
 const app = express();
-const ONE_DAY = 1000 * 60 * 60 * 24;
-const hrs_2 = 7.2e+6;
+
+const {
+    PORT = 8080,
+    SESSION_LIFETIME = 1000 * 60 * 60 * 24,
+    SESSION_SECRET = 'A6HD62NJ28YW92090JHWHW7W02HW27WY9268NDUW6988786GVD3F76AQ23Q',
+    SESSION_NAME = 'session-id'
+} = process.env;
+
+
+app.use(compression());
+app.use(helmet());
+//app.use(logger('dev'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
+
+
+
 const session_options = {
-    checkExpirationInterval: hrs_2,
+    clearExpired: true,
+    checkExpirationInterval: 900000,
+    expiration: 86400000,
     createDatabaseTable: true,
-    // charset: 'utf8mb4_bin',
+    charset: 'utf8mb4_bin',
     schema: {
         tableName: 'sessions',
         columnNames: {
@@ -32,57 +46,39 @@ const session_options = {
         }
     }
 };
-try{
-let pool = mysql.createPool({
-    host: process.env.db_host,
-    user: process.env.db_user,
-    password: process.env.db_password,
-    database: process.env.db,
-    ssl: {
-        ca: process.env.db_ca,
-        key: process.env.db_key,
-        cert: process.env.db_cert
-    }
-})
-pool = pool.promise();
-const sessionStore = new MySQLStore(session_options, pool);
-if (app.get('env') === 'production') {
-    app.set('trust proxy', 1) // trust first proxy
-    sess.cookie.secure = true // serve secure cookies
-}
-// attach all the middleware
-app.use(compression());
-app.use(helmet());
-// app.use(csurf());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({
-    extended: false
-}));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+const sessionStore = new MySQLStore(session_options, conPool);
 app.use(session({
-    name: "cookie_id",
-    secret: process.env.sessionSecret,
+    name: SESSION_NAME,
+    secret: SESSION_SECRET,
     resave: false,
-    saveUninitialized: false,
+    saveUninitialized: true,
     store: sessionStore,
     cookie: {
-        maxAge: ONE_DAY,
-        sameSite: true,
-        secure: true,
-        httpOnly:true
-    },
+        maxAge: SESSION_LIFETIME,
+        sameSite: true
+        //1day TTL
+        //by default its http only
+    }
 }));
-app.use((req, res, next) => {
-    req.db = pool;
-    next();
-});
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+const redirectLogin = (req, res, next) => {
+    if (req.session.userId) {
+        next();}
+    else {
+        res.redirect('/login.html')       
+    }
+};
+const redirectStudent = (req, res, next) => {
+    if (req.session.userId) {
+        next();}
+    else {
+        res.redirect('/student_dashboard.html');       
+    }
+};
+app.use('/',redirectLogin,indexRouter);
+app.use('/register',redirectStudent,registerRouter);
+app.use('/users',redirectLogin,usersRouter);
 
+app.listen(PORT);
 
-} catch(e) {
-    debug(e);
-}
 module.exports = app;
