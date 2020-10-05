@@ -59,7 +59,7 @@ try {
     // attach all the middleware
     app.use(compression());
     app.use(helmet());
-    // app.use(csurf());
+    app.use(csurf());
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({
         extended: false
@@ -75,7 +75,7 @@ try {
         cookie: {
             maxAge: ONE_DAY,
             sameSite: true,
-            // secure: true,
+            secure: true,
             httpOnly: true
         },
     }));
