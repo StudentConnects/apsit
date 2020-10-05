@@ -2,19 +2,6 @@
   "name": "backend",
   "version": "0.0.0",
   "private": true,
-  "description": "This project will be named as Disha, under APSIT college.",
-  "main": "app.js",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/APSIT-Skills-Aptitude/Backend.git"
-  },
-  "keywords": [],
-  "author": "OMKAR AGRAWAL <omkar3654@gmail.com>",
-  "license": "AGPL-3.0",
-  "bugs": {
-    "url": "https://github.com/APSIT-Skills-Aptitude/Backend/issues"
-  },
-  "homepage": "https://github.com/APSIT-Skills-Aptitude/Backend#readme",
   "scripts": {
     "start": "node ./bin/www",
     "dev": "nodemon node ./bin/www",
@@ -22,12 +9,11 @@
     "ip": "node ip.test.js"
   },
   "dependencies": {
-    "@sendgrid/mail": "^7.2.6",
     "compression": "^1.7.4",
     "cookie-parser": "~1.4.4",
     "cors": "^2.8.5",
     "csurf": "^1.11.0",
-    "debug": "^4.2.0",
+    "debug": "~2.6.9",
     "ejs": "^3.1.5",
     "express": "^4.16.4",
     "express-mysql-session": "^2.1.4",

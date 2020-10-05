@@ -1,3 +1,2 @@
+# ![Node.js CI](https://github.com/APSIT-Skills-Aptitude/Backend/workflows/Node.js%20CI/badge.svg)
 # Backend
-
-This project is made for APSIT college. You shouldn't have accessed this sentence. Pretty good work bro!!!

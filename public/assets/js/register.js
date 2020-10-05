@@ -101,7 +101,6 @@ function submit_details(fullname, email, mobile, password) {
         email : email,
         password : password
     }
-    console.log(_data);
 
     fetch('/register', {
             method: "POST",
@@ -110,10 +109,7 @@ function submit_details(fullname, email, mobile, password) {
                 "Content-type": "application/json; charset=UTF-8"
             }
         })
-        .then(response => {
-            console.log("Received Response");
-            response.json();
-        })
-        .then((...data) => console.log(data))
+        .then(response => response.json())
+        .then(json => console.log(json))
         .catch(err => console.log(err));
 }

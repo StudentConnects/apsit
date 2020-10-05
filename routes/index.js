@@ -20,17 +20,19 @@ router.get("/", (req, res) => {
 router.all('/test', function (req, res) {
     debug("into /test");
     console.log("into /test");
-    if (req.session.viewCount) {
+    if(req.session.viewCount)
+    {
         req.session.viewCount++;
-    } else {
-        req.session.viewCount = 1;
+    }
+    else{
+        req.session.viewCount=1;
     }
     res.send(`<h1>you visited ${req.session.viewCount}</h1>`);
 });
 
 // {
 //     fullname: 'OMKAR AGRAWAL',
-//     mobile: '7977937694',
+//     mobile: 'ssss977937694',
 //     email: 'omkar3654@gmail.com',
 //     password: 'wt^ZdS47RZz'
 // }

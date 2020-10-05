@@ -1,3 +1,8 @@
+document.getElementById("btn_login").addEventListener("click", login);
+document.getElementById("btn_recover").addEventListener("click", recover);
+
+
+
 function forgotpassword() {
     var xlogin = document.getElementById("login");
     var yreset = document.getElementById("reset");

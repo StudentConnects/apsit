@@ -1,5 +1,8 @@
 // let questions = 0;
 // let question_box;
+
+
+
 var active_question;
 var edit_index;
 var quiz_list = [];
@@ -86,7 +89,6 @@ function save_question() {
     }
 
     let txtarea = document.getElementById("txtarea").value;
-    let time_limit = document.getElementById("time_limit").value;
     let option_1 = document.getElementById("option_1").value;
     let option_2 = document.getElementById("option_2").value;
     let option_3 = document.getElementById("option_3").value;
@@ -107,7 +109,6 @@ function save_question() {
         question_no: ques_no,
         upload_image: upload_image,
         question: txtarea,
-        time_limit: time_limit,
         answer_type: answer_type,
         option_1: option_1,
         option_2: option_2,
@@ -177,7 +178,6 @@ function edit_btn(x) {
     question_edit = true;
     var i = x.parentNode.parentNode.rowIndex;
     document.getElementById("txtarea").value = quiz_list[i].question;
-    document.getElementById("time_limit").value = quiz_list[i].time_limit;
     if (quiz_list[i].answer_type == "Single") {
         document.getElementById("sel_single").checked = true;
     } else if (quiz_list[i].answer_type == "Multiple") {
@@ -205,7 +205,6 @@ function delete_btn(x) {
 
 function reset_questionform() {
     document.getElementById("txtarea").value = "";
-    document.getElementById("time_limit").value = "";
     document.getElementById("sel_single").checked = true;
     document.getElementById("option_1").value = "";
     document.getElementById("option_2").value = "";
@@ -234,8 +233,11 @@ $('input[type=checkbox]').change(function(e){
  })
 
  function toggleQuiz() {
-    var xlogin = document.getElementById("companyformcontainer");
-    var yreset = document.getElementById("addquestioncontainer");
-    xlogin.classList.toggle("hidden");
-    yreset.classList.toggle("hidden");
+    let selectcompany = document.getElementById("selectcompanycontainer");
+    let addquestion = document.getElementById("addquestioncontainer");
+    selectcompany.classList.toggle("hidden");
+    addquestion.classList.toggle("hidden");
 }
+
+
+
