@@ -17,8 +17,9 @@
   "homepage": "https://github.com/APSIT-Skills-Aptitude/Backend#readme",
   "scripts": {
     "start": "node ./bin/www",
-    "dev": "nodemon npm start",
-    "test": "mocha"
+    "dev": "nodemon node ./bin/www",
+    "test": "mocha",
+    "ip": "node ip.test.js"
   },
   "dependencies": {
     "@sendgrid/mail": "^7.2.6",
@@ -31,11 +32,13 @@
     "express": "^4.16.4",
     "express-mysql-session": "^2.1.4",
     "express-session": "^1.17.1",
+    "express-validator": "^6.6.1",
     "helmet": "^4.1.1",
     "morgan": "^1.9.1",
     "mysql2": "^2.2.5",
     "passport": "^0.4.1",
-    "passport-local": "^1.0.0"
+    "passport-local": "^1.0.0",
+    "validator-pizza-node": "^1.0.3"
   },
   "devDependencies": {
     "chai": "^4.2.0",
@@ -46,7 +49,8 @@
   },
   "nodemonConfig": {
     "ignore": [
-      "public/*"
+      "public/*",
+      "*.test.js"
     ]
   }
 }
