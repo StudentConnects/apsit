@@ -101,7 +101,7 @@ function checkName(fullname) {
 
 
 function submit_details(fullname, email, password, institute_name, mobile, address, city, country, postcode, photo) {
-    photo = 'Not yet implemented';
+    photo = 'https://google.com';
     let _data = {
         fullname: fullname,
         email: email,
@@ -122,7 +122,7 @@ function submit_details(fullname, email, password, institute_name, mobile, addre
                 "Content-type": "application/json; charset=UTF-8"
             }
         })
-        .then(response => response.json())
+        .then(response => response.text())
         .then(json => console.log(json))
         .catch(err => console.log(err));
 }
