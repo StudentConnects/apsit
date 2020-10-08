@@ -78,9 +78,11 @@
             <div class="col login-container">
                 <form>
                     <div class="image">
-                    <img class="avatar" src="assets/images/undraw_profile_pic_ic5t.svg" alt="Profile">
-                    <h2>Welcome</h2>
+                    <img class="avatar" id="profile_avatar" src="assets/images/undraw_profile_pic_ic5t.svg" alt="Profile">
                     </div>
+                    <input id="profile_pic" class="file-upload" type="file" accept="image/*" disabled/>
+                    <div class="row">
+                    <div class="col-md-6">    
                     <div class="input-div one">
                         <div class="i">
                             <i class="fa fa-user"></i>
@@ -89,18 +91,20 @@
                             <h5>Full Name</h5>
                             <input class="input" type="text" id="fullname">
                         </div>
-					</div>
-					
+                    </div>
+                    </div>
+                    <div class="col-md-6">
 					<div class="input-div one">
                         <div class="i">
-                            <i class="fa fa-mobile"></i>
+                            <i class="fa fa-user-o"></i>
                         </div>
                         <div>
-                            <h5>Mobile No.</h5>
-                            <input class="input" type="text" id="mobile">
+                            <h5>Username</h5>
+                            <input class="input" type="text" id="username">
                         </div>
                     </div>
-
+                    </div>
+                    </div>
                     <div class="input-div one">
                         <div class="i">
                             <i class="fa fa-envelope"></i>
@@ -120,8 +124,72 @@
                             <input class="input" type="password" id="password">
                         </div>
                     </div>
-
-                                  
+                    <div class="row">
+                        <div class="col-md-6">
+					<div class="input-div one">
+                        <div class="i">
+                            <i class="fa fa-lock"></i>
+                        </div>
+                        <div>
+                            <h5>Institution Name</h5>
+                            <input class="input" type="text" id="institute_name">
+                        </div>
+                    </div>
+                </div>
+                    <div class="col-md-6">
+                    <div class="input-div one">
+                        <div class="i">
+                            <i class="fa fa-mobile"></i>
+                        </div>
+                        <div>
+                            <h5>Mobile No.</h5>
+                            <input class="input" type="text" id="mobile">
+                        </div>
+                    </div>
+                </div>
+                </div>
+                    <div class="input-div one">
+                        <div class="i">
+                            <i class="fa fa-map-marker"></i>
+                        </div>
+                        <div>
+                            <h5>Address</h5>
+                            <input class="input" type="text" id="address">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+					<div class="input-div one">
+                        <div class="i">
+                            <i class="fa fa-map-marker"></i>
+                        </div>
+                        <div>
+                            <h5>City</h5>
+                            <input class="input" type="text" id="city">
+                        </div>
+                    </div>
+                </div>
+                    <div class="col-md-6">
+					<div class="input-div one">
+                        <div class="i">
+                            <i class="fa fa-map-marker"></i>
+                        </div>
+                        <div>
+                            <h5>Country</h5>
+                            <input class="input" type="text" id="country">
+                        </div>
+                    </div>
+                </div>
+                </div>
+					<div class="input-div one">
+                        <div class="i">
+                            <i class="fa fa-map-marker"></i>
+                        </div>
+                        <div>
+                            <h5>Post Code</h5>
+                            <input class="input" type="text" id="postcode">
+                        </div>
+                    </div>
                     <a href="/login.html">Already have an account?</a>
                     <input type="button" id="btn_register" class="btn" value="Sign Up">
                 </form>
