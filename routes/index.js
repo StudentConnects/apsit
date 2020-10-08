@@ -14,52 +14,48 @@ const emailVerifier = new ValidatorPizzaClient().validate;
 
 router.get("/", (req, res) => {
     debug("into /");
-    console.log("into /");
     res.send(path.join(__dirname, "..", "public", "index.html"));
 });
 router.all('/test', function (req, res) {
     debug("into /test");
-    console.log("into /test");
-    if(req.session.viewCount)
-    {
+    if (req.session.viewCount) {
         req.session.viewCount++;
-    }
-    else{
-        req.session.viewCount=1;
+    } else {
+        req.session.viewCount = 1;
     }
     res.send(`<h1>you visited ${req.session.viewCount}</h1>`);
 });
 
+router.get("/registrationSuccess", (req, res) => {
+    res.send("Thank you for the registration, You have been successfully registered! Now you can login after you veify your account from the email just sent to you.");
+})
+
 // {
-//     fullname: 'OMKAR AGRAWAL',
-//     mobile: 'ssss977937694',
-//     email: 'omkar3654@gmail.com',
-//     password: 'wt^ZdS47RZz'
+//     "fullname": "OMKAR AGRAWAL",
+//     "email": "omkar3654@gmail.com",
+//     "password": "%Cz44^G2ZfX",
+//     "institute_name": "",
+//     "mobile": 7977937694,
+//     "address": "B-12/601 silver sarita near pooja park, kashimira mira road(E)",
+//     "city": "Select",
+//     "country": "India",
+//     "postcode": "401107",
+//     "photo": "Not yet implemented"
 // }
 router.post('/register',
-    // (req, res, next) => {
-    //     console.table([{
-    //         ...req.body
-    //     }]);
-    //     next();
-    // },
     checkSchema({
         "fullname": {
             in: ["body"],
             notEmpty: true,
             isString: true,
             trim: true,
-        },
-        "mobile": {
-            in: ["body"],
-            errorMessage: "Invalid input for Mobile",
-            notEmpty: true,
-            trim: true,
-            isNumeric: true,
-            isMobilePhone: {
-                locale: "en-IN"
-            },
-            toInt: true
+            isLength: {
+                options: {
+                    max: 50,
+                    min: 5
+                },
+                errorMessage: "Needs to be min: 5 Max 50"
+            }
         },
         "email": {
             in: ["body"],
@@ -73,35 +69,42 @@ router.post('/register',
                     return (new Promise((resolve, reject) => {
                         // deepcode ignore javascript%2Fdc_interfile_project%2FEqualityMisplacedParentheses: <please specify a reason of ignoring this>
                         if (data.location !== "body") {
-                            console.log("Rejecting because not in body");
+                            debug("Rejecting because not in body");
                             reject("Invalid Request");
                         } else {
-                            console.log("Sending Request");
+                            debug("Sending Request");
                             emailVerifier("email", value).then(
                                 validated => {
-                                    console.log("Remaining: " + validated.data.remaining_requests);
+                                    debug("Remaining: " + validated.data.remaining_requests);
                                     if (validated.data.status != 200) {
-                                        console.log("Failed Status + " + JSON.stringify(validated.data));
+                                        debug("Failed Status + " + JSON.stringify(validated.data));
                                         reject("INVALID Email because of:\n" + JSON.stringify(validated.data));
                                     } else if (validated.data.did_you_mean || validated.data.disposable || !validated.data.mx || !validated.valid() || !validated.successful()) {
-                                        // console.log(validated.did_you_mean || validated.disposable || !validated.mx || !validated.valid() || !validated.successful())
+                                        // debug(validated.did_you_mean || validated.disposable || !validated.mx || !validated.valid() || !validated.successful())
                                         const reason = "INVALID Email because of:\n" + JSON.stringify(validated.data) + "\n Valid: " + validated.valid() + "\n Successful: " + validated.successful();
-                                        console.log("Rejecting Email in else if because of \n" + reason);
+                                        debug("Rejecting Email in else if because of \n" + reason);
                                         reject(reason);
                                     } else {
-                                        console.log("Resolving Request");
+                                        debug("Resolving Request");
                                         resolve(validated.email);
                                     }
                                 }
                             ).catch(
                                 err => {
-                                    console.log(err);
+                                    debug(err);
                                     reject("INVALID Email because of: \n" + err);
                                 }
                             )
                         }
                     }));
                 }
+            },
+            isLength: {
+                options: {
+                    max: 50,
+                    min: 10
+                },
+                errorMessage: "Needs to be min: 10 Max 50"
             }
         },
         "password": {
@@ -111,24 +114,120 @@ router.post('/register',
             trim: true,
             isLength: {
                 options: {
+                    max: 50,
                     min: 8
-                }
+                },
+                errorMessage: "Needs to be min: 8 Max: 50"
             },
             custom: {
                 options: (value, data) => {
-                    if(data.location != "body") {
+                    if (data.location != "body") {
                         throw new Error("Invalid Request")
-                    } else if(RegExp(/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=.\-_*])([a-zA-Z0-9@#$%^&+=*.₹_\-]){8,}$/).test(value)) {
+                    } else if (RegExp(/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=.\-_*])([a-zA-Z0-9@#$%^&+=*.₹_\-]){8,}$/).test(value)) {
                         return true
                     } else {
                         return Promise.reject("Password of min length 8 should contain at least 1 lowercase character, min of 1 UPPERCASE CHARACTER, a number and a special character");
                     }
                 }
             }
+        },
+        "institute_name": {
+            in: ["body"],
+            notEmpty: true,
+            isString: true,
+            isAlpha: true,
+            trim: true,
+            isLength: {
+                options: {
+                    max: 50,
+                    min: 4
+                },
+                errorMessage: "Needs to be min: 4 Max 50"
+            }
+        },
+        "mobile": {
+            in: ["body"],
+            errorMessage: "Invalid input for Mobile",
+            notEmpty: true,
+            trim: true,
+            isNumeric: true,
+            isInt: true,
+            isMobilePhone: {
+                locale: "en-IN"
+            },
+            toInt: true,
+        },
+        "address": {
+            in: ["body"],
+            notEmpty: true,
+            isString: true,
+            trim: true,
+            isLength: {
+                options: {
+                    max: 255,
+                    min: 5
+                },
+                errorMessage: "Needs to be min: 5 Max 255"
+            }
+        },
+        "city": {
+            in: ["body"],
+            notEmpty: true,
+            isString: true,
+            isAlpha:true,
+            trim: true,
+            isLength: {
+                options: {
+                    max: 15,
+                    min: 5
+                },
+                errorMessage: "Needs to be min: 5 Max 15"
+            }
+        },
+        "country": {
+            in: ["body"],
+            notEmpty: true,
+            isString: true,
+            trim: true,
+            isAlpha: true,
+            isLength: {
+                options: {
+                    max: 25,
+                    min: 5
+                },
+                errorMessage: "Needs to be min: 5 Max 25"
+            }
+        },
+        "postcode": {
+            in: ["body"],
+            errorMessage: "Invalid input for Postcode",
+            notEmpty: true,
+            trim: true,
+            isNumeric: true,
+            isInt: true,
+            isPostalCode: {
+                options: "IN"
+            },
+            toInt: true,
+        },
+        "photo": {
+            in: ["body"],
+            notEmpty: true,
+            isString: true,
+            trim: true,
+            isURL: true,
+            isLength: {
+                options: {
+                    max: 325,
+                    min: 11
+                },
+                errorMessage: "Needs to be min: 11 Max 325"
+            }
         }
     }), (req, res) => {
         const results = validationResult(req)
         if (!results.isEmpty()) {
+            debug(req.body);
             res.status(400).json({
                 errors: results.array()
             });
@@ -137,22 +236,25 @@ router.post('/register',
             //     ...req.body
             // }]);
 
-            console.log("Received at /register");
-            // req.db.query("CALL Reg(?, ?, ?, ?, ?, ?, ?, ?, ?, ?);", [])
-            //     .then((...results) => {
-            //         console.log(...results);
-            //         res.json(req.body);
-            //         debug("Response Sent successfully");
-            //     })
-            //     .catch((err) => {
-            //         debug(err);
-            //         res.json({
-            //             body: req.body,
-            //             error: err
-            //         });
-            //         debug("Response Sent with error");
-            //     });
-            res.json(req.body);
+            // debug("Received at /register");
+            req.db.query("CALL Reg(?, ?, ?, ?, ?, ?, ?, ?, ?, ?);", [req.body.email, req.body.password, req.body.fullname, req.body.mobile, req.body.address, req.body.city, req.body.country, req.body.postcode, req.body.institute_name, req.body.photo])
+                .then((...results) => {
+                    const data = results[0][0][0];
+                    console.table([{id: data.id, email: data.email, status: data["@status"], isVerified: data.isVerified}]);    
+                    // res.json(req.body);
+                    res.redirect("/registrationSuccess")
+                    debug("Response Sent successfully");
+                })
+                .catch((err) => {
+                    debug(err);
+                    res.json({
+                        body: req.body,
+                        error: err
+                    });
+                    debug("Response Sent with error");
+                });
+
+            // res.json(req.body);
         }
     });
 module.exports = router;
