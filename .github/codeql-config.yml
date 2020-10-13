@@ -8,3 +8,5 @@ paths-ignore:
   - '**/*.test.js'
   - '**/assets/js/Chart.bundle.js'
   - '**/assets/plugins/**/*.*'
+  - '**/*.html'
+  - '**/*.css'
