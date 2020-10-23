@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -14,62 +15,68 @@
     <link rel="stylesheet" type="text/css" href="assets/styles/responsive.css">
     <link rel="stylesheet" type="text/css" href="assets/styles/Sign_up_form.css">
 </head>
+
 <body>
     <header class="header">
-			
-		<!-- Top Bar -->
-		<!-- Header Content -->
-		<div class="header_container">
-			<div class="container">
-				<div class="row">
-					<div class="col">
-						<div class="header_content d-flex flex-row align-items-center justify-content-start">
-							<div class="logo_container">
-								<a href="#">
-									<div class="logo_text">Aps<span>it</span></div>
-								</a>
-							</div>
-							<nav class="main_nav_contaner ml-auto">
-								<ul class="main_nav">
-									<li><a href="index.html">Home</a></li>
-									<li><a href="about.html">About</a></li>
-									<li><a href="companies.html">Companies</a></li>
-									<li><a href="contact.html">Contact</a></li>
-									<li><a href="login.html">Login</a></li>
-									<li class="active"><a href="register.html">Register</a></li>
-								</ul>
+
+        <!-- Top Bar -->
+        <!-- Header Content -->
+        <div class="header_container">
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <div class="header_content d-flex flex-row align-items-center justify-content-start">
+                            <div class="logo_container">
+                                <a href="#">
+                                    <div class="logo_text">Aps<span>it</span></div>
+                                </a>
+                            </div>
+                            <nav class="main_nav_contaner ml-auto">
+                                <ul class="main_nav">
+                                    <li><a href="index.html">Home</a></li>
+                                    <li><a href="about.html">About</a></li>
+                                    <li><a href="companies.html">Companies</a></li>
+                                    <li><a href="contact.html">Contact</a></li>
+                                    <li><a href="login.html">Login</a></li>
+                                    <li class="active"><a href="register.html">Register</a></li>
+                                </ul>
 
 
-								<!-- Hamburger -->
+                                <!-- Hamburger -->
 
-								<div class="hamburger menu_mm">
-									<i class="fa fa-bars menu_mm" aria-hidden="true"></i>
-								</div>
-							</nav>
+                                <div class="hamburger menu_mm">
+                                    <i class="fa fa-bars menu_mm" aria-hidden="true"></i>
+                                </div>
+                            </nav>
 
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-		<!-- Header Search Panel -->
-				
+        <!-- Header Search Panel -->
+
     </header>
     <div class="menu d-flex flex-column align-items-end justify-content-start text-right menu_mm trans_400">
-		<div class="menu_close_container"><div class="menu_close"><div></div><div></div></div></div>
-		
-		<nav class="menu_nav">
-			<ul class="menu_mm">
-				<li class="menu_mm"><a href="index.html">Home</a></li>
-				<li class="menu_mm"><a href="about.html">About</a></li>
-				<li class="menu_mm"><a href="companies.html">Companies</a></li>
-				<li class="menu_mm"><a href="contact.html">Contact</a></li>
-				<li class="menu_mm"><a href="login.html">Login</a></li>
-				<li class="menu_mm"><a href="register.html">Register</a></li>
-			</ul>
-		</nav>
-	</div>
+        <div class="menu_close_container">
+            <div class="menu_close">
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+
+        <nav class="menu_nav">
+            <ul class="menu_mm">
+                <li class="menu_mm"><a href="index.html">Home</a></li>
+                <li class="menu_mm"><a href="about.html">About</a></li>
+                <li class="menu_mm"><a href="companies.html">Companies</a></li>
+                <li class="menu_mm"><a href="contact.html">Contact</a></li>
+                <li class="menu_mm"><a href="login.html">Login</a></li>
+                <li class="menu_mm"><a href="register.html">Register</a></li>
+            </ul>
+        </nav>
+    </div>
     <div class="container-fluid">
         <div class="row" style="margin-top: 100px;">
             <div class="col img">
@@ -78,9 +85,11 @@
             <div class="col login-container">
                 <form>
                     <div class="image">
-                    <img class="avatar" src="assets/images/undraw_profile_pic_ic5t.svg" alt="Profile">
-                    <h2>Welcome</h2>
+                        <img class="avatar" id="profile_avatar" src="assets/images/undraw_profile_pic_ic5t.svg"
+                            alt="Profile">
                     </div>
+                    <input id="profile_pic" class="file-upload" type="file" accept="image/*" disabled />
+
                     <div class="input-div one">
                         <div class="i">
                             <i class="fa fa-user"></i>
@@ -88,16 +97,6 @@
                         <div>
                             <h5>Full Name</h5>
                             <input class="input" type="text" id="fullname">
-                        </div>
-					</div>
-					
-					<div class="input-div one">
-                        <div class="i">
-                            <i class="fa fa-mobile"></i>
-                        </div>
-                        <div>
-                            <h5>Mobile No.</h5>
-                            <input class="input" type="text" id="mobile">
                         </div>
                     </div>
 
@@ -110,8 +109,8 @@
                             <input class="input" type="text" id="email">
                         </div>
                     </div>
-                    
-					<div class="input-div one">
+
+                    <div class="input-div one">
                         <div class="i">
                             <i class="fa fa-lock"></i>
                         </div>
@@ -120,8 +119,72 @@
                             <input class="input" type="password" id="password">
                         </div>
                     </div>
-
-                                  
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="input-div one">
+                                <div class="i">
+                                    <i class="fa fa-lock"></i>
+                                </div>
+                                <div>
+                                    <h5>Institution Name</h5>
+                                    <input class="input" type="text" id="institute_name">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-div one">
+                                <div class="i">
+                                    <i class="fa fa-mobile"></i>
+                                </div>
+                                <div>
+                                    <h5>Mobile No.</h5>
+                                    <input class="input" type="text" id="mobile">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-div one">
+                        <div class="i">
+                            <i class="fa fa-map-marker"></i>
+                        </div>
+                        <div>
+                            <h5>Address</h5>
+                            <input class="input" type="text" id="address">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="input-div one">
+                                <div class="i">
+                                    <i class="fa fa-map-marker"></i>
+                                </div>
+                                <div>
+                                    <h5>City</h5>
+                                    <input class="input" type="text" id="city">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-div one">
+                                <div class="i">
+                                    <i class="fa fa-map-marker"></i>
+                                </div>
+                                <div>
+                                    <h5>Country</h5>
+                                    <input class="input" type="text" id="country">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-div one">
+                        <div class="i">
+                            <i class="fa fa-map-marker"></i>
+                        </div>
+                        <div>
+                            <h5>Post Code</h5>
+                            <input class="input" type="text" id="postcode">
+                        </div>
+                    </div>
                     <a href="/login.html">Already have an account?</a>
                     <input type="button" id="btn_register" class="btn" value="Sign Up">
                 </form>
@@ -129,61 +192,63 @@
         </div>
     </div>
 
-       	<!-- Footer -->
+    <!-- Footer -->
 
-	<footer class="footer">
-		<div class="container">
-			<div class="row">
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
 
-				<!-- About -->
-				<div class="col-lg-4 footer_col">
-					<div class="footer_about">
-						<div class="logo_container">
-							<a href="#">
-								<div class="footer_logo_container">
-										<a href="#">
-                                            <div class="footer_logo_text" style="float: left;">Aps<span>it</span></div>
-                                            <br>
-										</a>
-									</div>
-							</a>
-						</div>
-						<div class="footer_about_text">
-							<p>APSIT aspires to be a premier institute producing globally competent engineering professionals to contribute towards socio-economic growth of India.</p>
-						</div>
-						<div class="footer_social">
-							<ul>
-								<li><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
-								<li><a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>
-								<li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-								<li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-							</ul>
-						</div>
-						
-					</div>
-				</div>
+                <!-- About -->
+                <div class="col-lg-4 footer_col">
+                    <div class="footer_about">
+                        <div class="logo_container">
+                            <a href="#">
+                                <div class="footer_logo_container">
+                                    <a href="#">
+                                        <div class="footer_logo_text" style="float: left;">Aps<span>it</span></div>
+                                        <br>
+                                    </a>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="footer_about_text">
+                            <p>APSIT aspires to be a premier institute producing globally competent engineering
+                                professionals to contribute towards socio-economic growth of India.</p>
+                        </div>
+                        <div class="footer_social">
+                            <ul>
+                                <li><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
+                                <li><a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>
+                                <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                                <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                            </ul>
+                        </div>
 
-				<div class="col-lg-4"></div>
+                    </div>
+                </div>
 
-				<div class="col-lg-4 footer_col">
-					<div class="footer_contact">
-						<div class="footer_title">Contact Us</div>
-						<div class="footer_contact_info">
-							<div class="footer_contact_item">
-								<div class="footer_contact_title">Address:</div>
-								<div class="footer_contact_line">Survey No. 12, Opp. Hypercity Mall, Ghodbunder Rd, Kasarvadavali, Thane West, Thane, Maharashtra 400615</div>
-							</div>
-					
-							<div class="footer_contact_item">
-								<div class="footer_contact_title">Email:</div>
-								<div class="footer_contact_line">apsit@gmail.com</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</footer>
+                <div class="col-lg-4"></div>
+
+                <div class="col-lg-4 footer_col">
+                    <div class="footer_contact">
+                        <div class="footer_title">Contact Us</div>
+                        <div class="footer_contact_info">
+                            <div class="footer_contact_item">
+                                <div class="footer_contact_title">Address:</div>
+                                <div class="footer_contact_line">Survey No. 12, Opp. Hypercity Mall, Ghodbunder Rd,
+                                    Kasarvadavali, Thane West, Thane, Maharashtra 400615</div>
+                            </div>
+
+                            <div class="footer_contact_item">
+                                <div class="footer_contact_title">Email:</div>
+                                <div class="footer_contact_line">apsit@gmail.com</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
 </body>
 <script src="assets/sign up/Sign_up_form.js"></script>
 <script src="assets/js/jquery-3.2.1.min.js"></script>

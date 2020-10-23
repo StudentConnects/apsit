@@ -7,15 +7,22 @@ function signup(event) {
 
     let fullname = document.getElementById("fullname").value;
     let email = document.getElementById("email").value;
-    let mobile = document.getElementById("mobile").value;
     let password = document.getElementById("password").value;
+    let institute_name = document.getElementById("institute_name").value;
+    let mobile = document.getElementById("mobile").value;
+    let address = document.getElementById("address").value;
+    let city = document.getElementById("city").value;
+    let country = document.getElementById("country").value;
+    let postcode = document.getElementById("postcode").value;
+    let photo = document.getElementById("profile_pic").value;
+
 
     if (!(isFormEmpty(fullname, email, mobile, password))) {
         if (checkName(fullname)) {
             if (validateEmail(email)) {
                 if (checkNumber(mobile)) {
                     if (validatePassword(password)) {
-                        submit_details(fullname, email, mobile,  password);
+                        submit_details(fullname, email, password, institute_name, mobile, address, city, country, postcode, photo);
                     }
                 }
             }
@@ -93,13 +100,19 @@ function checkName(fullname) {
 
 
 
-function submit_details(fullname, email, mobile, password) {
-
+function submit_details(fullname, email, password, institute_name, mobile, address, city, country, postcode, photo) {
+    photo = 'https://google.com';
     let _data = {
-        fullname : fullname,
-        mobile : mobile,
-        email : email,
-        password : password
+        fullname: fullname,
+        email: email,
+        password: password,
+        institute_name: institute_name,
+        mobile: mobile,
+        address: address,
+        city: city,
+        country: country,
+        postcode: postcode,
+        photo: photo
     }
 
     fetch('/register', {
@@ -109,7 +122,22 @@ function submit_details(fullname, email, mobile, password) {
                 "Content-type": "application/json; charset=UTF-8"
             }
         })
-        .then(response => response.json())
+        .then(response => response.text())
         .then(json => console.log(json))
         .catch(err => console.log(err));
 }
+
+var reader = new FileReader();
+reader.onload = function (e) {
+    $('#profile_avatar').attr('src', e.target.result);
+}
+
+function readURL(input) {
+    if (input.files && input.files[0]) {
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+$("#profile_pic").change(function () {
+    readURL(this);
+});
