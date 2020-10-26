@@ -122,7 +122,7 @@ function submit_details(fullname, email, password, institute_name, mobile, addre
                 "Content-type": "application/json; charset=UTF-8"
             }
         })
-        .then(response => response.text())
+        .then(response => showmodal(response.text()))
         .then(json => console.log(json))
         .catch(err => console.log(err));
 }
@@ -141,3 +141,14 @@ function readURL(input) {
 $("#profile_pic").change(function () {
     readURL(this);
 });
+
+
+
+function showmodal(msg) {
+    document.getElementById("responseMsg").innerHTML = msg;
+  $("#modalresponse").modal("show");
+}
+
+$('#modalresponse').on('hidden.bs.modal', function () {
+    location.reload();
+  });
