@@ -242,8 +242,9 @@ router.post('/register',
                     const data = results[0][0][0];
                     console.table([{id: data.id, email: data.email, status: data["@status"], isVerified: data.isVerified}]);    
                     // res.json(req.body);
-                    res.redirect("/registrationSuccess")
+                    // res.redirect("/registrationSuccess")
                     debug("Response Sent successfully");
+                    res.send("Registration Successful");
                 })
                 .catch((err) => {
                     debug(err);
