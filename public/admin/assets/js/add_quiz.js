@@ -232,6 +232,8 @@ $('input[type=checkbox]').change(function(e){
     }
  })
 
+ document.getElementById("selectQuizCompany").addEventListener("click", toggleQuiz);
+
  function toggleQuiz() {
     let selectcompany = document.getElementById("selectcompanycontainer");
     let addquestion = document.getElementById("addquestioncontainer");
