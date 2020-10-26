@@ -71,7 +71,7 @@ The above copyright notice and this permission notice shall be included in all c
           <li class="nav-item">
             <a class="nav-link" href="student_dashboard.html">
               <i class="material-icons">dashboard</i>
-              <p>Dashboard</p>
+              <p>Homepage</p>
             </a>
           </li>
           <li class="nav-item ">
@@ -80,36 +80,36 @@ The above copyright notice and this permission notice shall be included in all c
               <p>User Profile</p>
             </a>
           </li>
-          <li class="nav-item ">
+          <!-- <li class="nav-item ">
             <a class="nav-link" href="report.html">
               <i class="material-icons">content_paste</i>
               <p>Report</p>
             </a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item ">
             <a class="nav-link" href="companies.html">
               <i class="material-icons">card_travel</i>
               <p>Companies</p>
             </a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item ">
             <a class="nav-link" href="badges.html">
               <i class="material-icons">school</i>
               <p>Badges</p>
             </a>
-          </li>
-          <li class="nav-item active  ">
+          </li> -->
+          <li class="nav-item active">
             <a class="nav-link" href="results.html">
               <i class="material-icons">emoji_events</i>
               <p>Results</p>
             </a>
           </li>
-          <li class="nav-item ">
+          <!-- <li class="nav-item ">
             <a class="nav-link" href="certificates.html">
               <i class="material-icons">assignment</i>
               <p>Certificates</p>
             </a>
-          </li>
+          </li> -->
           <li class="nav-item ">
             <a class="nav-link" href="quiz.html">
               <i class="material-icons">grading</i>
@@ -182,7 +182,7 @@ The above copyright notice and this permission notice shall be included in all c
 	  <div class="content">
         <div class="container-fluid">
 		<div class="row">
-          <div class="card col-lg-6">
+          <div class="card col-lg-12">
             <div class="card-header card-header-primary">
               <h4 class="card-title">View Results</h4>
               <p class="card-category"></p>
@@ -195,16 +195,16 @@ The above copyright notice and this permission notice shall be included in all c
                           ID
                         </th>
                         <th style="font-weight:bold">
-                          Student Name
-                        </th>
-                        <th style="font-weight:bold">
                           Company Name
                         </th>
                         <th style="font-weight:bold">
-                          No. of Tests of This Company
+                          Quiz Name
                         </th>
                         <th style="font-weight:bold">
-                          View Badge
+                          Quiz Score
+                        </th>
+                        <th style="font-weight:bold">
+                          View
                         </th>
                       </thead>
                       <tbody>
@@ -213,13 +213,13 @@ The above copyright notice and this permission notice shall be included in all c
                             1
                           </td>
                           <td>
-                            Kshitij Jain
-                          </td>
-                          <td>
                             Infosys
                           </td>
                           <td>
-                            30
+                            JAVA
+                          </td>
+                          <td>
+                            25/30
                           </td>
                           <td class="text-primary">
 							<button class="btn" style="background:#ffc107;"><a href="list.html" style="color:black;">View Badge</a></button>
@@ -230,13 +230,13 @@ The above copyright notice and this permission notice shall be included in all c
                             2
                           </td>
                           <td>
-                            Chinmay Dharap
+                            IBM
                           </td>
                           <td>
-                            LTI
+                            C++
                           </td>
                           <td>
-                            30
+                            40/50
                           </td>
                           <td class="text-primary">
 							<button class="btn" style="background:#ffc107;"><a href="list.html" style="color:black;">View Badge</a></button>
@@ -247,13 +247,13 @@ The above copyright notice and this permission notice shall be included in all c
                             3
                           </td>
                           <td>
-                            Nimali Keny
+                            WIPRO
                           </td>
                           <td>
-                            Capgemini
+                            Javascript
                           </td>
                           <td>
-                            30
+                            25/30
                           </td>
                           <td class="text-primary">
 							<button class="btn" style="background:#ffc107;"><a href="list.html" style="color:black;">View Badge</a></button>
@@ -267,91 +267,6 @@ The above copyright notice and this permission notice shall be included in all c
             </div>
           </div>
 		  
-		  <div class="card col-lg-6">
-            <div class="card-header card-header-primary">
-              <h4 class="card-title">Test Lists</h4>
-              <p class="card-category">Student list cleared the Test (Test wise Listing)</p>
-            </div>
-            <div class="card-body">
-              
-			  <div class="table-responsive">
-                    <table class="table">
-                      <thead>
-                        <th style="font-weight:bold">
-                          Test ID
-                        </th>
-                        <th style="font-weight:bold">
-                          Test Name
-                        </th>
-                        <th style="font-weight:bold">
-                          Company Name
-                        </th>
-                        <th style="font-weight:bold">
-                          No. of Students
-                        </th>
-                        <th style="font-weight:bold">
-                          View List
-                        </th>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>
-                            1
-                          </td>
-                          <td>
-                            Test 1
-                          </td>
-                          <td>
-                            Infosys
-                          </td>
-                          <td>
-                            30
-                          </td>
-                          <td class="text-primary">
-							<button class="btn" style="background:#ffc107;"><a href="list.html" style="color:black;">View List</a></button>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>
-                            2
-                          </td>
-                          <td>
-                            Test 2
-                          </td>
-                          <td>
-                            LTI
-                          </td>
-                          <td>
-                            30
-                          </td>
-                          <td class="text-primary">
-							<button class="btn" style="background:#ffc107;"><a href="list.html" style="color:black;">View List</a></button>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>
-                            3
-                          </td>
-                          <td>
-                            Test 3
-                          </td>
-                          <td>
-                            Capgemini
-                          </td>
-                          <td>
-                            30
-                          </td>
-                          <td class="text-primary">
-							<button class="btn" style="background:#ffc107;"><a href="list.html" style="color:black;">View List</a></button>
-                          </td>
-                        </tr>
-                        
-                      </tbody>
-                    </table>
-                  </div>
-			  
-            </div>
-          </div>
 		  
 		 </div>
         </div>
