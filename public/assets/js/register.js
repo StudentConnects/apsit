@@ -122,7 +122,8 @@ function submit_details(fullname, email, password, institute_name, mobile, addre
                 "Content-type": "application/json; charset=UTF-8"
             }
         })
-        .then(response => showmodal(response.text()))
+        .then(response => response.text())
+        .then(Txt => {console.log(Txt);showmodal(Txt)})
         .then(json => console.log(json))
         .catch(err => console.log(err));
 }

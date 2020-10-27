@@ -18,7 +18,8 @@
     <link href="assets/css/material-dashboard.css?v=2.1.2" rel="stylesheet" />
     <link href="assets/css/add_quiz.css" rel="stylesheet">
     <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
 </head>
 
 <body class="">
@@ -104,6 +105,10 @@
 
                             <div class="card" id="selectcompanycontainer">
                                 <div class="card-header card-header-primary">
+                                    <button class="btn btn-success btn-round float-right" id="add_company">
+                                        <i class="material-icons">add_circle</i>
+                                        ADD
+                                    </button>
                                     <h4 class="card-title ">Select Company</h4>
                                     <p class="card-category">Select Comapany and Quiz Name</p>
                                 </div>
@@ -113,10 +118,12 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label class="bmd-label-floating">Company Name:&nbsp;</label>
-                                                    <select class="selectpicker" data-style="btn-outline-primary" multiple data-live-search="true" show-menu-arrow>
-                                                        <option>Google</option>
+                                                    <select id="quizCompany" class="selectpicker"
+                                                        data-style="btn-outline-primary" data-live-search="true"
+                                                        show-menu-arrow>
+                                                        <!-- <option>Google</option>
                                                         <option>Facebook</option>
-                                                        <option>Amazon</option>
+                                                        <option>Amazon</option> -->
                                                     </select>
                                                 </div>
                                             </div>
@@ -125,7 +132,7 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label class="bmd-label-floating">Quiz Name</label>
-                                                    <input type="text" class="form-control" required>
+                                                    <input id="quizName" type="text" class="form-control" required>
                                                 </div>
                                             </div>
                                         </div>
@@ -133,11 +140,25 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label class="bmd-label-floating">Quiz Time(Minutes)</label>
-                                                    <input type="number" class="form-control" required>
+                                                    <input id="quizTime" type="number" class="form-control" required>
                                                 </div>
                                             </div>
                                         </div>
-                                        <button type="button" class="btn btn-primary pull-left" id="selectQuizCompany">Next</button>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-check">
+                                                    <label class="form-check-label">
+                                                        <input class="form-check-input" type="checkbox" id="isActive">
+                                                        Active 
+                                                        <span class="form-check-sign">
+                                                          <span class="check"></span>
+                                                        </span>
+                                                    </label>
+                                                  </div>
+                                            </div>
+                                        </div>
+                                        <button type="button" class="btn btn-primary pull-left"
+                                            id="selectQuizCompany">Next</button>
                                     </form>
                                 </div>
                             </div>
@@ -265,9 +286,10 @@
                                                 </div>
                                             </div>
                                             <div style="margin-top:20px">
-                                                <button type="button" onclick="save_question()"
+                                                <button type="button" id="save_questions"
                                                     class="submit_button">Save</button>
-                                                <button class="submit_quiz_button" onclick="">Submit Quiz</button>
+                                                <button type="button" class="submit_button" id="submit_quiz_btn">Submit
+                                                    Quiz</button>
                                             </div>
                                         </div>
                                     </form>
@@ -288,7 +310,65 @@
                     </div>
                 </div>
             </div>
-
+            <div class="modal fade" role="dialog" tabindex="-1" id="modalresponse">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Response</h4><button type="button" class="close"
+                                data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="card-body">
+                                <h3 id="responseMsg"></h3>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-light" type="button" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" role="dialog" tabindex="-1" id="modalComapnyAdd">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Add Company</h4><button type="button" class="close"
+                                data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="card-body">
+                                <form>
+                                    <div class="form-row">
+                                        <div class="col">
+                                            <div class="form-group"><label for="company_name"><strong>Company
+                                                        Name</strong><br></label><input class="form-control" type="text"
+                                                    id="company_name" name="company_name">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col">
+                                            <div class="form-group"><label for="company_description"><strong>Company
+                                                        Description</strong></label><textarea id="company_description"
+                                                    class="form-control" name="company_description"></textarea></div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col">
+                                            <label for="company_logo"><strong>Company Logo</strong></label>
+                                            <input type="file" class="form-control-file" id="company_logo"
+                                                name="company_logo">
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="modal-footer"><button class="btn btn-light" type="button"
+                                data-dismiss="modal">Close</button><button id="comapany_add" class="btn btn-primary"
+                                type="button">Submit</button></div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <!-- <footer class="footer">

@@ -1,8 +1,53 @@
 // let questions = 0;
 // let question_box;
 
+// document.addEventListener('DOMContentLoaded', function () {
+//     fetch('https://6083ad888fc5.ngrok.io/users/admin/listCompanies', {
+//             method: "GET",
+//             headers: {
+//                 "Content-type": "application/json; charset=UTF-8"
+//             }
+//         })
+//         .then(response => response.text().then(text => {
+//             console.log(text);
+//             return text
+//         }))
+//         .then(json => console.log(json))
+//         .catch(err => console.log(err));
+// }, false);
+
+document.addEventListener('DOMContentLoaded', function () {
+    fetch('/users/admin/listCompanies', {
+            method: "GET",
+            headers: {
+                "Content-type": "application/json; charset=UTF-8"
+            }
+        })
+        .then(response => response.text().then(text => {
+            if(response.ok){
+            let select = document.getElementById("quizCompany");
+            let index;
+            for (index in text) {
+                select.options[select.options.length] = new Option(text[index].name, text[index].id);
+            }
+            $('.selectpicker').selectpicker('refresh');
+            }
+            return response.status;
+        }))
+        .then(json => console.log(json))
+        .catch(err => console.log(err));
+}, false);
 
 
+document.getElementById("selectQuizCompany").addEventListener("click", () => {
+    toggleQuiz();
+    quiz_name();
+});
+
+document.getElementById("save_questions").addEventListener("click", save_question);
+document.getElementById("submit_quiz_btn").addEventListener("click", submit_quiz);
+
+let quizdata = {};
 var active_question;
 var edit_index;
 var quiz_list = [];
@@ -55,30 +100,31 @@ var question_edit = false;
 
 
 
-    var reader = new FileReader();
-    reader.onload = function (e) {
-      $('#upload_questiom').attr('src', e.target.result);
-    }
-    function readURL(input) {
-      if (input.files && input.files[0]) {
+var reader = new FileReader();
+reader.onload = function (e) {
+    $('#upload_questiom').attr('src', e.target.result);
+}
+
+function readURL(input) {
+    if (input.files && input.files[0]) {
         reader.readAsDataURL(input.files[0]);
-            reader.onloadend = function () {
+        reader.onloadend = function () {
             upload_image = reader.result;
-            }
-      }
+        }
     }
-    $("#image_uploader").change(function () {
-      readURL(this);
-    });
+}
+$("#image_uploader").change(function () {
+    readURL(this);
+});
 
 function save_question() {
 
-    if(document.getElementById("sel_single").checked){
+    if (document.getElementById("sel_single").checked) {
         if ($('input[type=checkbox]:checked').length > 1) {
             $(this).prop('checked', false)
             return alert("Only Single Select Possible");
-            
-       }
+
+        }
     }
 
     if (!question_edit) {
@@ -101,26 +147,31 @@ function save_question() {
             break;
         }
     }
-    let checkbox_1 = document.getElementById("checkbox_1").checked;
-    let checkbox_2 = document.getElementById("checkbox_2").checked;
-    let checkbox_3 = document.getElementById("checkbox_3").checked;
-    let checkbox_4 = document.getElementById("checkbox_4").checked;
+
+    let answers = [];
+
+    if (document.getElementById("checkbox_1").checked) {
+        answers.push('A');
+    }
+    if (document.getElementById("checkbox_2").checked) {
+        answers.push('B');
+    }
+    if (document.getElementById("checkbox_3").checked) {
+        answers.push('C');
+    }
+    if (document.getElementById("checkbox_4").checked) {
+        answers.push('D');
+    }
+
+
     let quiz_t = {
-        question_no: ques_no,
         upload_image: upload_image,
         question: txtarea,
-        answer_type: answer_type,
-        option_1: option_1,
-        option_2: option_2,
-        option_3: option_3,
-        option_4: option_4,
-        answer: {
-            checkbox_1,
-            checkbox_2,
-            checkbox_3,
-            checkbox_4
-        }
-
+        option_A: option_1,
+        option_B: option_2,
+        option_C: option_3,
+        option_D: option_4,
+        answer: answers
     };
 
     if (!question_edit) {
@@ -149,6 +200,7 @@ function quiz_table() {
 
         $("#quiz_table").find('tbody')
             .append($('<tr>')
+
                 .append($('<td>')
                     .attr('class', 'col-sm-10')
                     .text(quiz_list[i].question)
@@ -219,27 +271,109 @@ function reset_questionform() {
 
 
 
-$('input[type=checkbox]').change(function(e){
+$('input[type=checkbox]').change(function (e) {
     var chk_i = 1;
-    if(document.getElementById("sel_multi").checked){
+    if (document.getElementById("sel_multi").checked) {
         chk_i = 4;
-    }else if(document.getElementById("sel_single").checked){
+    } else if (document.getElementById("sel_single").checked) {
         chk_i = 1;
     }
     if ($('input[type=checkbox]:checked').length > chk_i) {
-         $(this).prop('checked', false)
-         alert("Only Single Select Possible");
+        $(this).prop('checked', false)
+        alert("Only Single Select Possible");
     }
- })
+})
 
- document.getElementById("selectQuizCompany").addEventListener("click", toggleQuiz);
 
- function toggleQuiz() {
+
+
+function toggleQuiz() {
     let selectcompany = document.getElementById("selectcompanycontainer");
     let addquestion = document.getElementById("addquestioncontainer");
     selectcompany.classList.toggle("hidden");
     addquestion.classList.toggle("hidden");
 }
 
+function quiz_name() {
+    let quizCompany = document.getElementById("quizCompany");
+    quizCompany = quizCompany.options[quizCompany.selectedIndex].text;
+    let quizName = document.getElementById("quizName").value;
+    let quizTime = document.getElementById("quizTime").value;
+    let quiz_info = {
+        quizCompanyId: quizCompany,
+        quizName: quizName,
+        quizTime: quizTime
+    };
+    quizdata['quiz_Info'] = quiz_info;
+}
 
 
+function submit_quiz() {
+    quizdata['quiz_Questions'] = quiz_list;
+    console.log(JSON.stringify(quizdata));
+
+    fetch('/users/admin/submitQuiz', {
+        method: "POST",
+        body: JSON.stringify(quizdata),
+        headers: {
+            "Content-type": "application/json; charset=UTF-8"
+        }
+    })
+    .then(response => response.text().then(text => {
+        console.log(text);
+        showmodal(text);
+        return text;
+    }))
+    .then(json => console.log(json))
+    .catch(err => console.log(err));
+
+
+}
+
+
+function showmodal(msg) {
+    document.getElementById("responseMsg").innerHTML = msg;
+  $("#modalresponse").modal("show");
+}
+
+$('#modalresponse').on('hidden.bs.modal', function () {
+    location.reload();
+  });
+
+document.getElementById("add_company").addEventListener("click", showmodalcompany);
+
+
+function showmodalcompany() {
+  $("#modalComapnyAdd").modal("show");
+}
+
+document.getElementById("comapany_add").addEventListener("click", comapany_add);
+
+    function comapany_add() {
+      let company_name = document.getElementById("company_name").value;
+      let company_description = document.getElementById("company_description").value;
+      let company_logo = document.getElementById("company_logo").value;
+      let isActive = (document.querySelector('#isActive').checked) ? 1 : 0;
+      company_logo = "Not yet implemented";
+      let company_Infoadd = {
+        company_name: company_name,
+        company_description: company_description,
+        company_logo: company_logo,
+        isActive: isActive
+      };
+      fetch('/users/admin/companies', {
+        method: "POST",
+        body: JSON.stringify(company_Infoadd),
+        headers: {
+            "Content-type": "application/json; charset=UTF-8"
+        }
+    })
+    .then(response => response.text().then(text => {
+        console.log(text);
+        if(!alert('Successfully Added')){window.location.reload();}
+        return text;
+    }))
+    .then(json => console.log(json))
+    .catch(err => console.log(err));
+
+    }
