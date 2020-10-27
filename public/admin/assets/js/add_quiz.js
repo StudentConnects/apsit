@@ -353,11 +353,13 @@ document.getElementById("comapany_add").addEventListener("click", comapany_add);
       let company_name = document.getElementById("company_name").value;
       let company_description = document.getElementById("company_description").value;
       let company_logo = document.getElementById("company_logo").value;
+      let isActive = (document.querySelector('#isActive').checked) ? 1 : 0;
       company_logo = "Not yet implemented";
       let company_Infoadd = {
         company_name: company_name,
         company_description: company_description,
-        company_logo: company_logo
+        company_logo: company_logo,
+        isActive: isActive
       };
       fetch('/users/admin/companies', {
         method: "POST",
