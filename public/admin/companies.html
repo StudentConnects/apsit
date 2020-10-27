@@ -473,22 +473,30 @@ The above copyright notice and this permission notice shall be included in all c
                       <div class="form-row">
                         <div class="col">
                           <div class="form-group"><label for="company_name"><strong>Company
-                                Name</strong><br></label><input class="form-control" type="text" name="company_name">
+                                Name</strong><br></label><input class="form-control" type="text" id="company_name"
+                              name="company_name">
                           </div>
                         </div>
                       </div>
                       <div class="form-row">
                         <div class="col">
                           <div class="form-group"><label for="company_description"><strong>Company
-                                Description</strong></label><textarea class="form-control"
+                                Description</strong></label><textarea id="company_description" class="form-control"
                               name="company_description"></textarea></div>
+                        </div>
+                      </div>
+                      <div class="form-row">
+                        <div class="col">
+                          <label for="company_logo"><strong>Company Logo</strong></label>
+                          <input type="file" class="form-control-file" id="company_logo" name="company_logo">
                         </div>
                       </div>
                     </form>
                   </div>
                 </div>
                 <div class="modal-footer"><button class="btn btn-light" type="button"
-                    data-dismiss="modal">Close</button><button class="btn btn-primary" type="button">Save</button></div>
+                    data-dismiss="modal">Close</button><button id="comapany_add" class="btn btn-primary"
+                    type="button">Submit</button></div>
               </div>
             </div>
           </div>
@@ -734,6 +742,35 @@ The above copyright notice and this permission notice shall be included in all c
 
     function showmodal() {
       $("#modalcompany").modal("show");
+    }
+    document.getElementById("comapany_add").addEventListener("click", comapany_add);
+
+    function comapany_add() {
+      let company_name = document.getElementById("company_name").value;
+      let company_description = document.getElementById("company_description").value;
+      let company_logo = document.getElementById("company_logo").value;
+      company_logo = "Not yet implemented";
+      let company_Infoadd = {
+        company_name: company_name,
+        company_description: company_description,
+        company_logo: company_logo
+      };
+      fetch('/users/admin/companies', {
+          method: "POST",
+          body: JSON.stringify(company_Infoadd),
+          headers: {
+            "Content-type": "application/json; charset=UTF-8"
+          }
+        })
+        .then(response => response.text().then(text => {
+          console.log(text);
+          if (!alert('Successfully Added')) {
+            window.location.reload();
+          }
+          return text;
+        }))
+        .then(json => console.log(json))
+        .catch(err => console.log(err));
     }
   </script>
 </body>

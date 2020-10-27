@@ -24,11 +24,15 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         })
         .then(response => response.text().then(text => {
+            if(response.ok){
             let select = document.getElementById("quizCompany");
+            let index;
             for (index in text) {
                 select.options[select.options.length] = new Option(text[index].name, text[index].id);
             }
             $('.selectpicker').selectpicker('refresh');
+            }
+            return response.status;
         }))
         .then(json => console.log(json))
         .catch(err => console.log(err));
@@ -144,10 +148,6 @@ function save_question() {
         }
     }
 
-    let checkbox_1;
-    let checkbox_2;
-    let checkbox_3;
-    let checkbox_4;
     let answers = [];
 
     if (document.getElementById("checkbox_1").checked) {
@@ -167,13 +167,11 @@ function save_question() {
     let quiz_t = {
         upload_image: upload_image,
         question: txtarea,
-        answer_type: answer_type,
         option_A: option_1,
         option_B: option_2,
         option_C: option_3,
         option_D: option_4,
         answer: answers
-
     };
 
     if (!question_edit) {
@@ -341,3 +339,39 @@ function showmodal(msg) {
 $('#modalresponse').on('hidden.bs.modal', function () {
     location.reload();
   });
+
+document.getElementById("add_company").addEventListener("click", showmodalcompany);
+
+
+function showmodalcompany() {
+  $("#modalComapnyAdd").modal("show");
+}
+
+document.getElementById("comapany_add").addEventListener("click", comapany_add);
+
+    function comapany_add() {
+      let company_name = document.getElementById("company_name").value;
+      let company_description = document.getElementById("company_description").value;
+      let company_logo = document.getElementById("company_logo").value;
+      company_logo = "Not yet implemented";
+      let company_Infoadd = {
+        company_name: company_name,
+        company_description: company_description,
+        company_logo: company_logo
+      };
+      fetch('/users/admin/companies', {
+        method: "POST",
+        body: JSON.stringify(company_Infoadd),
+        headers: {
+            "Content-type": "application/json; charset=UTF-8"
+        }
+    })
+    .then(response => response.text().then(text => {
+        console.log(text);
+        if(!alert('Successfully Added')){window.location.reload();}
+        return text;
+    }))
+    .then(json => console.log(json))
+    .catch(err => console.log(err));
+
+    }
