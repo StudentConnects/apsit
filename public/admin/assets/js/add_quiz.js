@@ -17,7 +17,7 @@
 // }, false);
 
 document.addEventListener('DOMContentLoaded', function () {
-    fetch('https://b5976962af4f.ngrok.io/users/admin/listCompanies', {
+    fetch('/users/admin/listCompanies', {
             method: "GET",
             headers: {
                 "Content-type": "application/json; charset=UTF-8"
@@ -125,7 +125,6 @@ function save_question() {
         if ($('input[type=checkbox]:checked').length > 1) {
             $(this).prop('checked', false)
             return alert("Only Single Select Possible");
-
         }
     }
 
@@ -285,6 +284,17 @@ function reset_questionform() {
 //         alert("Only Single Select Possible");
 //     }
 // })
+
+
+$(function() {
+    $('input:radio[name="usage_commit"]').change(function() {
+        $('#checkbox_1').prop('checked', false);
+        $('#checkbox_2').prop('checked', false);
+        $('#checkbox_3').prop('checked', false);
+        $('#checkbox_4').prop('checked', false);
+        $(".qOptions").not(":checked").removeAttr('disabled');
+    });
+});
 
 $('.qOptions').click(function(){
     let maxAllowed  = 1;

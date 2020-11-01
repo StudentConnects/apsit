@@ -772,6 +772,54 @@ The above copyright notice and this permission notice shall be included in all c
         .then(json => console.log(json))
         .catch(err => console.log(err));
     }
+
+
+    document.addEventListener('DOMContentLoaded', function () {
+    fetch('/users/admin/Companies', {
+            method: "GET",
+            headers: {
+                "Content-type": "application/json; charset=UTF-8"
+            }
+        })
+        .then(response => response.json().then(text => {
+            if(response.ok){
+            console.log(text);
+            append_json(text);
+            }
+            return response.status;
+        }))
+        .then(json => console.log(json))
+        .catch(err => console.log(err));
+}, false);
+
+        //this function appends the json data to the table 'company_list'
+        function append_json(data){
+          var company = '';
+
+          var buttons =
+            '<button class="btn btn-success btn-fab btn-fab-mini btn-round" onclick="editcompany()">' +
+            '                          <i class="material-icons">edit</i>' +
+            '                        </button>' +
+            '                        <button class="btn btn-danger btn-fab btn-fab-mini btn-round" onclick="deletecompany()">' +
+            '                          <i class="material-icons">delete</i>' +
+            '                        </button>';
+
+          // ITERATING THROUGH OBJECTS 
+          $.each(data, function (key, value) {
+
+            //CONSTRUCTION OF ROWS HAVING 
+            // DATA FROM JSON OBJECT 
+            company += '<tr>';
+            company += '<td>' + value.id + '</td>';
+            company += '<td>' + value.company_name + '</td>';
+            company += '<td>' + value.company_desc + '</td>';
+            company += '<td>' + buttons + '</td>';
+            company += '</tr>';
+          });
+
+          //INSERTING ROWS INTO TABLE  
+          $('#company_list').append(company);
+        }
   </script>
 </body>
 
