@@ -55,19 +55,22 @@
         method: "POST",
         body: formData,
       };
-
+      let isActive = (document.querySelector('#isActive').checked) ? 1 : 0;
 
 
       fetch('/uploadImage', options)
         .then(function (response) {
-          return response.json();
+          return response.text();
         })
         .then(function (data) {
           // do stuff with `data`, call second `fetch`
+          console.log(JSON.stringify(data));
           
           let company_Infoadd = {
             company_name: company_name,
             company_description: company_description,
+            company_logo: data,
+            isActive: isActive
           };
 
           return fetch("/users/admin/companies", {
@@ -136,7 +139,7 @@
         company += "<tr>";
         company += "<td>" + value.id + "</td>";
         company += "<td>" + value.name + "</td>";
-        company += "<td>" + value.company_desc + "</td>";
+        company += "<td>" + value.description + "</td>";
         company += "<td>" + buttons + "</td>";
         company += "</tr>";
       });
