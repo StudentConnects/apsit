@@ -65,6 +65,12 @@ router.use(passport.session());
 router.get("/", (_req, res) => {
     res.sendFile(path.join(__dirname, "..", "public", "student", "user.html"));
 });
+router.get("/allQuiz", (req, res) => {
 
-router.use(express.static(path.join(__dirname, "..", "public", "student")))
+    req.db.query("Select quiz_list.id, c.name as companyName, quiz_list.quiz_id as quizName, quiz_list.quiz_time from quiz_list inner join company c on quiz_list.company_id = c.id where quiz_list.isActive=1;")
+        .then(results => {
+            res.send(results[0]);
+        });
+});
+router.use(express.static(path.join(__dirname, "..", "public", "student")));
 module.exports = router;

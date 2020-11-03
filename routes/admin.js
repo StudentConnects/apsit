@@ -15,7 +15,7 @@ router.get("/", (_req, res) => {
 });
 
 router.get("/listCompanies", (req, res) => {
-    req.db.query("Select id, name from company where active = 1;")
+    req.db.query("Select id, name, description, logo from company where active = 1;")
         .then((results) => {
             res.send(results[0]);
         })

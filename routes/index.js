@@ -10,15 +10,15 @@ const ValidatorPizzaClient = require("validator-pizza-node");
 const formidable = require('formidable');
 
 
-
 const emailVerifier = new ValidatorPizzaClient().validate;
 const formOptions = {
     uploadDir: path.join(__dirname, "..", "custom-images"),
     keepExtensions: true,
     maxFileSize: 5 * 1024 * 1024,
     multiples: false,
+    captureRejections: true,
   };
-  const form = new formidable.IncomingForm(formOptions);
+
 
 
 
@@ -271,6 +271,7 @@ router.post('/register',
     });
 
 router.post("/uploadImage", (req, res) => {
+    const form = new formidable.IncomingForm(formOptions);
     form.parse(req);
 
     try {
@@ -279,9 +280,15 @@ router.post("/uploadImage", (req, res) => {
             // file.path = form.uploadDir + "/" + file.name + "-" + Date.now();
             // throw new Error("Incorrect File Type"); 
             // form._error("Incorrect Image");
-            form.handlePart(file);
+            // form.handlePart(file);
+            file.open = () => {}
+            file.write = () => {}
+            file.end = () => {}
             form.emit('error', new Error("Incorrect Image"));
+            return;
             // res.status(400).send("Incorrect Image");
+        } else {
+            file.path = form.uploadDir + "/" + Date.now()+ "--" + file.name;
         }
     });
 
@@ -292,11 +299,13 @@ router.post("/uploadImage", (req, res) => {
 
     form.on('file', (name, file) => {
         debug('Uploaded ' + file.name + "\tTo: " + file.path);
-        res.send({file});
+        res.send("/images/" + file.path.split("/").slice(-1)[0]);
+
     });
 } catch(err) {
     debug(err);
 }
 })
 
-    module.exports = router;
+router.use("/images", express.static(path.join(__dirname, "..", "custom-images")));
+module.exports = router;
