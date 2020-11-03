@@ -19,6 +19,10 @@ router.all('/test', function(_req,res) {
     res.send("TEST SUCCESS");
 });
 
+router.use(express.static(path.join(__dirname, "..", "public", "admin")))
+router.use(express.static(path.join(__dirname, "..", "public", "student")))
+
+
 router.use('/admin', adminRouter);
 router.use('/student', studentRouter);
 module.exports = router;

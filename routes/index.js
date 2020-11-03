@@ -1,6 +1,5 @@
 const express = require('express');
 const path = require('path');
-
 const router = express.Router();
 const debug = require('debug')('backend:server:index.js');
 const {
@@ -8,8 +7,19 @@ const {
     validationResult
 } = require('express-validator');
 const ValidatorPizzaClient = require("validator-pizza-node");
+const formidable = require('formidable');
+
+
 
 const emailVerifier = new ValidatorPizzaClient().validate;
+const formOptions = {
+    uploadDir: path.join(__dirname, "..", "custom-images"),
+    keepExtensions: true,
+    maxFileSize: 5 * 1024 * 1024,
+    multiples: false,
+  };
+  const form = new formidable.IncomingForm(formOptions);
+
 
 
 router.get("/", (req, res) => {
@@ -240,6 +250,7 @@ router.post('/register',
             req.db.query("CALL Reg(?, ?, ?, ?, ?, ?, ?, ?, ?, ?);", [req.body.email, req.body.password, req.body.fullname, req.body.mobile, req.body.address, req.body.city, req.body.country, req.body.postcode, req.body.institute_name, req.body.photo])
                 .then((...results) => {
                     const data = results[0][0][0];
+                    console.log(...results);
                     console.table([{id: data.id, email: data.email, status: data["@status"], isVerified: data.isVerified}]);    
                     // res.json(req.body);
                     // res.redirect("/registrationSuccess")
@@ -258,4 +269,34 @@ router.post('/register',
             // res.json(req.body);
         }
     });
-module.exports = router;
+
+router.post("/uploadImage", (req, res) => {
+    form.parse(req);
+
+    try {
+    form.on('fileBegin', (name, file) => {
+        if(file.type != "image/jpeg" && file.type != "image/png" && file.type != "image/gif" && file.type != "image/svg+xml" && file.type != "image/webp") {
+            // file.path = form.uploadDir + "/" + file.name + "-" + Date.now();
+            // throw new Error("Incorrect File Type"); 
+            // form._error("Incorrect Image");
+            form.handlePart(file);
+            form.emit('error', new Error("Incorrect Image"));
+            // res.status(400).send("Incorrect Image");
+        }
+    });
+
+    form.on('error', err => {
+        debug('\n' + err + '\n');
+        res.send("Incorrect File Format");
+      });
+
+    form.on('file', (name, file) => {
+        debug('Uploaded ' + file.name + "\tTo: " + file.path);
+        res.send({file});
+    });
+} catch(err) {
+    debug(err);
+}
+})
+
+    module.exports = router;

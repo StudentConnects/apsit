@@ -123,7 +123,10 @@ function submit_details(fullname, email, password, institute_name, mobile, addre
             }
         })
         .then(response => response.text())
-        .then(Txt => {console.log(Txt);showmodal(Txt)})
+        .then(text => {
+            console.log(text);
+            showmodal(text);
+        })
         .then(json => console.log(json))
         .catch(err => console.log(err));
 }

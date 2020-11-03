@@ -9,11 +9,15 @@ const compression = require("compression");
 const session = require('express-session');
 const MySQLStore = require('express-mysql-session')(session);
 const bodyParser = require('body-parser');
-const csurf = require('csurf');
+// const csurf = require('csurf');
+// const passport = require('passport');
+// const passportLocal = require('passport-local').Strategy;
+const cors = require('cors');
 
 // Required Routers
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
+const { countReset } = require('console');
 
 // Variables Required
 const app = express();
@@ -59,6 +63,16 @@ try {
     // attach all the middleware
     app.use(compression());
     app.use(helmet());
+    app.use(
+        helmet.contentSecurityPolicy({
+          directives: {
+            defaultSrc: ["'self'", "'unsafe-inline'", "maxcdn.bootstrapcdn.com", "fonts.googleapis.com", "fonts.gstatic.com"],
+            scriptSrc: ["'self'", "'unsafe-inline'", "cdnjs.cloudflare.com", "cdn.jsdelivr.net"],
+            "style-src-elem": ["'self'", "'unsafe-inline'", "cdnjs.cloudflare.com", "maxcdn.bootstrapcdn.com", "cdn.jsdelivr.net", "fonts.googleapis.com"],
+            "img-src": ["data:", "'self'"]
+          },
+        })
+      );
     // app.use(csurf());
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({
@@ -83,6 +97,64 @@ try {
         req.db = pool;
         next();
     });
+
+    
+// Setting Passport for use
+// passport.use(new passportLocal({
+//     usernameField: 'email',
+//     passwordField: 'password'
+//   },
+//     async function(username, password, _done) {
+//         console.log("LINE 20");
+//         console.log(username, password);
+//         // if(username == "AdminAccount") {
+//         //     if(password == "123456") {
+//         //         console.log("Success verify");
+//         //         return done(null, {"email": username, "password": password, name: "Test Admin"});
+//         //     } else {
+//         //         console.log("Wrong Password")
+//         //         return done(null, false);
+//         //     }
+//         // } else if (username && password) {
+//         //     console.log("Wrong username or password")
+//         //     return done(null, false);
+//         // } else {
+//         //     console.log("No USERNAME and PASSWORD");
+//         //     return done(new Error("NO Username or Password"));
+//         // }
+//     }
+// ));
+
+// passport.serializeUser(function(user, done) {
+//     debug("LINE 41");
+//     debug(user.email);
+//     done(null, JSON.stringify({"email":user.email, "password": user.password}));
+// });
+
+// passport.deserializeUser(function(id, done) {
+//     const {email: username, password} = JSON.parse(id);
+//     console.log("LINE 48");
+//     console.log(username, password);
+//     if(username == "DishaUser") {
+//         if(password == "123456") {
+//             console.log("Success verify");
+//             return done(null, {"email": username, "password": password, name: "Trial User"});
+//         } else {
+//             console.log("Wrong Password")
+//             return done(null, false);
+//         }
+//     } else if (username && password) {
+//         console.log("Wrong username or password")
+//         return done(null, false);
+//     } else {
+//         console.log("No USERNAME and PASSWORD");
+//         return done(new Error("NO Username or Password"));
+//     }
+// });
+
+// router.use(passport.session());
+// router.use(passport.initialize());
+app.use(cors());
 
     app.use('/', indexRouter);
     app.use('/users', usersRouter);
