@@ -282,7 +282,7 @@ The above copyright notice and this permission notice shall be included in all c
       <div class="content">
         <div class="row">
           <div class="col-lg-12 col-md-12">
-            
+
             <!-- <div class="card" id="selectcompanycontainer">
               <div class="card-header card-header-primary">
                 <h4 class="card-title ">Select Company</h4>
@@ -616,11 +616,11 @@ The above copyright notice and this permission notice shall be included in all c
 
           var buttons = '<button type="button" class="btn btn-success" onclick="toggleQuiz()" >Start Quiz</button>';
 
-          // ITERATING THROUGH OBJECTS 
+          // ITERATING THROUGH OBJECTS
           $.each(data, function (key, value) {
 
-            //CONSTRUCTION OF ROWS HAVING 
-            // DATA FROM JSON OBJECT 
+            //CONSTRUCTION OF ROWS HAVING
+            // DATA FROM JSON OBJECT
             company += '<tr>';
             company += '<td class="text-center">' + value.id + '</td>';
             company += '<td>' + value.companyName + '</td>';
@@ -630,7 +630,7 @@ The above copyright notice and this permission notice shall be included in all c
             company += '</tr>';
           });
 
-          //INSERTING ROWS INTO TABLE  
+          //INSERTING ROWS INTO TABLE
           $('#allQuiz').append(company);
         }
   </script>
