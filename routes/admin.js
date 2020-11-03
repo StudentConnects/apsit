@@ -1,71 +1,68 @@
 const express = require('express');
 const path = require('path');
-const passport = require('passport');
-const passportLocal = require('passport-local').Strategy;
 const debug = require('debug')('backend:server:admin.js');
+const {
+    checkSchema,
+    validationResult
+} = require('express-validator');
 
 const router = express.Router();
 
-// Setting Passport for use
-passport.use(new passportLocal({
-    usernameField: 'email',
-    passwordField: 'password'
-  },
-    async function(username, password, _done) {
-        console.log("LINE 20");
-        console.log(username, password);
-        // if(username == "AdminAccount") {
-        //     if(password == "123456") {
-        //         console.log("Success verify");
-        //         return done(null, {"email": username, "password": password, name: "Test Admin"});
-        //     } else {
-        //         console.log("Wrong Password")
-        //         return done(null, false);
-        //     }
-        // } else if (username && password) {
-        //     console.log("Wrong username or password")
-        //     return done(null, false);
-        // } else {
-        //     console.log("No USERNAME and PASSWORD");
-        //     return done(new Error("NO Username or Password"));
-        // }
-    }
-));
-
-passport.serializeUser(function(user, done) {
-    console.log("LINE 41");
-    console.log(user.email);
-    done(null, JSON.stringify({"email":user.email, "password": user.password}));
-});
-
-passport.deserializeUser(function(id, done) {
-    const {email: username, password} = JSON.parse(id);
-    console.log("LINE 48");
-    console.log(username, password);
-    if(username == "DishaUser") {
-        if(password == "123456") {
-            console.log("Success verify");
-            return done(null, {"email": username, "password": password, name: "Trial User"});
-        } else {
-            console.log("Wrong Password")
-            return done(null, false);
-        }
-    } else if (username && password) {
-        console.log("Wrong username or password")
-        return done(null, false);
-    } else {
-        console.log("No USERNAME and PASSWORD");
-        return done(new Error("NO Username or Password"));
-    }
-});
-
-router.use(passport.session());
-router.use(passport.initialize());
 
 
 router.get("/", (_req, res) => {
     res.sendFile(path.join(__dirname, "..", "public", "admin", "user.html"));
 });
-router.use(express.static(path.join(__dirname, "..", "public", "admin")))
 
+router.get("/listCompanies", (req, res) => {
+    req.db.query("Select id, name from company where active = 1;")
+        .then((results) => {
+            res.send(results[0]);
+        })
+        .catch(err => {
+            debug(err);
+            res.status(500).send(err);
+        })
+});
+
+
+router.post("/submitQuiz", (req, res) => {
+    const data = req.body;
+    // const data = ogData;
+    data.quiz_Info.quizName = data.quiz_Info.quizName.toLowerCase().split(" ").join("_");
+    debug("MAKING ENTERING DB");
+    req.db.query("call addQuiz1(?, ?, ?, ?);", [data.quiz_Info.quizName, data.quiz_Info.quizCompanyId, data.quiz_Info.quizTime, (data.quiz_Info.isActive)?1:0])
+        .then((results) => {
+                debug("results returned");
+                if(results[0][0][0]["@status"] === "success") {
+                    debug("Inside if");
+                const table = results[0][0][0]["@table"];
+                const questionList = data.quiz_Questions.map(question => {
+                    return([question.question, question.option_A, question.option_B, question.option_C, question.option_D, JSON.stringify(question.answer)]);
+                });
+            return req.db.query("insert into ?? (question, op1, op2, op3, op4, ans) values ?", [table, questionList])
+
+            } else {
+                debug("ERROR at 71");
+                debug(results[0][0][0]);
+                debug(results);
+                res.status(500).send(results[0][0][0]["@status"]);
+            }
+
+        })
+        .then((results) => {
+            // res.send({results});
+            res.send("SUCCESS");
+            debug(results);
+        })
+        
+        .catch(err => {
+            debug("ERROR at 87");
+            console.log(err);
+            res.status(500).send(err);
+        })
+    // res.send(data);
+});
+router.use(express.static(path.join(__dirname, "..", "public", "admin")))
+// debug(path.join(__dirname, "..", "public", "admin"))
 module.exports = router;
