@@ -19,8 +19,9 @@ router.all('/test', function(_req,res) {
     res.send("TEST SUCCESS");
 });
 
-router.use(express.static(path.join(__dirname, "..", "public", "admin")))
-router.use(express.static(path.join(__dirname, "..", "public", "student")))
+router.use("/assets", express.static(path.join(__dirname, "..", "public", "assets")));
+router.use("/admin", express.static(path.join(__dirname, "..", "public", "admin")))
+router.use("/student", express.static(path.join(__dirname, "..", "public", "student")))
 
 
 router.use('/admin', adminRouter);
