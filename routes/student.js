@@ -67,7 +67,7 @@ router.get("/", (_req, res) => {
 });
 router.get("/allQuiz", (req, res) => {
 
-    req.db.query("Select quiz_list.id, c.name as companyName, quiz_list.quiz_id as quizName, quiz_list.quiz_time from quiz_list inner join company c on quiz_list.company_id = c.id where quiz_list.isActive=1;")
+    req.db.query("Select quiz_list.id, c.name as companyName, quiz_list.quiz_id as quizName, quiz_list.quiz_time from quiz_list inner join company c on quiz_list.company_id = c.id where quiz_list.isActive=1 and c.active = 1;")
         .then(results => {
             res.send(results[0]);
         });
