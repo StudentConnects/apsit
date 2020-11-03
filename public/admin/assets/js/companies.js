@@ -73,7 +73,7 @@
             isActive: isActive
           };
 
-          return fetch("/users/admin/companies", {
+          return fetch("/users/admin/addCompany", {
             method: "POST",
             body: JSON.stringify(company_Infoadd),
             headers: {
@@ -82,11 +82,11 @@
           });
         })
         .then(function (response) {
-          return response.json();
+          return response.text();
         })
         .then(function (data) {
           // do stuff with `data`
-          if (!alert("Successfully Added "+data)) {
+          if (!alert("Successfully Added :"+data)) {
             window.location.reload();
           }
         })
