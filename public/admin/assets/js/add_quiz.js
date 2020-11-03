@@ -17,17 +17,22 @@
 // }, false);
 
 document.addEventListener('DOMContentLoaded', function () {
-    fetch('/users/admin/listCompanies', {
+    fetch('https://b5976962af4f.ngrok.io/users/admin/listCompanies', {
             method: "GET",
             headers: {
                 "Content-type": "application/json; charset=UTF-8"
             }
         })
+<<<<<<< HEAD
         .then(response => response.json())
         .then(text => {
+=======
+        .then(response => response.json().then(text => {
+>>>>>>> 3ab84d2fd4ab82bd821362a42d08273c5d84672a
             if(response.ok){
             let select = document.getElementById("quizCompany");
             let index;
+            console.log(text);
             for (index in text) {
                 select.options[select.options.length] = new Option(text[index].name, text[index].id);
             }
@@ -270,22 +275,34 @@ function reset_questionform() {
 }
 
 
+// qOptions
 
+// $('input[type=checkbox]').change(function (e) {
+//     var chk_i = 1;
+//     if (document.getElementById("sel_multi").checked) {
+//         chk_i = 4;
+//     } else if (document.getElementById("sel_single").checked) {
+//         chk_i = 1;
+//     }
+//     if ($('input[type=checkbox]:checked').length > chk_i) {
+//         $(this).prop('checked', false)
+//         alert("Only Single Select Possible");
+//     }
+// })
 
-$('input[type=checkbox]').change(function (e) {
-    var chk_i = 1;
+$('.qOptions').click(function(){
+    let maxAllowed  = 1;
     if (document.getElementById("sel_multi").checked) {
-        chk_i = 4;
+        maxAllowed  = 4;
     } else if (document.getElementById("sel_single").checked) {
-        chk_i = 1;
+        maxAllowed  = 1;
     }
-    if ($('input[type=checkbox]:checked').length > chk_i) {
-        $(this).prop('checked', false)
-        alert("Only Single Select Possible");
+    if ($('.qOptions:checked').length >= maxAllowed) {
+      $(".qOptions").not(":checked").attr("disabled",true);
     }
-})
-
-
+    else 
+      $(".qOptions").not(":checked").removeAttr('disabled');
+  });
 
 
 function toggleQuiz() {
@@ -296,14 +313,15 @@ function toggleQuiz() {
 }
 
 function quiz_name() {
-    let quizCompany = document.getElementById("quizCompany");
-    quizCompany = quizCompany.options[quizCompany.selectedIndex].text;
+    let quizCompany = Number(document.getElementById("quizCompany").value);
     let quizName = document.getElementById("quizName").value;
     let quizTime = document.getElementById("quizTime").value;
+    let isActive = (document.querySelector('#isActive').checked) ? 1 : 0;
     let quiz_info = {
         quizCompanyId: quizCompany,
         quizName: quizName,
-        quizTime: quizTime
+        quizTime: quizTime,
+        isActive: isActive
     };
     quizdata['quiz_Info'] = quiz_info;
 }
@@ -313,7 +331,7 @@ function submit_quiz() {
     quizdata['quiz_Questions'] = quiz_list;
     console.log(JSON.stringify(quizdata));
 
-    fetch('/users/admin/submitQuiz', {
+    fetch('https://b5976962af4f.ngrok.io/users/admin/submitQuiz', {
         method: "POST",
         body: JSON.stringify(quizdata),
         headers: {
@@ -354,15 +372,13 @@ document.getElementById("comapany_add").addEventListener("click", comapany_add);
       let company_name = document.getElementById("company_name").value;
       let company_description = document.getElementById("company_description").value;
       let company_logo = document.getElementById("company_logo").value;
-      let isActive = (document.querySelector('#isActive').checked) ? 1 : 0;
       company_logo = "Not yet implemented";
       let company_Infoadd = {
         company_name: company_name,
         company_description: company_description,
-        company_logo: company_logo,
-        isActive: isActive
+        company_logo: company_logo
       };
-      fetch('/users/admin/companies', {
+      fetch('https://b5976962af4f.ngrok.io/users/admin/companies', {
         method: "POST",
         body: JSON.stringify(company_Infoadd),
         headers: {
