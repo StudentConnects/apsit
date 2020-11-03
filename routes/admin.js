@@ -25,7 +25,17 @@ router.get("/listCompanies", (req, res) => {
         })
 });
 
-
+router.post("/addCompany", (req, res) => {
+    req.db.query("call addComp(?, ?, ?, ?);", [(req.body.isActive)?1:0, req.body.company_name, req.body.company_description, req.body.company_logo])
+        .then(results => {
+            if(results[0][0][0]["@status"] === "Company details added") {
+                    debug("Inside if");
+                    res.send("Success");
+        } else {
+            res.status(500).send({results});
+        };
+});
+});
 router.post("/submitQuiz", (req, res) => {
     const data = req.body;
     // const data = ogData;
