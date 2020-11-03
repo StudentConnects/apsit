@@ -23,8 +23,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 "Content-type": "application/json; charset=UTF-8"
             }
         })
-        .then(response => response.json())
-        .then(text => {
+        .then(response => response.json().then(text => {
             if(response.ok){
             let select = document.getElementById("quizCompany");
             let index;
