@@ -18,24 +18,24 @@
 
 document.addEventListener('DOMContentLoaded', function () {
     fetch('https://b5976962af4f.ngrok.io/users/admin/listCompanies', {
-            method: "GET",
-            headers: {
-                "Content-type": "application/json; charset=UTF-8"
-            }
-        })
+        method: "GET",
+        headers: {
+            "Content-type": "application/json; charset=UTF-8"
+        }
+    })
         .then(response => response.json())
         .then(text => {
-            if(response.ok){
-            let select = document.getElementById("quizCompany");
-            let index;
-            console.log(text);
-            for (index in text) {
-                select.options[select.options.length] = new Option(text[index].name, text[index].id);
-            }
-            $('.selectpicker').selectpicker('refresh');
+            if (response.ok) {
+                let select = document.getElementById("quizCompany");
+                let index;
+                console.log(text);
+                for (index in text) {
+                    select.options[select.options.length] = new Option(text[index].name, text[index].id);
+                }
+                $('.selectpicker').selectpicker('refresh');
             }
             return response.status;
-        }))
+        })
         .then(json => console.log(json))
         .catch(err => console.log(err));
 }, false);
@@ -286,19 +286,19 @@ function reset_questionform() {
 //     }
 // })
 
-$('.qOptions').click(function(){
-    let maxAllowed  = 1;
+$('.qOptions').click(function () {
+    let maxAllowed = 1;
     if (document.getElementById("sel_multi").checked) {
-        maxAllowed  = 4;
+        maxAllowed = 4;
     } else if (document.getElementById("sel_single").checked) {
-        maxAllowed  = 1;
+        maxAllowed = 1;
     }
     if ($('.qOptions:checked').length >= maxAllowed) {
-      $(".qOptions").not(":checked").attr("disabled",true);
+        $(".qOptions").not(":checked").attr("disabled", true);
     }
-    else 
-      $(".qOptions").not(":checked").removeAttr('disabled');
-  });
+    else
+        $(".qOptions").not(":checked").removeAttr('disabled');
+});
 
 
 function toggleQuiz() {
@@ -334,13 +334,13 @@ function submit_quiz() {
             "Content-type": "application/json; charset=UTF-8"
         }
     })
-    .then(response => response.text().then(text => {
-        console.log(text);
-        showmodal(text);
-        return text;
-    }))
-    .then(json => console.log(json))
-    .catch(err => console.log(err));
+        .then(response => response.text().then(text => {
+            console.log(text);
+            showmodal(text);
+            return text;
+        }))
+        .then(json => console.log(json))
+        .catch(err => console.log(err));
 
 
 }
@@ -348,45 +348,45 @@ function submit_quiz() {
 
 function showmodal(msg) {
     document.getElementById("responseMsg").innerHTML = msg;
-  $("#modalresponse").modal("show");
+    $("#modalresponse").modal("show");
 }
 
 $('#modalresponse').on('hidden.bs.modal', function () {
     location.reload();
-  });
+});
 
 document.getElementById("add_company").addEventListener("click", showmodalcompany);
 
 
 function showmodalcompany() {
-  $("#modalComapnyAdd").modal("show");
+    $("#modalComapnyAdd").modal("show");
 }
 
 document.getElementById("comapany_add").addEventListener("click", comapany_add);
 
-    function comapany_add() {
-      let company_name = document.getElementById("company_name").value;
-      let company_description = document.getElementById("company_description").value;
-      let company_logo = document.getElementById("company_logo").value;
-      company_logo = "Not yet implemented";
-      let company_Infoadd = {
+function comapany_add() {
+    let company_name = document.getElementById("company_name").value;
+    let company_description = document.getElementById("company_description").value;
+    let company_logo = document.getElementById("company_logo").value;
+    company_logo = "Not yet implemented";
+    let company_Infoadd = {
         company_name: company_name,
         company_description: company_description,
         company_logo: company_logo
-      };
-      fetch('https://b5976962af4f.ngrok.io/users/admin/companies', {
+    };
+    fetch('https://b5976962af4f.ngrok.io/users/admin/companies', {
         method: "POST",
         body: JSON.stringify(company_Infoadd),
         headers: {
             "Content-type": "application/json; charset=UTF-8"
         }
     })
-    .then(response => response.text().then(text => {
-        console.log(text);
-        if(!alert('Successfully Added')){window.location.reload();}
-        return text;
-    }))
-    .then(json => console.log(json))
-    .catch(err => console.log(err));
+        .then(response => response.text().then(text => {
+            console.log(text);
+            if (!alert('Successfully Added')) { window.location.reload(); }
+            return text;
+        }))
+        .then(json => console.log(json))
+        .catch(err => console.log(err));
 
-    }
+}
