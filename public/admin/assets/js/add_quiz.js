@@ -19,26 +19,27 @@
 document.addEventListener(
   "DOMContentLoaded",
   function () {
-    fetch("https://b5976962af4f.ngrok.io/users/admin/listCompanies", {
+    fetch("/users/admin/listCompanies", {
       method: "GET",
       headers: { "Content-type": "application/json; charset=UTF-8" },
     })
-      .then((response) => response.json())
-      .then((text) => {
-        if (response.ok) {
-          let select = document.getElementById("quizCompany");
-          let index;
-          console.log(text);
-          for (index in text) {
-            select.options[select.options.length] = new Option(
-              text[index].name,
-              text[index].id
-            );
+      .then((response) =>
+        response.json().then((text) => {
+          if (response.ok) {
+            let select = document.getElementById("quizCompany");
+            let index;
+            console.log(text);
+            for (index in text) {
+              select.options[select.options.length] = new Option(
+                text[index].name,
+                text[index].id
+              );
+            }
+            $(".selectpicker").selectpicker("refresh");
           }
-          $(".selectpicker").selectpicker("refresh");
-        }
-        return response.status;
-      })
+          return response.status;
+        })
+      )
       .then((json) => console.log(json))
       .catch((err) => console.log(err));
   },
@@ -58,7 +59,7 @@ document
   .addEventListener("click", submit_quiz);
 
 let quizdata = {};
-var active_question;
+// var active_question;
 var edit_index;
 var quiz_list = [];
 var upload_image;
@@ -124,33 +125,36 @@ $("#image_uploader").change(function () {
 });
 
 function save_question() {
-  if (document.getElementById("sel_single").checked) {
-    if ($("input[type=checkbox]:checked").length > 1) {
-      $(this).prop("checked", false);
-      return alert("Only Single Select Possible");
-    }
-  }
 
-  if (!question_edit) {
-    active_question = document.getElementById("quiz_table").rows.length;
-    let ques_no = active_question;
-  } else {
-    let ques_no = edit_index;
-  }
+  // if (document.getElementById("sel_single").checked) {
+  //     if ($('input[type=checkbox]:checked').length > 1) {
+  //         $(this).prop('checked', false)
+  //         return alert("Only Single Select Possible");
+  //     }
+  // }
+
+  // if (!question_edit) {
+  //     active_question = document.getElementById("quiz_table").rows.length;
+  //     let ques_no = active_question;
+  // } else {
+  //     let ques_no = edit_index;
+  // }
+
 
   let txtarea = document.getElementById("txtarea").value;
   let option_1 = document.getElementById("option_1").value;
   let option_2 = document.getElementById("option_2").value;
   let option_3 = document.getElementById("option_3").value;
   let option_4 = document.getElementById("option_4").value;
-  let answer_type;
-  var radios = document.getElementsByName("usage_commit");
-  for (var i = 0, length = radios.length; i < length; i++) {
-    if (radios[i].checked) {
-      answer_type = radios[i].value;
-      break;
-    }
-  }
+
+  // let answer_type;
+  // var radios = document.getElementsByName('usage_commit');
+  // for (var i = 0, length = radios.length; i < length; i++) {
+  //     if (radios[i].checked) {
+  //         answer_type = radios[i].value;
+  //         break;
+  //     }
+  // }
 
   let answers = [];
 
@@ -185,6 +189,8 @@ function save_question() {
   }
 
   reset_questionform();
+  $(".qOptions").not(":checked").removeAttr("disabled");
+
 
   console.log(JSON.stringify(quiz_list));
   upload_image = undefined;
@@ -195,7 +201,7 @@ function save_question() {
 
 function quiz_table() {
   $("#quiz_table tbody").empty();
-  for (i = 0; i < quiz_list.length; i++) {
+  for (let i = 0; i < quiz_list.length; i++) {
     $("#quiz_table")
       .find("tbody")
       .append(
@@ -228,23 +234,36 @@ function quiz_table() {
 }
 
 function edit_btn(x) {
+  reset_questionform();
   edit_index = x.parentNode.parentNode.rowIndex;
+  console.log(edit_index);
   question_edit = true;
   var i = x.parentNode.parentNode.rowIndex;
+  console.log(i);
   document.getElementById("txtarea").value = quiz_list[i].question;
   if (quiz_list[i].answer_type == "Single") {
     document.getElementById("sel_single").checked = true;
   } else if (quiz_list[i].answer_type == "Multiple") {
     document.getElementById("sel_multi").checked = true;
   }
-  document.getElementById("option_1").value = quiz_list[i].option_1;
-  document.getElementById("option_2").value = quiz_list[i].option_2;
-  document.getElementById("option_3").value = quiz_list[i].option_3;
-  document.getElementById("option_4").value = quiz_list[i].option_4;
-  $("#checkbox_1").prop("checked", quiz_list[i].answer.checkbox_1);
-  $("#checkbox_2").prop("checked", quiz_list[i].answer.checkbox_2);
-  $("#checkbox_3").prop("checked", quiz_list[i].answer.checkbox_3);
-  $("#checkbox_4").prop("checked", quiz_list[i].answer.checkbox_4);
+
+  document.getElementById("option_1").value = quiz_list[i].option_A;
+  document.getElementById("option_2").value = quiz_list[i].option_B;
+  document.getElementById("option_3").value = quiz_list[i].option_C;
+  document.getElementById("option_4").value = quiz_list[i].option_D;
+
+  if (quiz_list[i].answer.includes("A")) {
+    $("#checkbox_1").prop("checked", true);
+  }
+  if (quiz_list[i].answer.includes("B")) {
+    $("#checkbox_2").prop("checked", true);
+  }
+  if (quiz_list[i].answer.includes("C")) {
+    $("#checkbox_3").prop("checked", true);
+  }
+  if (quiz_list[i].answer.includes("D")) {
+    $("#checkbox_4").prop("checked", true);
+  }
 }
 
 function delete_btn(x) {
@@ -280,6 +299,17 @@ function reset_questionform() {
 //         alert("Only Single Select Possible");
 //     }
 // })
+
+
+$(function () {
+  $('input:radio[name="usage_commit"]').change(function () {
+    $("#checkbox_1").prop("checked", false);
+    $("#checkbox_2").prop("checked", false);
+    $("#checkbox_3").prop("checked", false);
+    $("#checkbox_4").prop("checked", false);
+    $(".qOptions").not(":checked").removeAttr("disabled");
+  });
+});
 
 $(".qOptions").click(function () {
   let maxAllowed = 1;
@@ -318,7 +348,7 @@ function submit_quiz() {
   quizdata["quiz_Questions"] = quiz_list;
   console.log(JSON.stringify(quizdata));
 
-  fetch("https://b5976962af4f.ngrok.io/users/admin/submitQuiz", {
+  fetch("/users/admin/submitQuiz", {
     method: "POST",
     body: JSON.stringify(quizdata),
     headers: { "Content-type": "application/json; charset=UTF-8" },
@@ -364,7 +394,8 @@ function comapany_add() {
     company_description: company_description,
     company_logo: company_logo,
   };
-  fetch("https://b5976962af4f.ngrok.io/users/admin/companies", {
+
+  fetch("/users/admin/companies", {
     method: "POST",
     body: JSON.stringify(company_Infoadd),
     headers: { "Content-type": "application/json; charset=UTF-8" },
