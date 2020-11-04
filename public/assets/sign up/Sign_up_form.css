@@ -125,6 +125,8 @@ a:hover{
 .btn{
     display: block;
     width: 100%;
+    position: relative;
+    right: 15px;
     height: 3.125rem;
     border-radius: 1.5625rem;
     margin: 1rem;
