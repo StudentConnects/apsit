@@ -125,6 +125,7 @@ $("#image_uploader").change(function () {
 });
 
 function save_question() {
+
   // if (document.getElementById("sel_single").checked) {
   //     if ($('input[type=checkbox]:checked').length > 1) {
   //         $(this).prop('checked', false)
@@ -139,11 +140,13 @@ function save_question() {
   //     let ques_no = edit_index;
   // }
 
+
   let txtarea = document.getElementById("txtarea").value;
   let option_1 = document.getElementById("option_1").value;
   let option_2 = document.getElementById("option_2").value;
   let option_3 = document.getElementById("option_3").value;
   let option_4 = document.getElementById("option_4").value;
+
   // let answer_type;
   // var radios = document.getElementsByName('usage_commit');
   // for (var i = 0, length = radios.length; i < length; i++) {
@@ -187,6 +190,7 @@ function save_question() {
 
   reset_questionform();
   $(".qOptions").not(":checked").removeAttr("disabled");
+
 
   console.log(JSON.stringify(quiz_list));
   upload_image = undefined;
@@ -242,6 +246,7 @@ function edit_btn(x) {
   } else if (quiz_list[i].answer_type == "Multiple") {
     document.getElementById("sel_multi").checked = true;
   }
+
   document.getElementById("option_1").value = quiz_list[i].option_A;
   document.getElementById("option_2").value = quiz_list[i].option_B;
   document.getElementById("option_3").value = quiz_list[i].option_C;
@@ -294,6 +299,7 @@ function reset_questionform() {
 //         alert("Only Single Select Possible");
 //     }
 // })
+
 
 $(function () {
   $('input:radio[name="usage_commit"]').change(function () {
@@ -388,6 +394,7 @@ function comapany_add() {
     company_description: company_description,
     company_logo: company_logo,
   };
+
   fetch("/users/admin/companies", {
     method: "POST",
     body: JSON.stringify(company_Infoadd),

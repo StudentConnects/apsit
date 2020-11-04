@@ -330,52 +330,52 @@ The above copyright notice and this permission notice shall be included in all c
               <div class="card-header card-header-warning">
                 <h4 class="card-title">Badges</h4>
               </div>
-                <div class="container-fluid">
-                  <div class="row">
-                    <div class="col-lg-4 col-md-12 col-sm-12">
-                      <div class="card card-stats">
-                        <div class="card-header card-header-warning card-header-icon">
-                          <div class="card-icon">
-                            <img class="badges" src="assets/img/badge1.png" alt="Badge">
-                          </div>
-                          <h3 class="card-title">3rd Runner up</h3>
-                          <h3 class="card-category">Baseline: Data, ML, AI</h3>
+              <div class="container-fluid">
+                <div class="row">
+                  <div class="col-lg-4 col-md-12 col-sm-12">
+                    <div class="card card-stats">
+                      <div class="card-header card-header-warning card-header-icon">
+                        <div class="card-icon">
+                          <img class="badges" src="assets/img/badge1.png" alt="Badge">
                         </div>
-                        <div class="card-footer">
-                            <a href="javascript:;">View More...</a>
-                        </div>
+                        <h3 class="card-title">3rd Runner up</h3>
+                        <h3 class="card-category">Baseline: Data, ML, AI</h3>
+                      </div>
+                      <div class="card-footer">
+                        <a href="javascript:;">View More...</a>
                       </div>
                     </div>
-                    <div class="col-lg-4 col-md-12 col-sm-12">
-                      <div class="card card-stats">
-                        <div class="card-header card-header-success card-header-icon">
-                          <div class="card-icon">
-                            <img class="badges" src="assets/img/badge2.jfif" alt="Badge">
-                          </div>
-                          <h3 class="card-title">First</h3>
-                          <h3 class="card-category">Google Cloud Essentials</h3>
+                  </div>
+                  <div class="col-lg-4 col-md-12 col-sm-12">
+                    <div class="card card-stats">
+                      <div class="card-header card-header-success card-header-icon">
+                        <div class="card-icon">
+                          <img class="badges" src="assets/img/badge2.jfif" alt="Badge">
                         </div>
-                        <div class="card-footer">
-                          <a href="javascript:;">View More...</a>
-                        </div>
+                        <h3 class="card-title">First</h3>
+                        <h3 class="card-category">Google Cloud Essentials</h3>
+                      </div>
+                      <div class="card-footer">
+                        <a href="javascript:;">View More...</a>
                       </div>
                     </div>
-                    <div class="col-lg-4 col-md-12 col-sm-12">
-                      <div class="card card-stats">
-                        <div class="card-header card-header-danger card-header-icon">
-                          <div class="card-icon">
-                            <img class="badges" src="assets/img/badge3.png" alt="Badge">
-                          </div>
-                          <h3 class="card-title">2nd Runner up</h3>
-                          <h3 class="card-category">Cloud Hero: Application Development</h3>
+                  </div>
+                  <div class="col-lg-4 col-md-12 col-sm-12">
+                    <div class="card card-stats">
+                      <div class="card-header card-header-danger card-header-icon">
+                        <div class="card-icon">
+                          <img class="badges" src="assets/img/badge3.png" alt="Badge">
                         </div>
-                        <div class="card-footer">
-                          <a href="javascript:;">View More...</a>
-                        </div>
+                        <h3 class="card-title">2nd Runner up</h3>
+                        <h3 class="card-category">Cloud Hero: Application Development</h3>
+                      </div>
+                      <div class="card-footer">
+                        <a href="javascript:;">View More...</a>
                       </div>
                     </div>
                   </div>
                 </div>
+              </div>
             </div>
           </div>
         </div>
@@ -393,7 +393,8 @@ The above copyright notice and this permission notice shall be included in all c
               </li>
             </ul>
           </nav>
-          <div class="copyright">Copyright &copy;<script>
+          <div class="copyright">Copyright &copy;
+            <script>
               document.write(new Date().getFullYear());
             </script> All rights reserved </div>
         </div>
@@ -401,8 +402,13 @@ The above copyright notice and this permission notice shall be included in all c
     </div>
   </div>
   <!--   Core JS Files   -->
-  <script src="assets/js/core/jquery.min.js"></script>
-  <script src="assets/js/core/popper.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+    integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+    crossorigin="anonymous"></script>
+
   <script src="assets/js/core/bootstrap-material-design.min.js"></script>
   <script src="assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
 
@@ -599,10 +605,10 @@ The above copyright notice and this permission notice shall be included in all c
     });
 
     // <!-- add avatar -->
-    // var btnCust = '<button type="button" class="btn btn-secondary" title="Add picture tags" ' + 
+    // var btnCust = '<button type="button" class="btn btn-secondary" title="Add picture tags" ' +
     //     'onclick="alert(\'Call your custom code here.\')">' +
     //     '<i class="glyphicon glyphicon-tag"></i>' +
-    //     '</button>'; 
+    //     '</button>';
     // $("#avatar-2").fileinput({
     //     overwriteInitial: true,
     //     maxFileSize: 1500,
