@@ -12,7 +12,6 @@ const bodyParser = require('body-parser');
 // const csurf = require('csurf');
 // const passport = require('passport');
 // const passportLocal = require('passport-local').Strategy;
-const cors = require('cors');
 
 // Required Routers
 const indexRouter = require('./routes/index');
@@ -59,6 +58,8 @@ try {
     if (app.get('env') === 'production') {
         app.set('trust proxy', 1) // trust first proxy
         // sess.cookie.secure = true // serve secure cookies
+    } else {
+const cors = require('cors');
     }
     // attach all the middleware
     app.use(compression());
