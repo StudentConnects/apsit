@@ -21,7 +21,7 @@ form{
     /* width: 5.5rem; */
     width: 125px;
     height: 125px;
-    border-radius: 50%; 
+    border-radius: 50%;
     background-position: center center;
     background-size: cover;
 }
@@ -121,6 +121,8 @@ a:hover{
     display: block;
     width: 100%;
     height: 3.125rem;
+    position: relative;
+    right: 15px;
     border-radius: 1.5625rem;
     margin: 1rem;
     font-size: 1.2rem;
@@ -138,7 +140,7 @@ a:hover{
     background-color: #4b4858;
     color: #d4dee4;
 }
- 
+
 @media screen and (max-width: 1050px){
     .container{
         grid-gap: 5rem;
