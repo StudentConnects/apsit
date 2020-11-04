@@ -756,12 +756,12 @@ The above copyright notice and this permission notice shall be included in all c
         company_logo: company_logo
       };
       fetch('/users/admin/companies', {
-          method: "POST",
-          body: JSON.stringify(company_Infoadd),
-          headers: {
-            "Content-type": "application/json; charset=UTF-8"
-          }
-        })
+        method: "POST",
+        body: JSON.stringify(company_Infoadd),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8"
+        }
+      })
         .then(response => response.text().then(text => {
           console.log(text);
           if (!alert('Successfully Added')) {
