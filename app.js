@@ -60,6 +60,7 @@ try {
         // sess.cookie.secure = true // serve secure cookies
     } else {
 const cors = require('cors');
+app.use(cors());
     }
     // attach all the middleware
     app.use(compression());
@@ -155,7 +156,7 @@ const cors = require('cors');
 
 // router.use(passport.session());
 // router.use(passport.initialize());
-app.use(cors());
+
 
     app.use('/', indexRouter);
     app.use('/users', usersRouter);
