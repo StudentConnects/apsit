@@ -326,14 +326,13 @@ The above copyright notice and this permission notice shall be included in all c
               </div>
               <div class="card-body">
                 <div class="table-responsive">
-                  <table class="table">
+                  <table class="table" id="allQuiz">
                     <thead>
                       <tr>
                         <th class="text-center">#</th>
                         <th>Company Name</th>
                         <th>Quiz Name</th>
                         <th>Quiz Time</th>
-                        <th>Score</th>
                         <th>Actions</th>
                       </tr>
                     </thead>
@@ -343,7 +342,6 @@ The above copyright notice and this permission notice shall be included in all c
                         <td>IBM</td>
                         <td>javascript</td>
                         <td>30 Minutes</td>
-                        <td>50</td>
                         <td class="td-actions">
                           <button type="button" class="btn btn-success" onclick="toggleQuiz()">Start Quiz</button>
                           <!-- <button type="button" rel="tooltip" class="btn btn-info btn-round">
@@ -598,6 +596,49 @@ The above copyright notice and this permission notice shall be included in all c
         });
       });
     });
+
+
+    document.addEventListener('DOMContentLoaded', function () {
+    fetch('/users/student/allQuiz', {
+            method: "GET",
+            headers: {
+                "Content-type": "application/json; charset=UTF-8"
+            }
+        })
+        .then(response => response.json().then(text => {
+            if(response.ok){
+            console.log(text);
+            append_json(text);
+            }
+            return response.status;
+        }))
+        .then(json => console.log(json))
+        .catch(err => console.log(err));
+}, false);
+
+        //this function appends the json data to the table 'company_list'
+        function append_json(data){
+          var company = '';
+
+          var buttons = '<button type="button" class="btn btn-success" onclick="toggleQuiz()" >Start Quiz</button>';
+
+          // ITERATING THROUGH OBJECTS
+          $.each(data, function (key, value) {
+
+            //CONSTRUCTION OF ROWS HAVING
+            // DATA FROM JSON OBJECT
+            company += '<tr>';
+            company += '<td class="text-center">' + value.id + '</td>';
+            company += '<td>' + value.companyName + '</td>';
+            company += '<td>' + value.quizName + '</td>';
+			      company += '<td>' + value.quiz_time + '</td>';
+            company += '<td class="td-actions">' + buttons + '</td>';
+            company += '</tr>';
+          });
+
+          //INSERTING ROWS INTO TABLE
+          $('#allQuiz').append(company);
+        }
   </script>
   <!-- <script>
     $(document).ready(function() {
