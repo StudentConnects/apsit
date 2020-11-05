@@ -420,12 +420,11 @@ The above copyright notice and this permission notice shall be included in all c
                           <div class="form-group">
                             <label class="form-check-label" for="isActive">
                               <input class="form-check-input" type="checkbox" id="isActive"
-                                checked><strong>Active</strong>
+                                checked /><strong>Active</strong>
                             </label>
                           </div>
                         </div>
                       </div>
-
                     </form>
                   </div>
                 </div>
@@ -674,76 +673,6 @@ The above copyright notice and this permission notice shall be included in all c
         });
       });
     });
-
-    // $(document).ready(function () {
-
-    //   // FETCHING DATA FROM JSON FILE 
-    //   $.getJSON("company.json",
-    //     function (data) {
-    //       var company = '';
-
-    //       var buttons =
-    //         '<button class="btn btn-success btn-fab btn-fab-mini btn-round" onclick="editcompany()">' +
-    //         '                          <i class="material-icons">edit</i>' +
-    //         '                        </button>' +
-    //         '                        <button class="btn btn-danger btn-fab btn-fab-mini btn-round" onclick="deletecompany()">' +
-    //         '                          <i class="material-icons">delete</i>' +
-    //         '                        </button>';
-
-    //       // ITERATING THROUGH OBJECTS 
-    //       $.each(data, function (key, value) {
-
-    //         //CONSTRUCTION OF ROWS HAVING 
-    //         // DATA FROM JSON OBJECT 
-    //         company += '<tr>';
-    //         company += '<td>' + value.id + '</td>';
-    //         company += '<td>' + value.company_name + '</td>';
-    //         company += '<td>' + value.company_desc + '</td>';
-    //         company += '<td>' + buttons + '</td>';
-    //         company += '</tr>';
-    //       });
-
-    //       //INSERTING ROWS INTO TABLE  
-    //       $('#company_list').append(company);
-    //     });
-    // });
-
-    document.getElementById("add_company").addEventListener("click", showmodal);
-
-    function showmodal() {
-      $("#modalcompany").modal("show");
-    }
-    document.getElementById("comapany_add").addEventListener("click", comapany_add);
-
-    function comapany_add() {
-      let company_name = document.getElementById("company_name").value;
-      let company_description = document.getElementById("company_description").value;
-      let company_logo = document.getElementById("company_logo").value;
-      company_logo = "Not yet implemented";
-      let company_Infoadd = {
-        company_name: company_name,
-        company_description: company_description,
-        company_logo: company_logo
-      };
-      fetch('/users/admin/companies', {
-        method: "POST",
-        body: JSON.stringify(company_Infoadd),
-        headers: {
-          "Content-type": "application/json; charset=UTF-8"
-        }
-      })
-        .then(response => response.text().then(text => {
-          console.log(text);
-          if (!alert('Successfully Added')) {
-            window.location.reload();
-          }
-          return text;
-        }))
-        .then(json => console.log(json))
-        .catch(err => console.log(err));
-    }
-
-
   </script>
 </body>
 

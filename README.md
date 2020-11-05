@@ -9,5 +9,7 @@
 
 - **![OSSAR](https://github.com/APSIT-Skills-Aptitude/Backend/workflows/OSSAR/badge.svg)**
 
+- **[![Build Status](https://travis-ci.com/APSIT-Skills-Aptitude/Backend.svg?branch=master)](https://travis-ci.com/APSIT-Skills-Aptitude/Backend)**
+
 
 # Backend
