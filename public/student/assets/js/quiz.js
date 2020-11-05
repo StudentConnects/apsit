@@ -91,12 +91,12 @@
         slides[currentSlide].classList.remove('active-slide');
         slides[n].classList.add('active-slide');
         currentSlide = n;
-          if(currentSlide === slides.length-1){
+        if (currentSlide === slides.length - 1) {
             submitButton.style.display = 'inline-block';
-          }
-          else{
+        }
+        else {
             submitButton.style.display = 'none';
-          }
+        }
     }
 
 
@@ -111,33 +111,33 @@
     const resultsContainer = document.getElementById('results');
     const submitButton = document.getElementById('submit');
     const myQuestions = [{
-            question: "Who invented JavaScript?",
-            answers: {
-                a: "Douglas Crockford",
-                b: "Sheryl Sandberg",
-                c: "Brendan Eich"
-            },
-            correctAnswer: "c"
+        question: "Who invented JavaScript?",
+        answers: {
+            a: "Douglas Crockford",
+            b: "Sheryl Sandberg",
+            c: "Brendan Eich"
         },
-        {
-            question: "Which one of these is a JavaScript package manager?",
-            answers: {
-                a: "Node.js",
-                b: "TypeScript",
-                c: "npm"
-            },
-            correctAnswer: "c"
+        correctAnswer: "c"
+    },
+    {
+        question: "Which one of these is a JavaScript package manager?",
+        answers: {
+            a: "Node.js",
+            b: "TypeScript",
+            c: "npm"
         },
-        {
-            question: "Which tool can you use to ensure code quality?",
-            answers: {
-                a: "Angular",
-                b: "jQuery",
-                c: "RequireJS",
-                d: "ESLint"
-            },
-            correctAnswer: "d"
-        }
+        correctAnswer: "c"
+    },
+    {
+        question: "Which tool can you use to ensure code quality?",
+        answers: {
+            a: "Angular",
+            b: "jQuery",
+            c: "RequireJS",
+            d: "ESLint"
+        },
+        correctAnswer: "d"
+    }
     ];
 
     // Kick things off
@@ -173,4 +173,76 @@ function toggleQuiz() {
     let select_company = document.getElementById("select_company_quiz");
     quiz_question.classList.toggle("hidden");
     select_company.classList.toggle("hidden");
+    quizTimer();
 }
+
+function quizTimer() {
+    var sec = 1800,
+        countDiv = document.getElementById("Quiztimer"),
+        secpass,
+        countDown = setInterval(function () {
+            'use strict';
+            secpass();
+        }, 1000);
+    function secpass() {
+        'use strict';
+        var min = Math.floor(sec / 60),
+            remSec = sec % 60;
+        if (remSec < 10) {
+            remSec = '0' + remSec;
+        }
+        if (min < 10) {
+            min = '0' + min;
+        }
+        countDiv.innerHTML = min + ":" + remSec;
+        if (sec > 0) {
+            sec = sec - 1;
+        } else {
+            clearInterval(countDown);
+            countDiv.innerHTML = 'countdown done';
+        }
+    }
+}
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    fetch('/users/student/allQuiz', {
+      method: "GET",
+      headers: {
+        "Content-type": "application/json; charset=UTF-8"
+      }
+    })
+      .then(response => response.json().then(text => {
+        if (response.ok) {
+          console.log(text);
+          append_json(text);
+        }
+        return response.status;
+      }))
+      .then(json => console.log(json))
+      .catch(err => console.log(err));
+  }, false);
+
+  //this function appends the json data to the table 'company_list'
+  function append_json(data) {
+    var company = '';
+
+    var buttons = '<button type="button" class="btn btn-success" onclick="toggleQuiz()" >Start Quiz</button>';
+
+    // ITERATING THROUGH OBJECTS
+    $.each(data, function (key, value) {
+
+      //CONSTRUCTION OF ROWS HAVING
+      // DATA FROM JSON OBJECT
+      company += '<tr>';
+      company += '<td class="text-center">' + value.id + '</td>';
+      company += '<td>' + value.companyName + '</td>';
+      company += '<td>' + value.quizName + '</td>';
+      company += '<td>' + value.quiz_time + '</td>';
+      company += '<td class="td-actions">' + buttons + '</td>';
+      company += '</tr>';
+    });
+
+    //INSERTING ROWS INTO TABLE
+    $('#allQuiz').append(company);
+  }
