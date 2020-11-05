@@ -293,6 +293,8 @@ function edit_btn(x) {
     document.getElementById("sel_multi").checked = true;
   }
 
+  previewDefaultText.style.display = "none";
+  previewImage.style.display = "block";
   previewImage.setAttribute("src",quiz_list[i].upload_image);
 
   document.getElementById("option_1").value = quiz_list[i].option_A;
@@ -332,7 +334,10 @@ function reset_questionform() {
   $("#checkbox_3").prop("checked", false);
   $("#checkbox_4").prop("checked", false);
   $(".qOptions").not(":checked").removeAttr("disabled");
-  $("#upload_questiom").attr("src", "assets/img/add-image_lg.png");
+  previewDefaultText.style.display = null;
+  previewImage.style.display = null;
+  previewImage.setAttribute("src","");
+  image_url = undefined;
 }
 
 // qOptions
