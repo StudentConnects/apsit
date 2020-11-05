@@ -16,37 +16,47 @@
 //         .catch(err => console.log(err));
 // }, false);
 
-document.addEventListener("DOMContentLoaded", function() {
-  fetch("/users/admin/listCompanies", {
-    method : "GET",
-    headers : {"Content-type" : "application/json; charset=UTF-8"},
-  })
-      .then((response) => response.json().then((text) => {
-        if (response.ok) {
-          let select = document.getElementById("quizCompany");
-          let index;
-          console.log(text);
-          for (index in text) {
-            select.options[select.options.length] =
-                new Option(text[index].name, text[index].id);
+document.addEventListener(
+  "DOMContentLoaded",
+  function () {
+    fetch("/users/admin/listCompanies", {
+      method: "GET",
+      headers: { "Content-type": "application/json; charset=UTF-8" },
+    })
+      .then((response) =>
+        response.json().then((text) => {
+          if (response.ok) {
+            let select = document.getElementById("quizCompany");
+            let index;
+            console.log(text);
+            for (index in text) {
+              select.options[select.options.length] = new Option(
+                text[index].name,
+                text[index].id
+              );
+            }
+            $(".selectpicker").selectpicker("refresh");
           }
-          $(".selectpicker").selectpicker("refresh");
-        }
-        return response.status;
-      }))
+          return response.status;
+        })
+      )
       .then((json) => console.log(json))
       .catch((err) => console.log(err));
-}, false);
+  },
+  false
+);
 
 document.getElementById("selectQuizCompany").addEventListener("click", () => {
   toggleQuiz();
   quiz_name();
 });
 
-document.getElementById("save_questions")
-    .addEventListener("click", save_question);
-document.getElementById("submit_quiz_btn")
-    .addEventListener("click", submit_quiz);
+document
+  .getElementById("save_questions")
+  .addEventListener("click", save_question);
+document
+  .getElementById("submit_quiz_btn")
+  .addEventListener("click", submit_quiz);
 
 let quizdata = {};
 // var active_question;
@@ -99,12 +109,13 @@ var question_edit = false;
 const inpFile = document.getElementById("image_uploader");
 const previewContainer = document.getElementById("imagePreview");
 const previewImage = previewContainer.querySelector(".image-preview__image");
-const previewDefaultText =
-    previewContainer.querySelector(".image-preview__default-text");
+const previewDefaultText = previewContainer.querySelector(
+  ".image-preview__default-text"
+);
 let upload_image;
 let image_url;
 
-inpFile.addEventListener("change", function() {
+inpFile.addEventListener("change", function () {
   const file = this.files[0];
   upload_image = file;
   if (file) {
@@ -112,7 +123,7 @@ inpFile.addEventListener("change", function() {
     previewDefaultText.style.display = "none";
     previewImage.style.display = "block";
 
-    reader.addEventListener("load", function() {
+    reader.addEventListener("load", function () {
       previewImage.setAttribute("src", this.result);
       getImageUrl();
     });
@@ -122,7 +133,7 @@ inpFile.addEventListener("change", function() {
     previewImage.style.display = null;
     previewImage.setAttribute("src", "");
   }
-})
+});
 
 // var reader = new FileReader();
 // reader.onload = function (e) {
@@ -143,21 +154,26 @@ inpFile.addEventListener("change", function() {
 
 function getImageUrl() {
   const formData = new FormData();
-  formData.append('file', upload_image);
+  formData.append("file", upload_image);
 
   const options = {
-    method : 'POST',
-    body : formData,
+    method: "POST",
+    body: formData,
   };
 
-  fetch('/uploadImage', options)
-      .then(function(response) { return response.text(); })
-      .then(function(data) { image_url = data; })
-      .catch(function(error) { console.log("Requestfailed", error); });
+  fetch("/uploadImage", options)
+    .then(function (response) {
+      return response.text();
+    })
+    .then(function (data) {
+      image_url = data;
+    })
+    .catch(function (error) {
+      console.log("Requestfailed", error);
+    });
 }
 
 function save_question() {
-
   // if (document.getElementById("sel_single").checked) {
   //     if ($('input[type=checkbox]:checked').length > 1) {
   //         $(this).prop('checked', false)
@@ -203,13 +219,13 @@ function save_question() {
   }
 
   let quiz_t = {
-    upload_image : image_url,
-    question : txtarea,
-    option_A : option_1,
-    option_B : option_2,
-    option_C : option_3,
-    option_D : option_4,
-    answer : answers,
+    upload_image: image_url,
+    question: txtarea,
+    option_A: option_1,
+    option_B: option_2,
+    option_C: option_3,
+    option_D: option_4,
+    answer: answers,
   };
 
   if (!question_edit) {
@@ -231,25 +247,33 @@ function quiz_table() {
   $("#quiz_table tbody").empty();
   for (let i = 0; i < quiz_list.length; i++) {
     $("#quiz_table")
-        .find("tbody")
-        .append(
-            $("<tr>")
-                .append($("<td>")
-                            .attr("class", "col-sm-10")
-                            .text(quiz_list[i].question))
-                .append($("<td>")
-                            .attr("class", "col-sm-1")
-                            .append($("<button>")
-                                        .attr("class", "edit_btn")
-                                        .attr("onclick", "edit_btn(this)")
-                                        .append('<i class="fa fa-edit"></i>')))
-                .append(
-                    $("<td>")
-                        .attr("class", "col-sm-1")
-                        .append($("<button>")
-                                    .attr("class", "delete_btn")
-                                    .attr("onclick", "delete_btn(this)")
-                                    .append('<i class="fa fa-trash"></i>'))));
+      .find("tbody")
+      .append(
+        $("<tr>")
+          .append(
+            $("<td>").attr("class", "col-sm-10").text(quiz_list[i].question)
+          )
+          .append(
+            $("<td>")
+              .attr("class", "col-sm-1")
+              .append(
+                $("<button>")
+                  .attr("class", "edit_btn")
+                  .attr("onclick", "edit_btn(this)")
+                  .append('<i class="fa fa-edit"></i>')
+              )
+          )
+          .append(
+            $("<td>")
+              .attr("class", "col-sm-1")
+              .append(
+                $("<button>")
+                  .attr("class", "delete_btn")
+                  .attr("onclick", "delete_btn(this)")
+                  .append('<i class="fa fa-trash"></i>')
+              )
+          )
+      );
   }
 }
 
@@ -329,8 +353,8 @@ function reset_questionform() {
 //     }
 // })
 
-$(function() {
-  $('input:radio[name="usage_commit"]').change(function() {
+$(function () {
+  $('input:radio[name="usage_commit"]').change(function () {
     $("#checkbox_1").prop("checked", false);
     $("#checkbox_2").prop("checked", false);
     $("#checkbox_3").prop("checked", false);
@@ -339,7 +363,7 @@ $(function() {
   });
 });
 
-$(".qOptions").click(function() {
+$(".qOptions").click(function () {
   let maxAllowed = 1;
   if (document.getElementById("sel_multi").checked) {
     maxAllowed = 4;
@@ -348,8 +372,7 @@ $(".qOptions").click(function() {
   }
   if ($(".qOptions:checked").length >= maxAllowed) {
     $(".qOptions").not(":checked").attr("disabled", true);
-  } else
-    $(".qOptions").not(":checked").removeAttr("disabled");
+  } else $(".qOptions").not(":checked").removeAttr("disabled");
 });
 
 function toggleQuiz() {
@@ -365,10 +388,10 @@ function quiz_name() {
   let quizTime = document.getElementById("quizTime").value;
   let isActive = document.querySelector("#isActive").checked ? 1 : 0;
   let quiz_info = {
-    quizCompanyId : quizCompany,
-    quizName : quizName,
-    quizTime : quizTime,
-    isActive : isActive,
+    quizCompanyId: quizCompany,
+    quizName: quizName,
+    quizTime: quizTime,
+    isActive: isActive,
   };
   quizdata["quiz_Info"] = quiz_info;
 }
@@ -378,17 +401,19 @@ function submit_quiz() {
   console.log(JSON.stringify(quizdata));
 
   fetch("/users/admin/submitQuiz", {
-    method : "POST",
-    body : JSON.stringify(quizdata),
-    headers : {"Content-type" : "application/json; charset=UTF-8"},
+    method: "POST",
+    body: JSON.stringify(quizdata),
+    headers: { "Content-type": "application/json; charset=UTF-8" },
   })
-      .then((response) => response.text().then((text) => {
+    .then((response) =>
+      response.text().then((text) => {
         console.log(text);
         showmodal(text);
         return text;
-      }))
-      .then((json) => console.log(json))
-      .catch((err) => console.log(err));
+      })
+    )
+    .then((json) => console.log(json))
+    .catch((err) => console.log(err));
 }
 
 function showmodal(msg) {
@@ -396,39 +421,46 @@ function showmodal(msg) {
   $("#modalresponse").modal("show");
 }
 
-$("#modalresponse").on("hidden.bs.modal", function() { location.reload(); });
+$("#modalresponse").on("hidden.bs.modal", function () {
+  location.reload();
+});
 
-document.getElementById("add_company")
-    .addEventListener("click", showmodalcompany);
+document
+  .getElementById("add_company")
+  .addEventListener("click", showmodalcompany);
 
-function showmodalcompany() { $("#modalComapnyAdd").modal("show"); }
+function showmodalcompany() {
+  $("#modalComapnyAdd").modal("show");
+}
 
 document.getElementById("comapany_add").addEventListener("click", comapany_add);
 
 function comapany_add() {
   let company_name = document.getElementById("company_name").value;
-  let company_description =
-      document.getElementById("company_description").value;
+  let company_description = document.getElementById("company_description")
+    .value;
   let company_logo = document.getElementById("company_logo").value;
   company_logo = "Not yet implemented";
   let company_Infoadd = {
-    company_name : company_name,
-    company_description : company_description,
-    company_logo : company_logo,
+    company_name: company_name,
+    company_description: company_description,
+    company_logo: company_logo,
   };
 
   fetch("/users/admin/companies", {
-    method : "POST",
-    body : JSON.stringify(company_Infoadd),
-    headers : {"Content-type" : "application/json; charset=UTF-8"},
+    method: "POST",
+    body: JSON.stringify(company_Infoadd),
+    headers: { "Content-type": "application/json; charset=UTF-8" },
   })
-      .then((response) => response.text().then((text) => {
+    .then((response) =>
+      response.text().then((text) => {
         console.log(text);
         if (!alert("Successfully Added")) {
           window.location.reload();
         }
         return text;
-      }))
-      .then((json) => console.log(json))
-      .catch((err) => console.log(err));
+      })
+    )
+    .then((json) => console.log(json))
+    .catch((err) => console.log(err));
 }
