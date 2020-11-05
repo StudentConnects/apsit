@@ -106,33 +106,34 @@ var question_edit = false;
 //     reader.readAsDataURL(file);
 // }
 
-
 const inpFile = document.getElementById("image_uploader");
 const previewContainer = document.getElementById("imagePreview");
 const previewImage = previewContainer.querySelector(".image-preview__image");
-const previewDefaultText = previewContainer.querySelector(".image-preview__default-text");
+const previewDefaultText = previewContainer.querySelector(
+  ".image-preview__default-text"
+);
 let upload_image;
 let image_url;
 
-    inpFile.addEventListener("change",function(){
-        const file = this.files[0];
-        upload_image = file;
-        if(file){
-            const reader = new FileReader();
-            previewDefaultText.style.display = "none";
-            previewImage.style.display = "block";
+inpFile.addEventListener("change", function () {
+  const file = this.files[0];
+  upload_image = file;
+  if (file) {
+    const reader = new FileReader();
+    previewDefaultText.style.display = "none";
+    previewImage.style.display = "block";
 
-            reader.addEventListener("load",function(){
-                previewImage.setAttribute("src",this.result);
-                getImageUrl();
-            });
-            reader.readAsDataURL(file);
-        }else{
-            previewDefaultText.style.display = null;
-            previewImage.style.display = null;
-            previewImage.setAttribute("src","");
-        }
-    })
+    reader.addEventListener("load", function () {
+      previewImage.setAttribute("src", this.result);
+      getImageUrl();
+    });
+    reader.readAsDataURL(file);
+  } else {
+    previewDefaultText.style.display = null;
+    previewImage.style.display = null;
+    previewImage.setAttribute("src", "");
+  }
+});
 
 // var reader = new FileReader();
 // reader.onload = function (e) {
@@ -151,29 +152,28 @@ let image_url;
 //   readURL(this);
 // });
 
-function getImageUrl(){
+function getImageUrl() {
   const formData = new FormData();
-  formData.append('file', upload_image);
+  formData.append("file", upload_image);
 
   const options = {
-    method: 'POST',
+    method: "POST",
     body: formData,
   };
 
-  fetch('/uploadImage', options)
-  .then(function (response) {
-    return response.text();
-  })
-  .then(function (data) {
-    image_url = data;
-  })
-  .catch(function (error) {
-    console.log("Requestfailed", error);
-  });
+  fetch("/uploadImage", options)
+    .then(function (response) {
+      return response.text();
+    })
+    .then(function (data) {
+      image_url = data;
+    })
+    .catch(function (error) {
+      console.log("Requestfailed", error);
+    });
 }
 
 function save_question() {
-
   // if (document.getElementById("sel_single").checked) {
   //     if ($('input[type=checkbox]:checked').length > 1) {
   //         $(this).prop('checked', false)
@@ -187,7 +187,6 @@ function save_question() {
   // } else {
   //     let ques_no = edit_index;
   // }
-
 
   let txtarea = document.getElementById("txtarea").value;
   let option_1 = document.getElementById("option_1").value;
@@ -244,7 +243,6 @@ function save_question() {
   quiz_table();
 }
 
-
 function quiz_table() {
   $("#quiz_table tbody").empty();
   for (let i = 0; i < quiz_list.length; i++) {
@@ -295,7 +293,7 @@ function edit_btn(x) {
 
   previewDefaultText.style.display = "none";
   previewImage.style.display = "block";
-  previewImage.setAttribute("src",quiz_list[i].upload_image);
+  previewImage.setAttribute("src", quiz_list[i].upload_image);
 
   document.getElementById("option_1").value = quiz_list[i].option_A;
   document.getElementById("option_2").value = quiz_list[i].option_B;
@@ -336,7 +334,7 @@ function reset_questionform() {
   $(".qOptions").not(":checked").removeAttr("disabled");
   previewDefaultText.style.display = null;
   previewImage.style.display = null;
-  previewImage.setAttribute("src","");
+  previewImage.setAttribute("src", "");
   image_url = undefined;
 }
 
@@ -354,7 +352,6 @@ function reset_questionform() {
 //         alert("Only Single Select Possible");
 //     }
 // })
-
 
 $(function () {
   $('input:radio[name="usage_commit"]').change(function () {
