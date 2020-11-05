@@ -145,6 +145,10 @@ The above copyright notice and this permission notice shall be included in all c
     .hidden {
       display: none;
     }
+
+    .watch h2 {
+      font-weight: 400;
+    }
   </style>
 </head>
 
@@ -362,9 +366,11 @@ The above copyright notice and this permission notice shall be included in all c
 
               </div>
             </div>
-
             <div id="quiz_question_container" class="card col-lg-12 hidden">
               <div class="card-header card-header-primary">
+                <div class="watch float-right">
+                  <h2 id="watch">00:00:00:00</h2>
+                </div>
                 <h4 class="card-title">Quiz</h4>
                 <p class="card-category"></p>
               </div>
@@ -377,7 +383,8 @@ The above copyright notice and this permission notice shall be included in all c
                 </div>
                 <div class="col-12">
                   <div class="quiz-container">
-                    <div id="quiz_questions"></div>
+                    <div id="quiz_questions">
+                    </div>
                   </div>
                   <button id="submit">Submit Quiz</button>
                   <div id="results"></div>
@@ -599,46 +606,46 @@ The above copyright notice and this permission notice shall be included in all c
 
 
     document.addEventListener('DOMContentLoaded', function () {
-    fetch('/users/student/allQuiz', {
-            method: "GET",
-            headers: {
-                "Content-type": "application/json; charset=UTF-8"
-            }
-        })
+      fetch('/users/student/allQuiz', {
+        method: "GET",
+        headers: {
+          "Content-type": "application/json; charset=UTF-8"
+        }
+      })
         .then(response => response.json().then(text => {
-            if(response.ok){
+          if (response.ok) {
             console.log(text);
             append_json(text);
-            }
-            return response.status;
+          }
+          return response.status;
         }))
         .then(json => console.log(json))
         .catch(err => console.log(err));
-}, false);
+    }, false);
 
-        //this function appends the json data to the table 'company_list'
-        function append_json(data){
-          var company = '';
+    //this function appends the json data to the table 'company_list'
+    function append_json(data) {
+      var company = '';
 
-          var buttons = '<button type="button" class="btn btn-success" onclick="toggleQuiz()" >Start Quiz</button>';
+      var buttons = '<button type="button" class="btn btn-success" onclick="toggleQuiz()" >Start Quiz</button>';
 
-          // ITERATING THROUGH OBJECTS
-          $.each(data, function (key, value) {
+      // ITERATING THROUGH OBJECTS
+      $.each(data, function (key, value) {
 
-            //CONSTRUCTION OF ROWS HAVING
-            // DATA FROM JSON OBJECT
-            company += '<tr>';
-            company += '<td class="text-center">' + value.id + '</td>';
-            company += '<td>' + value.companyName + '</td>';
-            company += '<td>' + value.quizName + '</td>';
-			      company += '<td>' + value.quiz_time + '</td>';
-            company += '<td class="td-actions">' + buttons + '</td>';
-            company += '</tr>';
-          });
+        //CONSTRUCTION OF ROWS HAVING
+        // DATA FROM JSON OBJECT
+        company += '<tr>';
+        company += '<td class="text-center">' + value.id + '</td>';
+        company += '<td>' + value.companyName + '</td>';
+        company += '<td>' + value.quizName + '</td>';
+        company += '<td>' + value.quiz_time + '</td>';
+        company += '<td class="td-actions">' + buttons + '</td>';
+        company += '</tr>';
+      });
 
-          //INSERTING ROWS INTO TABLE
-          $('#allQuiz').append(company);
-        }
+      //INSERTING ROWS INTO TABLE
+      $('#allQuiz').append(company);
+    }
   </script>
   <!-- <script>
     $(document).ready(function() {
