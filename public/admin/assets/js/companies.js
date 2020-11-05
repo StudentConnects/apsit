@@ -163,15 +163,17 @@ function deletecompany(x) {
   };
 
   fetch("/users/admin/disableCompany", {
-    method: "POST",
+    method: "DELETE",
     body: JSON.stringify(companydata),
     headers: { "Content-type": "application/json; charset=UTF-8" },
   })
     .then((response) =>
       response.text().then((text) => {
         console.log(text);
-        if (!alert("Successfully Deleted")) {
-          window.location.reload();
+        if (response.ok) {
+          if (!alert("Successfully Deleted")) {
+            window.location.reload();
+          }
         }
         return text;
       })
