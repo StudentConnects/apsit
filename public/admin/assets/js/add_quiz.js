@@ -62,7 +62,6 @@ let quizdata = {};
 // var active_question;
 var edit_index;
 var quiz_list = [];
-var upload_image;
 var question_edit = false;
 // function addquestion() {
 //     questions++;
@@ -107,22 +106,71 @@ var question_edit = false;
 //     reader.readAsDataURL(file);
 // }
 
-var reader = new FileReader();
-reader.onload = function (e) {
-  $("#upload_questiom").attr("src", e.target.result);
-};
 
-function readURL(input) {
-  if (input.files && input.files[0]) {
-    reader.readAsDataURL(input.files[0]);
-    reader.onloadend = function () {
-      upload_image = reader.result;
-    };
-  }
+const inpFile = document.getElementById("image_uploader");
+const previewContainer = document.getElementById("imagePreview");
+const previewImage = previewContainer.querySelector(".image-preview__image");
+const previewDefaultText = previewContainer.querySelector(".image-preview__default-text");
+let upload_image;
+let image_url;
+
+    inpFile.addEventListener("change",function(){
+        const file = this.files[0];
+        upload_image = file;
+        if(file){
+            const reader = new FileReader();
+            previewDefaultText.style.display = "none";
+            previewImage.style.display = "block";
+
+            reader.addEventListener("load",function(){
+                previewImage.setAttribute("src",this.result);
+                getImageUrl();
+            });
+            reader.readAsDataURL(file);
+        }else{
+            previewDefaultText.style.display = null;
+            previewImage.style.display = null;
+            previewImage.setAttribute("src","");
+        }
+    })
+
+// var reader = new FileReader();
+// reader.onload = function (e) {
+//   $("#upload_questiom").attr("src", e.target.result);
+// };
+
+// function readURL(input) {
+//   if (input.files && input.files[0]) {
+//     reader.readAsDataURL(input.files[0]);
+//     reader.onloadend = function () {
+//       upload_image = reader.result;
+//     };
+//   }
+// }
+// $("#image_uploader").change(function () {
+//   readURL(this);
+// });
+
+function getImageUrl(){
+  const formData = new FormData();
+  formData.append('file', upload_image);
+
+  const options = {
+    method: 'POST',
+    body: formData,
+  };
+
+  fetch('/uploadImage', options)
+  .then(function (response) {
+    return response.text();
+  })
+  .then(function (data) {
+    image_url = data;
+  })
+  .catch(function (error) {
+    console.log("Requestfailed", error);
+  });
 }
-$("#image_uploader").change(function () {
-  readURL(this);
-});
 
 function save_question() {
 
@@ -172,7 +220,7 @@ function save_question() {
   }
 
   let quiz_t = {
-    upload_image: upload_image,
+    upload_image: image_url,
     question: txtarea,
     option_A: option_1,
     option_B: option_2,
@@ -189,15 +237,13 @@ function save_question() {
   }
 
   reset_questionform();
-  $(".qOptions").not(":checked").removeAttr("disabled");
-
 
   console.log(JSON.stringify(quiz_list));
-  upload_image = undefined;
   document.getElementById("image_uploader").value = "";
 
   quiz_table();
 }
+
 
 function quiz_table() {
   $("#quiz_table tbody").empty();
@@ -247,6 +293,8 @@ function edit_btn(x) {
     document.getElementById("sel_multi").checked = true;
   }
 
+  previewImage.setAttribute("src",quiz_list[i].upload_image);
+
   document.getElementById("option_1").value = quiz_list[i].option_A;
   document.getElementById("option_2").value = quiz_list[i].option_B;
   document.getElementById("option_3").value = quiz_list[i].option_C;
@@ -283,6 +331,8 @@ function reset_questionform() {
   $("#checkbox_2").prop("checked", false);
   $("#checkbox_3").prop("checked", false);
   $("#checkbox_4").prop("checked", false);
+  $(".qOptions").not(":checked").removeAttr("disabled");
+  $("#upload_questiom").attr("src", "assets/img/add-image_lg.png");
 }
 
 // qOptions

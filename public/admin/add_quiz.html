@@ -202,14 +202,19 @@
                                                     </div>
                                                     <div class="col-12 col-sm-12 col-md-7 col-lg-7">
                                                         <div class="upload_img m-auto">
-                                                            <img id="upload_questiom" src="assets/img/add-image_lg.png"
-                                                                class="add_image_icon" />
-                                                            <div class="edit_icon">
-                                                                <i class="material-icons">edit</i>
-                                                                <input type="file" id="image_uploader"
+                                                            <label for='image_uploader'>
+                                                            <input type="file" id="image_uploader"
                                                                     class="upload-image-input"
-                                                                    accept=".jpg,.png,.gif,.jpeg,.bmp,.svg,.giphy"></input>
+                                                                    accept="image/jpeg, image/png, image/gif, image/svg+xm, image/webp">
+                                                            <div class="image-preview" id="imagePreview">
+                                                                <img id="upload_questiom" src="" alt="Image Preview" class="image-preview__image">
+                                                                <span class="image-preview__default-text">Upload Image</span>
                                                             </div>
+                                                        </label>
+                                                            <!-- <div class="edit_icon">
+                                                                <i class="material-icons">edit</i>
+                                                                
+                                                            </div> -->
                                                         </div>
                                                     </div>
                                                 </div>
