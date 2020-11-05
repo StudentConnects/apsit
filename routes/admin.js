@@ -73,6 +73,47 @@ router.post("/submitQuiz", (req, res) => {
         })
     // res.send(data);
 });
+
+router.delete('/disableCompany', (req, res) => {
+    const { id } = req.body;
+    req.db.query('update company set active = 0 where id = ? and active= 1;', [id])
+        .then(results => {
+            // console.log(results);
+            // res.send(results[0]);
+            let info = results[0].info.split(':');
+            if(info[1].includes('0') || info[2].includes('0')) {
+                console.log("INCORRECT ID");
+                console.log(results);
+                res.send("Incorrect ID");
+              } else if(info[1].includes('1') && info[2].includes('1')) {
+                res.send("Success");
+              } else {
+                console.log(info);
+                res.status(500).send(results.info);
+              }
+        });
+});
+
+router.patch('/enableCompany', (req, res) => {
+    const { id } = req.body;
+    req.db.query('update company set active = 1 where id = ? and active= 0;', [id])
+        .then(results => {
+            // console.log(results);
+            // res.send(results[0]);
+            let info = results[0].info.split(':');
+            if(info[1].includes('0') || info[2].includes('0')) {
+                console.log("INCORRECT ID");
+                console.log(results);
+                res.send("Incorrect ID");
+              } else if(info[1].includes('1') && info[2].includes('1')) {
+                res.send("Success");
+              } else {
+                console.log(info);
+                res.status(500).send(results.info);
+              }
+        });
+});
+
 router.use(express.static(path.join(__dirname, "..", "public", "admin")))
 // debug(path.join(__dirname, "..", "public", "admin"))
 module.exports = router;
