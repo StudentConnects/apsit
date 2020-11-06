@@ -31,7 +31,7 @@
 //     });
 // });
 let compList;
-let question_edit = false;
+// let question_edit = false;
 
 document.getElementById("add_company").addEventListener("click", showmodal);
 
@@ -146,7 +146,7 @@ function append_json(data) {
 }
 
 function editcompany(x) {
-  comapny_edit = true;
+  // company_edit = true;
   let i = x.parentNode.parentNode.rowIndex;
   // console.log(JSON.stringify(compList));
   document.getElementById("company_name").value = compList[i - 1].name;

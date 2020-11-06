@@ -178,8 +178,7 @@ function toggleQuiz() {
 
 function quizTimer() {
     var sec = 1800,
-        countDiv = document.getElementById("Quiztimer"),
-        secpass,
+        countDiv = document.getElementById("Quiztimer");
         countDown = setInterval(function () {
             'use strict';
             secpass();
