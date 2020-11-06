@@ -146,8 +146,9 @@ The above copyright notice and this permission notice shall be included in all c
       display: none;
     }
 
-    .watch h2 {
+    .watch {
       font-weight: 400;
+      font-size: 25px;
     }
   </style>
 </head>
@@ -368,8 +369,8 @@ The above copyright notice and this permission notice shall be included in all c
             </div>
             <div id="quiz_question_container" class="card col-lg-12 hidden">
               <div class="card-header card-header-primary">
-                <div class="watch float-right">
-                  <h2 id="watch">00:00:00:00</h2>
+                <div class="float-right">
+                  <div id="Quiztimer" class="watch"></div>
                 </div>
                 <h4 class="card-title">Quiz</h4>
                 <p class="card-category"></p>
@@ -603,49 +604,6 @@ The above copyright notice and this permission notice shall be included in all c
         });
       });
     });
-
-
-    document.addEventListener('DOMContentLoaded', function () {
-      fetch('/users/student/allQuiz', {
-        method: "GET",
-        headers: {
-          "Content-type": "application/json; charset=UTF-8"
-        }
-      })
-        .then(response => response.json().then(text => {
-          if (response.ok) {
-            console.log(text);
-            append_json(text);
-          }
-          return response.status;
-        }))
-        .then(json => console.log(json))
-        .catch(err => console.log(err));
-    }, false);
-
-    //this function appends the json data to the table 'company_list'
-    function append_json(data) {
-      var company = '';
-
-      var buttons = '<button type="button" class="btn btn-success" onclick="toggleQuiz()" >Start Quiz</button>';
-
-      // ITERATING THROUGH OBJECTS
-      $.each(data, function (key, value) {
-
-        //CONSTRUCTION OF ROWS HAVING
-        // DATA FROM JSON OBJECT
-        company += '<tr>';
-        company += '<td class="text-center">' + value.id + '</td>';
-        company += '<td>' + value.companyName + '</td>';
-        company += '<td>' + value.quizName + '</td>';
-        company += '<td>' + value.quiz_time + '</td>';
-        company += '<td class="td-actions">' + buttons + '</td>';
-        company += '</tr>';
-      });
-
-      //INSERTING ROWS INTO TABLE
-      $('#allQuiz').append(company);
-    }
   </script>
   <!-- <script>
     $(document).ready(function() {
