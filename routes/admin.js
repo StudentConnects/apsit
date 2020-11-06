@@ -25,16 +25,64 @@ router.get("/listCompanies", (req, res) => {
         })
 });
 
-router.post("/addCompany", (req, res) => {
-    req.db.query("call addComp(?, ?, ?, ?);", [(req.body.isActive)?1:0, req.body.company_name, req.body.company_description, req.body.company_logo])
+router.post("/addCompany",checkSchema({
+    "company_name": {
+        in: ["body"],
+        notEmpty: true,
+        isString: true,
+        trim: true,
+        isLength: {
+            options: {
+                max: 30,
+                min: 1
+            },
+            errorMessage: "Needs to be min:1 letter name or maximum 30 letter name"
+        }
+    },
+    "company_description": {
+        in: ["body"],
+        notEmpty: true,
+        isString: true,
+        trim: true,
+        isLength: {
+            options: {
+                max: 1000,
+                min: 5
+            },
+            errorMessage: "Min 5 letters max 2000 letters"
+        }
+    },
+    "company_logo": {
+        in: ["body"],
+        notEmpty: true,
+        isString: true,
+        trim: true,
+        isURL: true,
+        isLength: {
+            options: {
+                max: 325,
+                min: 11
+            },
+            errorMessage: "Needs to be min: 11 Max 325"
+        }
+    }
+}),(req, res) => {
+    const results = validationResult(req)
+    if (!results.isEmpty()) {
+        debug(req.body);
+        res.status(400).json({
+            errors: results.array()
+        });
+    } else {
+        req.db.query("call addComp(?, ?, ?, ?);", [(req.body.isActive)?1:0, req.body.company_name, req.body.company_description, req.body.company_logo])
         .then(results => {
             if(results[0][0][0]["@status"] === "Company details added") {
                     debug("Inside if");
                     res.send("Success");
         } else {
             res.status(500).send({results});
-        };
-});
+        };});
+};
 });
 router.post("/submitQuiz", (req, res) => {
     const data = req.body;
