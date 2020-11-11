@@ -30,6 +30,8 @@
 //       $('#company_list').append(company);
 //     });
 // });
+let compList;
+// let question_edit = false;
 
 document.getElementById("add_company").addEventListener("click", showmodal);
 
@@ -116,22 +118,23 @@ document.addEventListener(
 
 // this function appends the json data to the table 'company_list'
 function append_json(data) {
+  compList = data;
+
   var company = "";
-
-  var buttons =
-    '<button class="btn btn-success btn-fab btn-fab-mini btn-round" onclick="editcompany()">' +
-    '                          <i class="material-icons">edit</i>' +
-    "                        </button>" +
-    '                        <button class="btn btn-danger btn-fab btn-fab-mini btn-round" onclick="deletecompany()">' +
-    '                          <i class="material-icons">delete</i>' +
-    "                        </button>";
-
   // ITERATING THROUGH OBJECTS
   $.each(data, function (key, value) {
+    // Making Buttons
+    var buttons =
+      '<button class="btn btn-success btn-fab btn-fab-mini btn-round" onclick="editcompany(this)">' +
+      '                          <i class="material-icons">edit</i>' +
+      "                        </button>" +
+      '                        <button class="btn btn-danger btn-fab btn-fab-mini btn-round" onclick="deletecompany(this)">' +
+      '                          <i class="material-icons">delete</i>' +
+      "                        </button>";
     // CONSTRUCTION OF ROWS HAVING
     // DATA FROM JSON OBJECT
     company += "<tr>";
-    company += "<td>" + value.id + "</td>";
+    company += "<td>" + (key + 1) + "</td>";
     company += "<td>" + value.name + "</td>";
     company += "<td>" + value.description + "</td>";
     company += "<td>" + buttons + "</td>";
@@ -140,4 +143,47 @@ function append_json(data) {
 
   // INSERTING ROWS INTO TABLE
   $("#company_list").append(company);
+}
+
+function editcompany(x) {
+  // company_edit = true;
+  let i = x.parentNode.parentNode.rowIndex;
+  // console.log(JSON.stringify(compList));
+  document.getElementById("company_name").value = compList[i - 1].name;
+  document.getElementById("company_description").value =
+    compList[i - 1].description;
+  showmodal();
+}
+
+function deletecompany(x) {
+  if (ConfirmDelete()) {
+    let i = x.parentNode.parentNode.rowIndex;
+    let companyid = compList[i - 1].id;
+    let companydata = { id: companyid };
+
+    fetch("/users/admin/disableCompany", {
+      method: "DELETE",
+      body: JSON.stringify(companydata),
+      headers: { "Content-type": "application/json; charset=UTF-8" },
+    })
+      .then((response) =>
+        response.text().then((text) => {
+          console.log(text);
+          if (response.ok) {
+            if (!alert("Successfully Deleted")) {
+              window.location.reload();
+            }
+          }
+          return text;
+        })
+      )
+      .then((json) => console.log(json))
+      .catch((err) => console.log(err));
+  }
+}
+
+function ConfirmDelete() {
+  var x = confirm("Are you sure you want to delete?");
+  if (x) return true;
+  else return false;
 }
