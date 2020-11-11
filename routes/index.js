@@ -8,7 +8,7 @@ const {
 } = require('express-validator');
 const ValidatorPizzaClient = require("validator-pizza-node");
 const formidable = require('formidable');
-
+const passport = require("passport");
 
 const emailVerifier = new ValidatorPizzaClient().validate;
 const formOptions = {
@@ -17,7 +17,7 @@ const formOptions = {
     maxFileSize: 5 * 1024 * 1024,
     multiples: false,
     captureRejections: true,
-  };
+};
 
 
 
@@ -40,18 +40,32 @@ router.get("/registrationSuccess", (req, res) => {
     res.send("Thank you for the registration, You have been successfully registered! Now you can login after you veify your account from the email just sent to you.");
 })
 
-// {
-//     "fullname": "OMKAR AGRAWAL",
-//     "email": "omkar3654@gmail.com",
-//     "password": "%Cz44^G2ZfX",
-//     "institute_name": "",
-//     "mobile": 7977937694,
-//     "address": "B-12/601 silver sarita near pooja park, kashimira mira road(E)",
-//     "city": "Select",
-//     "country": "India",
-//     "postcode": "401107",
-//     "photo": "Not yet implemented"
-// }
+router.get("/login", function (req, res, next) {
+    if (req.isAuthenticated()) {
+        console.warn("in login in authenticated");
+        res.redirect(301, "/users/student");
+    } else {
+        console.warn("in login not authenticated");
+        next();
+    }
+}, (req, res) => {
+    // res.sendFile(path.join(__dirname, "login.html"));
+    res.send("INTO LOGIN ---> GET");
+});
+
+router.post("/login", (req, res, next) => {
+    if(req.isAuthenticated()) {
+        debug("Is Authenticated");
+        res.redirect(301, "/users/student");
+        return;
+    }
+    debug("Not Authenticated");
+    passport.authenticate('local', {
+        failureRedirect: '/login',
+        successRedirect: "/users/student"
+    })(req, res, next);
+});
+
 router.post('/register',
     checkSchema({
         "fullname": {
@@ -184,7 +198,7 @@ router.post('/register',
             in: ["body"],
             notEmpty: true,
             isString: true,
-            isAlpha:true,
+            isAlpha: true,
             trim: true,
             isLength: {
                 options: {
@@ -251,7 +265,12 @@ router.post('/register',
                 .then((...results) => {
                     const data = results[0][0][0];
                     console.log(...results);
-                    console.table([{id: data.id, email: data.email, status: data["@status"], isVerified: data.isVerified}]);    
+                    console.table([{
+                        id: data.id,
+                        email: data.email,
+                        status: data["@status"],
+                        isVerified: data.isVerified
+                    }]);
                     // res.json(req.body);
                     // res.redirect("/registrationSuccess")
                     debug("Response Sent successfully");
@@ -275,36 +294,36 @@ router.post("/uploadImage", (req, res) => {
     form.parse(req);
 
     try {
-    form.on('fileBegin', (name, file) => {
-        if(file.type != "image/jpeg" && file.type != "image/png" && file.type != "image/gif" && file.type != "image/svg+xml" && file.type != "image/webp") {
-            // file.path = form.uploadDir + "/" + file.name + "-" + Date.now();
-            // throw new Error("Incorrect File Type"); 
-            // form._error("Incorrect Image");
-            // form.handlePart(file);
-            file.open = () => {}
-            file.write = () => {}
-            file.end = () => {}
-            form.emit('error', new Error("Incorrect Image"));
-            return;
-            // res.status(400).send("Incorrect Image");
-        } else {
-            file.path = form.uploadDir + "/" + Date.now()+ "--" + file.name;
-        }
-    });
+        form.on('fileBegin', (name, file) => {
+            if (file.type != "image/jpeg" && file.type != "image/png" && file.type != "image/gif" && file.type != "image/svg+xml" && file.type != "image/webp") {
+                // file.path = form.uploadDir + "/" + file.name + "-" + Date.now();
+                // throw new Error("Incorrect File Type"); 
+                // form._error("Incorrect Image");
+                // form.handlePart(file);
+                file.open = () => {}
+                file.write = () => {}
+                file.end = () => {}
+                form.emit('error', new Error("Incorrect Image"));
+                return;
+                // res.status(400).send("Incorrect Image");
+            } else {
+                file.path = form.uploadDir + "/" + Date.now() + "--" + file.name;
+            }
+        });
 
-    form.on('error', err => {
-        debug('\n' + err + '\n');
-        res.send("Incorrect File Format");
-      });
+        form.on('error', err => {
+            debug('\n' + err + '\n');
+            res.send("Incorrect File Format");
+        });
 
-    form.on('file', (name, file) => {
-        debug('Uploaded ' + file.name + "\tTo: " + file.path);
-        res.send("/images/" + file.path.split("/").slice(-1)[0]);
+        form.on('file', (name, file) => {
+            debug('Uploaded ' + file.name + "\tTo: " + file.path);
+            res.send("/images/" + file.path.split("/").slice(-1)[0]);
 
-    });
-} catch(err) {
-    debug(err);
-}
+        });
+    } catch (err) {
+        debug(err);
+    }
 })
 
 router.use("/images", express.static(path.join(__dirname, "..", "custom-images")));

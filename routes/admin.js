@@ -14,6 +14,11 @@ router.get("/", (_req, res) => {
     res.sendFile(path.join(__dirname, "..", "public", "admin", "user.html"));
 });
 
+router.all('/test', function (_req, res) {
+    debug("into /test");
+    res.send("TEST SUCCESS");
+});
+
 router.get("/listCompanies", (req, res) => {
     req.db.query("Select id, name, description, logo from company where active = 1;")
         .then((results) => {
