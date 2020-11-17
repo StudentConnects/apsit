@@ -35,6 +35,8 @@ function checkLogin(req, res, next) {
     // }
 }
 
-router.use('/admin', (req, _, next) => {req.allowedUserType = "admin"; req.differentUserType = "student"; next();}, checkLogin, adminRouter);
-router.use('/student', (req, _, next) => {req.allowedUserType = "student"; req.differentUserType = "admin"; next();}, checkLogin, studentRouter);
+// router.use('/admin', (req, _, next) => {req.allowedUserType = "admin"; req.differentUserType = "student"; next();}, checkLogin, adminRouter);
+// router.use('/student', (req, _, next) => {req.allowedUserType = "student"; req.differentUserType = "admin"; next();}, checkLogin, studentRouter);
+router.use('/admin', adminRouter);
+router.use('/student', studentRouter);
 module.exports = router;

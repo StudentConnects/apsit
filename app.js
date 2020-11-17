@@ -56,15 +56,8 @@ try {
         });
     pool = pool.promise();
     const sessionStore = new MySQLStore(session_options, pool);
-    if (app.get('env') === 'production') {
-        app.set('trust proxy', 1) // trust first proxy
-        // sess.cookie.secure = true // serve secure cookies
-        // const csurf = require('csurf');
-        // app.use(csurf);
-    } else {
-        const cors = require('cors');
-        app.use(cors());
-    }
+
+    
     // attach all the middleware
     app.use(compression());
     app.use(helmet());
@@ -85,21 +78,46 @@ try {
     }));
     app.use(cookieParser());
     app.use(express.static(path.join(__dirname, 'public')));
-    app.use(session({
-        name: "cookie_id",
-        secret: process.env.sessionSecret,
-        resave: false,
-        saveUninitialized: false,
-        store: sessionStore,
-        cookie: {
-            maxAge: ONE_DAY,
-            sameSite: true,
-            // secure: true,
-            httpOnly: true
-        },
-        // unset: 'destroy',
-        // rolling: true
-    }));
+    
+    if (app.get('env') === 'production') {
+        app.set('trust proxy', 1) // trust first proxy
+        // sess.cookie.secure = true // serve secure cookies
+        // const csurf = require('csurf');
+        // app.use(csurf);
+        app.use(session({
+            name: "cookie_id",
+            secret: process.env.sessionSecret,
+            resave: false,
+            saveUninitialized: false,
+            store: sessionStore,
+            cookie: {
+                maxAge: ONE_DAY,
+                sameSite: true,
+                secure: true,
+                httpOnly: true
+            },
+            // unset: 'destroy',
+            // rolling: true
+        }));
+    } else {
+        const cors = require('cors');
+        app.use(cors());
+        app.use(session({
+            name: "cookie_id",
+            secret: process.env.sessionSecret,
+            resave: false,
+            saveUninitialized: false,
+            store: sessionStore,
+            cookie: {
+                maxAge: ONE_DAY,
+                sameSite: true,
+                // secure: true,
+                httpOnly: true
+            },
+            // unset: 'destroy',
+            // rolling: true
+        }));
+    }
     app.use((req, res, next) => {
         req.db = pool;
         next();
@@ -164,7 +182,8 @@ try {
     app.use(passport.session());
 
 
-    app.use('/users',(req, res, next) => {if(req.isAuthenticated()){debug("IN /users while Authenticated");next();} else {debug("IN /users while UnAuthenticated"); res.redirect("/login");}}, usersRouter);
+    // app.use('/users',(req, res, next) => {if(req.isAuthenticated()){debug("IN /users while Authenticated");next();} else {debug("IN /users while UnAuthenticated"); res.redirect("/login");}}, usersRouter);
+    app.use('/users', usersRouter);
     app.use('/', indexRouter);
 
 
