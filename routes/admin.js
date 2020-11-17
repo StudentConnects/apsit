@@ -26,8 +26,7 @@ router.get("/listCompanies", (req, res) => {
     });
 });
 
-router.post(
-  "/addCompany",
+router.post("/addCompany",
   checkSchema({
     company_name: {
       in: ["body"],
@@ -87,7 +86,7 @@ router.post(
         ])
         .then((results) => {
           if (results[0][0][0]["@status"] === "Company details added") {
-            debug("Inside if");
+            // debug("Inside if");
             res.send("Success");
           } else {
             res.status(500).send({ results });
@@ -126,6 +125,7 @@ router.post("/submitQuiz", (req, res) => {
             JSON.stringify(question.answer),
           ];
         });
+        
         return req.db.query(
           "insert into ?? (question, op1, op2, op3, op4, ans) values ?",
           [table, questionList]
@@ -190,6 +190,17 @@ router.patch("/enableCompany", (req, res) => {
         console.log(info);
         res.status(500).send(results.info);
       }
+    });
+});
+
+router.get('/listInactiveCompany', (req, res) => {
+  req.db.query('select name, description, logo from company where active=0;')
+    .then(results => {
+      res.send(results);
+    })
+    .catch(err => {
+      debug(err);
+      res.status(500).send(err);
     });
 });
 
