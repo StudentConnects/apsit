@@ -326,5 +326,22 @@ router.post("/uploadImage", (req, res) => {
     }
 })
 
+router.get('/companyQuizs', (req, res) => {
+    const { companyId } = req.query;
+    // res.send(companyId);
+    req.db.query('select q.id, q.quiz_id, q.quiz_time from quiz_list q join company c on q.company_id = c.id where q.company_id = ? and c.active = true and q.isActive = true;', [companyId])
+    .then((results) => {
+        if (results[0].length >= 1) {
+          res.send(results[0]);
+        } else if (results[0].length === 0) {
+          res.send("No Quiz");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        res.status(500).send(err);
+      });
+});
+
 router.use("/images", express.static(path.join(__dirname, "..", "custom-images")));
 module.exports = router;

@@ -181,6 +181,10 @@ const fetchQuiz_out = {
   incorrect: "Invalid"
 };
 
+const companyQuizs_out = {
+  success: [ { id: 2, quiz_id: 'java_adv', quiz_time: 20 } ],
+  failure: "No Quiz"
+};
 
 
 module.exports = {
@@ -202,6 +206,7 @@ module.exports = {
     enableCompany_out,
     allQuiz_out,
     fetchQuiz_out,
+    companyQuizs_out,
 
   }
 }

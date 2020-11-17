@@ -165,13 +165,30 @@ function db_listDatabases(con) {
   //   });
 
 
-  con.query('call fetchQuiz(?, ?);', [3, "java_adv"])
-    .then((result) => {
-      if(result[0][0][0]["@Return"]){
-        console.log(result[0][0][0]["@Return"]);
-    } else {
-      console.log(result[0][0]);
-    }
+  // con.query('call fetchQuiz(?, ?);', [3, "java_adv"])
+  //   .then((result) => {
+  //     if(result[0][0][0]["@Return"]){
+  //       console.log(result[0][0][0]["@Return"]);
+  //   } else {
+  //     console.log(result[0][0]);
+  //   }
+  //     con.end();
+  //   })
+  //   .catch((err) => {
+  //     console.log(err);
+  //     con.end();
+  //   });
+
+  con.query('select q.id, q.quiz_id, q.quiz_time from quiz_list q join company c on q.company_id = c.id where q.company_id = ? and c.active = true and q.isActive = true;', [3])
+    .then((results) => {
+      // console.log(results[0]);
+      if (results[0].length >= 1) {
+        console.log(results[0]);
+      } else if (results[0].length === 0) {
+        console.log("No Quiz");
+      } else {
+        console.log(results);
+      }
       con.end();
     })
     .catch((err) => {
