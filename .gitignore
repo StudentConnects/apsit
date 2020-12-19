@@ -105,3 +105,6 @@ dist
 
 # db Configs
 db_certificates/
+
+# dccache
+.dccache
