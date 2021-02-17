@@ -95,7 +95,34 @@ router.post("/addCompany",
     }
   }
 );
-router.post("/submitQuiz", (req, res) => {
+router.post("/submitQuiz",
+  checkSchema({
+    quizName: {
+      in: ["body"],
+      errorMessage: 'ID is wrong',
+      notEmpty: true,
+      isString: true,
+      trim: true,
+      isLength: {
+        options: {
+          max: 30,
+          min: 1,
+        },
+        errorMessage: "Needs to be min:1 letter name or maximum 30 letter name",
+      },
+    },
+    quizCompanyId: {
+      in: ["body"],
+      errorMessage: 'ID is wrong',
+      isInt: true,
+      toInt: true,
+    },
+    quizTime: {
+      in: ["body"],
+      errorMessage: "Enter proper quiz time",
+    }
+  }),
+(req, res) => {
   const data = req.body;
   // const data = ogData;
   data.quiz_Info.quizName = data.quiz_Info.quizName
@@ -151,7 +178,16 @@ router.post("/submitQuiz", (req, res) => {
   // res.send(data);
 });
 
-router.delete("/disableCompany", (req, res) => {
+router.delete("/disableCompany",
+  checkSchema({
+    id: {
+      in: ["body"],
+      errorMessage: 'ID is wrong',
+      isInt: true,
+      toInt: true,
+    }
+  }),
+ (req, res) => {
   const { id } = req.body;
   req.db
     .query("update company set active = 0 where id = ? and active= 1;", [id])
@@ -172,7 +208,16 @@ router.delete("/disableCompany", (req, res) => {
     });
 });
 
-router.patch("/enableCompany", (req, res) => {
+router.patch("/enableCompany",
+checkSchema({
+    id: {
+      in: ["body"],
+      errorMessage: 'ID is wrong',
+      isInt: true,
+      toInt: true,
+    }
+  }),
+  (req, res) => {
   const { id } = req.body;
   req.db
     .query("update company set active = 1 where id = ? and active= 0;", [id])
