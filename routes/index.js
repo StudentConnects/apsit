@@ -10,6 +10,10 @@ const ValidatorPizzaClient = require("validator-pizza-node");
 const formidable = require('formidable');
 const passport = require("passport");
 
+// Temperory arrangement for varification code
+const { v4: uuidv4 } = require('uuid');
+
+
 const emailVerifier = new ValidatorPizzaClient().validate;
 const formOptions = {
     uploadDir: path.join(__dirname, "..", "custom-images"),
@@ -26,6 +30,7 @@ router.get("/", (req, res) => {
     debug("into /");
     res.send(path.join(__dirname, "..", "public", "index.html"));
 });
+
 router.all('/test', function (req, res) {
     debug("into /test");
     if (req.session.viewCount) {
@@ -261,7 +266,7 @@ router.post('/register',
             // }]);
 
             // debug("Received at /register");
-            req.db.query("CALL Reg(?, ?, ?, ?, ?, ?, ?, ?, ?, ?);", [req.body.email, req.body.password, req.body.fullname, req.body.mobile, req.body.address, req.body.city, req.body.country, req.body.postcode, req.body.institute_name, req.body.photo])
+            req.db.query("CALL Reg(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);", [req.body.email, req.body.password, req.body.fullname, req.body.mobile, req.body.address, req.body.city, req.body.country, req.body.postcode, req.body.institute_name,"www.yahoo.com",uuidv4()])//temp arrangement for verrification code
                 .then((...results) => {
                     const data = results[0][0][0];
                     console.log(...results);
@@ -344,4 +349,7 @@ router.get('/companyQuizs', (req, res) => {
 });
 
 router.use("/images", express.static(path.join(__dirname, "..", "custom-images")));
+
+
+
 module.exports = router;
