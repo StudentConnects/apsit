@@ -93,7 +93,8 @@
 			</div>
 			<div class="col login-container">
 				<div id="login">
-					<form>
+					<!-- <form> -->
+						<form method="POST" action="/login" >
 						<img class="avatar" src="assets/images/undraw_profile_pic_ic5t.svg" alt="Profile">
 						<h2>Login</h2>
 
@@ -118,7 +119,8 @@
 
 
 						<a href="#" onclick="forgotpassword();return false;">Forgot Password?</a>
-						<input type="button" class="btn" id="btn_login" value="Login">
+						<!-- <input type="button" class="btn" id="btn_login" value="Login"> -->
+						<button type="submit" class="btn">Submit</button>
 					</form>
 				</div>
 				<div id="reset" class="hidden">

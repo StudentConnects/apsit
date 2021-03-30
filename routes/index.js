@@ -59,10 +59,16 @@ router.get("/login", function (req, res, next) {
 });
 
 router.post("/login", (req, res, next) => {
+    console.log(req.body)
+    
     if(req.isAuthenticated()) {
         debug("Is Authenticated");
-        res.redirect(301, "/users/student");
-        return;
+        res.redirect(301,'/users/student/')
+        // console.log('Appered here')
+        // console.log(__dirname)
+        // console.log(path.join(__dirname, "../public/student/user.html"))
+        // res.sendFile(path.join(__dirname, "../public/student/user.html"));
+        return; 
     }
     debug("Not Authenticated");
     passport.authenticate('local', {
