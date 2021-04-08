@@ -15,7 +15,6 @@ const passportLocal = require('passport-local').Strategy;
 // Required Routers
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
-// const studentRouter = require('./routes/student');
 // const { countReset } = require('console');
 
 // Variables Required
@@ -66,7 +65,7 @@ try {
         helmet.contentSecurityPolicy({
             directives: {
                 defaultSrc: ["'self'", "'unsafe-inline'", "maxcdn.bootstrapcdn.com", "fonts.googleapis.com", "fonts.gstatic.com"],
-                scriptSrc: ["'self'", "'unsafe-inline'", "cdnjs.cloudflare.com", "cdn.jsdelivr.net"],
+                scriptSrc: ["'self'", "'unsafe-inline'", "cdnjs.cloudflare.com", "cdn.jsdelivr.net", "maxcdn.bootstrapcdn.com"],
                 "style-src-elem": ["'self'", "'unsafe-inline'", "cdnjs.cloudflare.com", "maxcdn.bootstrapcdn.com", "cdn.jsdelivr.net", "fonts.googleapis.com"],
                 "img-src": ["data:", "'self'"]
             },
@@ -184,7 +183,6 @@ try {
 
 
     // app.use('/users',(req, res, next) => {if(req.isAuthenticated()){debug("IN /users while Authenticated");next();} else {debug("IN /users while UnAuthenticated"); res.redirect("/login");}}, usersRouter);
-    // app.use('/student',studentRouter);
     app.use('/users', usersRouter);
     app.use('/', indexRouter);
 

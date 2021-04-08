@@ -47,6 +47,8 @@
   }
 
   function showResults() {
+    //creating answer object 
+    let answerobject = {}
     // gather answer containers from our quiz
     const answerContainers = quizContainer.querySelectorAll(".answers");
 
@@ -59,7 +61,10 @@
       const answerContainer = answerContainers[questionNumber];
       const selector = `input[name=question_${questionNumber}]:checked`;
       const userAnswer = (answerContainer.querySelector(selector) || {}).value;
-
+      
+      // setting answer object to ship to backend
+      answerobject[questionNumber+1] = userAnswer;
+      
       // if answer is correct
       if (userAnswer === currentQuestion.correctAnswer) {
         // add to the number of correct answers
@@ -74,9 +79,21 @@
         answerContainers[questionNumber].style.color = "red";
       }
     });
-
     // show number of correct answers out of total
-    resultsContainer.innerHTML = `${numCorrect} out of ${myQuestions.length}`;
+    resultsContainer.innerHTML = answerContainers//`${numCorrect} out of ${myQuestions.length}`;
+    // console.log(answerobject)
+    // const selector = `input[name=question_${0}]:checked`;
+    // console.log(answerContainers[0])
+    
+    fetch("/users/student/submitQuiz", {
+      method: "POST",
+      body: JSON.stringify(answerobject),
+      headers: { "Content-type": "application/json; charset=UTF-8" },
+    })
+      .then((response) =>{response.json()})
+      .then((json) => console.log(json))
+      .catch((err) => console.log(err));
+
   }
 
   function showSlide(n) {
