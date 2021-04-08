@@ -36,6 +36,7 @@ let compList;
 document.getElementById("add_company").addEventListener("click", showmodal);
 
 function showmodal() {
+  // jQuery.noConflict();
   $("#modalcompany").modal("show");
 }
 document.getElementById("comapany_add").addEventListener("click", comapany_add);

@@ -15,6 +15,7 @@
 
  */
 
+
 (function() {
   isWindows = navigator.platform.indexOf('Win') > -1 ? true : false;
   if (isWindows) {

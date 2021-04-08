@@ -1,4 +1,7 @@
-document.getElementById("btn_login").addEventListener("click", login);
+// document.getElementById("btn_login").addEventListener("click", login);
+
+document.getElementById("form_login").addEventListener("submit", login);
+
 document.getElementById("btn_recover").addEventListener("click", recover);
 
 
@@ -19,7 +22,10 @@ function login() {
     if (!(isFormEmpty(email, password))) {
         if (validateEmail(email)) {
             if (validatePassword(password)) {
-                submit_login(email, password);
+                // submit_login(email, password);
+                return true
+            }else{
+                return false
             }
         }
     }

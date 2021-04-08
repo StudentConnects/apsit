@@ -37,5 +37,13 @@ router.get('/fetchQuiz/:id/:quizId', (req, res) => {
         // res.send({id, quizId});
 })
 
+// Submit Quiz testing Route
+
+router.post('/submitQuiz',(req,res,next)=>{
+    console.log(req.body)
+    res.send('Hi')
+});
+
+
 router.use(express.static(path.join(__dirname, "..", "public", "student")));
 module.exports = router;

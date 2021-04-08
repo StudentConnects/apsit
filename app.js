@@ -65,7 +65,7 @@ try {
         helmet.contentSecurityPolicy({
             directives: {
                 defaultSrc: ["'self'", "'unsafe-inline'", "maxcdn.bootstrapcdn.com", "fonts.googleapis.com", "fonts.gstatic.com"],
-                scriptSrc: ["'self'", "'unsafe-inline'", "cdnjs.cloudflare.com", "cdn.jsdelivr.net"],
+                scriptSrc: ["'self'", "'unsafe-inline'", "cdnjs.cloudflare.com", "cdn.jsdelivr.net", "maxcdn.bootstrapcdn.com"],
                 "style-src-elem": ["'self'", "'unsafe-inline'", "cdnjs.cloudflare.com", "maxcdn.bootstrapcdn.com", "cdn.jsdelivr.net", "fonts.googleapis.com"],
                 "img-src": ["data:", "'self'"]
             },
@@ -100,8 +100,8 @@ try {
             // rolling: true
         }));
     } else {
-        const cors = require('cors');
-        app.use(cors());
+        // const cors = require('cors');
+        // app.use(cors());
         app.use(session({
             name: "cookie_id",
             secret: process.env.sessionSecret,
@@ -130,7 +130,7 @@ try {
         },async function (email, givenPassword, done) {
             debug("LINE 20");
             debug(email, givenPassword);
-            return pool.query('Select id, password, name, uType, isActive, isVerified, verificationLink from user where email = ?;', [email])
+            return pool.query('Select id, password, name, uType, isActive, isVerified, verificationCode from user where email = ?;', [email])
                 .then(results => {
                     if (results[0].length > 0) {
                         const {
@@ -140,7 +140,7 @@ try {
                             uType,
                             isActive,
                             isVerified,
-                            verificationLink
+                            verificationCode
                         } = results[0][0];
                         if (password == givenPassword) {
                             console.log("Success");
@@ -150,7 +150,7 @@ try {
                                 uType,
                                 isActive,
                                 isVerified,
-                                verificationLink
+                                verificationCode
                             });
                         } else {
                             debug("Invalid Password");
