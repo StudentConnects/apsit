@@ -280,8 +280,6 @@
         }
     };
 
-
-
     var pieChart = {
         type: 'pie',
         data: {
@@ -360,6 +358,16 @@
                                     "rgba(237,127,126,0.7)",
                                     "rgba(0,0,0,0.2)",
                                     "rgba(237,127,126,0.5)"
+                                    "#ba995b",
+                                    "#027373",
+                                    "#ffc832",
+                                    "#1fa88c"
+                                ],
+                hoverBackgroundColor: [
+                                    "#baab8d",
+                                    "#82a3a3",
+                                    "#fde6a7",
+                                    "#8dc8bc"
                                 ]
 
                             }],
@@ -368,6 +376,10 @@
                             "green",
                             "green",
                             "green"
+                            "Quants",
+                            "Logical",
+                            "Verbal Aptitude",
+							"Essay"
                         ]
         },
         options: {
@@ -401,9 +413,6 @@
             }
         }
     };
-
-
-
 
     window.onload = function () {
         var ctx = document.getElementById("sales-chart").getContext("2d");
@@ -499,5 +508,6 @@
 
 
 
-
+    }; 
+    
 })(jQuery);
