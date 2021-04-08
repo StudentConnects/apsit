@@ -59,7 +59,7 @@ router.post("/login", (req, res, next) => {
         res.redirect(301, "/users/student");
         return;
     }
-    debug("Not Authenticated");
+    // debug("Not Authenticated");
     passport.authenticate('local', {
         failureRedirect: '/login',
         successRedirect: "/users/student"
