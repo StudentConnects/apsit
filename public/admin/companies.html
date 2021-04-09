@@ -51,6 +51,27 @@ The above copyright notice and this permission notice shall be included in all c
         color: #ffba00;
       }
     </style>
+
+  <style>
+    .logo_text {
+      font-family: "Roboto Slab", serif;
+      font-size: 36px;
+      font-weight: 700;
+      line-height: 0.75;
+      color: #000000;
+      vertical-align: middle;
+      margin-left: 7px;
+      -webkit-transition: all 200ms ease;
+      -moz-transition: all 200ms ease;
+      -ms-transition: all 200ms ease;
+      -o-transition: all 200ms ease;
+      transition: all 200ms ease;
+    }
+
+    .logo_text span {
+      color: #ffba00;
+    }
+  </style>
 </head>
 
 <body class="">
@@ -236,6 +257,54 @@ The above copyright notice and this permission notice shall be included in all c
                     </table>
                   </div>
                 </div>
+                      <table class="table" id="company_list">
+                        <thead>
+                          <th style="font-weight: bold">#</th>
+                          <th style="font-weight: bold">Company Name</th>
+                          <th style="font-weight: bold">Company Description</th>
+                          <th style="font-weight: bold">Edit</th>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>01</td>
+                            <td>Infosys</td>
+                            <td>Infosys Limited</td>
+                            <td class="text-primary">
+                              <button class="btn btn-success btn-fab btn-fab-mini btn-round">
+                                <i class="material-icons">edit</i>
+                              </button>
+                              <button class="btn btn-danger btn-fab btn-fab-mini btn-round">
+                                <i class="material-icons">delete</i>
+                              </button>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                  </div>
+                </div>
+                <!-- <table class="table" id="company_list">
+                  <thead>
+                    <th style="font-weight: bold">#</th>
+                    <th style="font-weight: bold">Company Name</th>
+                    <th style="font-weight: bold">Company Description</th>
+                    <th style="font-weight: bold">Edit</th>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>01</td>
+                      <td>Test 1</td>
+                      <td>Infosys</td>
+                      <td class="text-primary">
+                        <button class="btn btn-success btn-fab btn-fab-mini btn-round">
+                          <i class="material-icons">edit</i>
+                        </button>
+                        <button class="btn btn-danger btn-fab btn-fab-mini btn-round">
+                          <i class="material-icons">delete</i>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table> -->
               </div>
             </div>
           </div>
@@ -504,7 +573,12 @@ The above copyright notice and this permission notice shall be included in all c
   <!--   Core JS Files   -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
     integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg=="
-    crossorigin="anonymous"></script>
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
+    integrity="sha512-/DXTXr6nQodMUiq+IUJYCt2PPOUjrHJ9wFrqpJ3XkgPNOZVfMok7cRw6CSxyCQxXn6ozlESsSh1/sMCTF1rL/g=="
+    crossorigin="anonymous"></script> -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
+      integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg=="
+      crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
     integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
     crossorigin="anonymous"></script>
@@ -516,7 +590,8 @@ The above copyright notice and this permission notice shall be included in all c
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/1.5.0/perfect-scrollbar.min.js"
     integrity="sha512-yUNtg0k40IvRQNR20bJ4oH6QeQ/mgs9Lsa6V+3qxTj58u2r+JiAYOhOW0o+ijuMmqCtCEg7LZRA+T4t84/ayVA=="
     crossorigin="anonymous"></script>
-
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/4.0.2/bootstrap-material-design.umd.min.js' integrity='sha512-dG5ZzvFUfkBdjYdJbsKdGGh8tOa9fv9wHmiChCFJYHRIW1XgfxN2cGzt2HaEPeunXqbAQXBOJvSBQpGOl0qikw==' crossorigin='anonymous'></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/1.5.0/perfect-scrollbar.min.js" integrity="sha512-yUNtg0k40IvRQNR20bJ4oH6QeQ/mgs9Lsa6V+3qxTj58u2r+JiAYOhOW0o+ijuMmqCtCEg7LZRA+T4t84/ayVA==" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
   <!-- Library for adding dinamically elements -->
 
