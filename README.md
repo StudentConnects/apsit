@@ -6,4 +6,3 @@
 
 - **![OSSAR](https://github.com/StudentConnects/apsit/workflows/OSSAR/badge.svg?branch=main)**
 
-Sample Changes check

@@ -9,6 +9,7 @@ const {
 const ValidatorPizzaClient = require("validator-pizza-node");
 const formidable = require('formidable');
 const passport = require("passport");
+const uuid = require('uuid')
 
 const emailVerifier = new ValidatorPizzaClient().validate;
 const formOptions = {
@@ -261,7 +262,7 @@ router.post('/register',
             // }]);
 
             // debug("Received at /register");
-            req.db.query("CALL Reg(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);", [req.body.email, req.body.password, req.body.fullname, req.body.mobile, req.body.address, req.body.city, req.body.country, req.body.postcode, req.body.institute_name, req.body.photo, ''])
+            req.db.query("CALL Reg(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);", [req.body.email, req.body.password, req.body.fullname, req.body.mobile, req.body.address, req.body.city, req.body.country, req.body.postcode, req.body.institute_name, req.body.photo,uuid.v4().splice(-6)])
                 .then((...results) => {
                     const data = results[0][0][0];
                     console.log(...results);
