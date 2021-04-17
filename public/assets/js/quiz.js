@@ -80,14 +80,15 @@
       }
     });
     // show number of correct answers out of total
-    resultsContainer.innerHTML = answerContainers//`${numCorrect} out of ${myQuestions.length}`;
+    resultsContainer.innerHTML = `${numCorrect} out of ${myQuestions.length}`;
+    let marks ={ total: numCorrect }
     // console.log(answerobject)
     // const selector = `input[name=question_${0}]:checked`;
     // console.log(answerContainers[0])
     
     fetch("/users/student/submitQuiz", {
       method: "POST",
-      body: JSON.stringify(answerobject),
+      body: JSON.stringify([answerobject,marks]),
       headers: { "Content-type": "application/json; charset=UTF-8" },
     })
       .then((response) =>{response.json()})
