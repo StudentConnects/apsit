@@ -59,7 +59,7 @@ router.post("/login", (req, res, next) => {
         res.redirect(301, "/users/student");
         return;
     }
-    debug("Not Authenticated");
+    // debug("Not Authenticated");
     passport.authenticate('local', {
         failureRedirect: '/login',
         successRedirect: "/users/student"
@@ -261,7 +261,7 @@ router.post('/register',
             // }]);
 
             // debug("Received at /register");
-            req.db.query("CALL Reg(?, ?, ?, ?, ?, ?, ?, ?, ?, ?);", [req.body.email, req.body.password, req.body.fullname, req.body.mobile, req.body.address, req.body.city, req.body.country, req.body.postcode, req.body.institute_name, req.body.photo])
+            req.db.query("CALL Reg(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);", [req.body.email, req.body.password, req.body.fullname, req.body.mobile, req.body.address, req.body.city, req.body.country, req.body.postcode, req.body.institute_name, req.body.photo, ''])
                 .then((...results) => {
                     const data = results[0][0][0];
                     console.log(...results);
@@ -341,6 +341,19 @@ router.get('/companyQuizs', (req, res) => {
         console.log(err);
         res.status(500).send(err);
       });
+});
+
+router.get('/logout' ,(req, res) => {
+    req.logOut();        
+    req.session.destroy((err) => {
+        if(err){
+            console.log(err);
+        }
+        req.user = '';
+        res.redirect('/');
+        req.allowedUserType = req.differentUserType = '';
+    });
+    
 });
 
 router.use("/images", express.static(path.join(__dirname, "..", "custom-images")));

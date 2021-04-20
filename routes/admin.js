@@ -14,7 +14,7 @@ router.all('/test', function (_req, res) {
     res.send("TEST SUCCESS");
 });
 
-router.get("/listCompanies", (req, res) => {
+router.get("/listActiveCompanies", (req, res) => {
   req.db
     .query("Select id, name, description, logo from company where active = 1;")
     .then((results) => {

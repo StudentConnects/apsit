@@ -100,8 +100,8 @@ try {
             // rolling: true
         }));
     } else {
-        const cors = require('cors');
-        app.use(cors());
+        // const cors = require('cors');
+        // app.use(cors());
         app.use(session({
             name: "cookie_id",
             secret: process.env.sessionSecret,

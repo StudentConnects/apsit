@@ -36,6 +36,7 @@ let compList;
 document.getElementById("add_company").addEventListener("click", showmodal);
 
 function showmodal() {
+  // jQuery.noConflict();
   $("#modalcompany").modal("show");
 }
 document.getElementById("comapany_add").addEventListener("click", comapany_add);
@@ -95,7 +96,7 @@ function comapany_add() {
 document.addEventListener(
   "DOMContentLoaded",
   function () {
-    fetch("/users/admin/listCompanies", {
+    fetch("/users/admin/listActiveCompanies", {
       method: "GET",
       headers: {
         "Content-type": "application/json; charset=UTF-8",
@@ -142,7 +143,7 @@ function append_json(data) {
   });
 
   // INSERTING ROWS INTO TABLE
-  $("#company_list").append(company);
+  $("#activeCompany_list").append(company);
 }
 
 function editcompany(x) {
