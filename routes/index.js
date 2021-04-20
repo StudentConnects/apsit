@@ -51,10 +51,12 @@ router.get("/login", function (req, res, next) {
     }
 }, (req, res) => {
     // res.sendFile(path.join(__dirname, "login.html"));
-    res.send("INTO LOGIN ---> GET");
+    // res.send("INTO LOGIN ---> GET");
+    res.redirect('/login.html');
 });
 
 router.post("/login", (req, res, next) => {
+    //console.log([req.user,res.user])
     if(req.isAuthenticated()) {
         debug("Is Authenticated");
         res.redirect(301, "/users/student");
@@ -262,7 +264,7 @@ router.post('/register',
             // }]);
 
             // debug("Received at /register");
-            req.db.query("CALL Reg(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);", [req.body.email, req.body.password, req.body.fullname, req.body.mobile, req.body.address, req.body.city, req.body.country, req.body.postcode, req.body.institute_name, req.body.photo,uuid.v4().splice(-6)])
+            req.db.query("CALL Reg(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);", [req.body.email, req.body.password, req.body.fullname, req.body.mobile, req.body.address, req.body.city, req.body.country, req.body.postcode, req.body.institute_name, req.body.photo,uuid.v4().slice(-6)])
                 .then((...results) => {
                     const data = results[0][0][0];
                     console.log(...results);
@@ -343,6 +345,24 @@ router.get('/companyQuizs', (req, res) => {
         res.status(500).send(err);
       });
 });
+
+router.get('/logout', (req,res)=>{
+    req.logOut()
+    req.allowedUserType='';
+    req.differentUserType = '';
+    req.user='';
+    req.session.destroy((err)=>{
+        if(err){
+            console.log(err);
+        }
+        res.redirect('/')
+    })
+    
+    // await req.logOut();
+    // req.session = null;
+    // res.clearCookie("cookie_id")
+    // return res.redirect('/')
+})
 
 router.use("/images", express.static(path.join(__dirname, "..", "custom-images")));
 module.exports = router;

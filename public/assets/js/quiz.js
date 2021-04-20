@@ -169,6 +169,8 @@ function toggleQuiz() {
   quiz_question.classList.toggle("hidden");
   select_company.classList.toggle("hidden");
   quizTimer();
+  window.location.pathname = '/quiz/1/abc'
+  
 }
 
 function quizTimer() {
