@@ -26,6 +26,18 @@ router.get("/listActiveCompanies", (req, res) => {
     });
 });
 
+router.get("/listInactiveCompanies", (req, res) => {
+  req.db
+    .query("Select id, name, description, logo from company where active = 0;")
+    .then((results) => {
+      res.send(results[0]);
+    })
+    .catch((err) => {
+      debug(err);
+      res.status(500).send(err);
+    });
+});
+
 router.post("/addCompany",
   checkSchema({
     company_name: {
