@@ -20,12 +20,17 @@ router.get("/allQuiz", (req, res) => {
 });
 
 router.get('/fetchQuiz/:id/:quizId', (req, res) => {
+    // console.log(req.params)
     const { id, quizId } = req.params;
-    req.db.query('call fetchQuiz(?, ?);', [id, quizId])
+    req.db.query('call fetchQuiz(?, ?);', [parseInt(id), quizId])   
+    //(`Select * from ${quizId} `) //(Select * from quiz_list where id = ${id} and isActive = 1)
+        //'call fetchQuiz(?, ?);', [parseInt(id), quizId])
         .then(results => {
+            // console.log(results[0])
             if(results[0][0][0]["@Return"]){
                 res.status(400).send(results[0][0][0]["@Return"])
             } else {
+                // console.log(results[0][0])
                 res.send(results[0][0]);
             }
         })
