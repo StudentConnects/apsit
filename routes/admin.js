@@ -71,10 +71,10 @@ router.post("/addCompany",
       notEmpty: true,
       isString: true,
       trim: true,
-      isURL: true,
+      //isURL: true,
       isLength: {
         options: {
-          max: 325,
+          max: 500000,
           min: 11,
         },
         errorMessage: "Needs to be min: 11 Max 325",
@@ -82,7 +82,9 @@ router.post("/addCompany",
     },
   }),
   (req, res) => {
+    // console.log(req.body.company_logo)
     const results = validationResult(req);
+    console.log(results)
     if (!results.isEmpty()) {
       debug(req.body);
       res.status(400).json({
@@ -90,13 +92,14 @@ router.post("/addCompany",
       });
     } else {
       req.db
-        .query("call addComp(?, ?, ?, ?);", [
+        .query("call addCOMP(?, ?, ?, ?);", [
           req.body.isActive ? 1 : 0,
           req.body.company_name,
           req.body.company_description,
-          req.body.company_logo,
+          req.body.company_logo
         ])
         .then((results) => {
+          console.log(results)
           if (results[0][0][0]["@status"] === "Company details added") {
             // debug("Inside if");
             res.send("Success");
@@ -107,6 +110,8 @@ router.post("/addCompany",
     }
   }
 );
+
+
 router.post("/submitQuiz",
   checkSchema({
     quizName: {
@@ -143,7 +148,7 @@ router.post("/submitQuiz",
     .join("_");
   debug("MAKING ENTERING DB");
   req.db
-    .query("call addQuiz1(?, ?, ?, ?);", [
+    .query("call addQuiz(?, ?, ?, ?);", [
       data.quiz_Info.quizName,
       data.quiz_Info.quizCompanyId,
       data.quiz_Info.quizTime,
@@ -173,7 +178,7 @@ router.post("/submitQuiz",
         debug("ERROR at 71");
         debug(results[0][0][0]);
         debug(results);
-        res.status(500).send(results[0][0][0]["@status"]);
+        // res.status(500).send(results[0][0][0]["@status"]);
       }
     })
     .then((results) => {

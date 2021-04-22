@@ -1,8 +1,8 @@
 const express = require('express');
 const path = require('path');
 const debug = require('debug')('backend:server:student.js');
-
 const router = express.Router();
+const uuid = require('uuid');
 
 router.get("/", (_req, res) => {
     res.sendFile(path.join(__dirname, "..", "public", "student", "user.html"));
@@ -20,12 +20,17 @@ router.get("/allQuiz", (req, res) => {
 });
 
 router.get('/fetchQuiz/:id/:quizId', (req, res) => {
+    // console.log(req.params)
     const { id, quizId } = req.params;
-    req.db.query('call fetchQuiz(?, ?);', [id, quizId])
+    req.db.query('call fetchQuiz(?, ?);', [parseInt(id), quizId])   
+    //(`Select * from ${quizId} `) //(Select * from quiz_list where id = ${id} and isActive = 1)
+        //'call fetchQuiz(?, ?);', [parseInt(id), quizId])
         .then(results => {
+            // console.log(results[0])
             if(results[0][0][0]["@Return"]){
                 res.status(400).send(results[0][0][0]["@Return"])
             } else {
+                // console.log(results[0][0])
                 res.send(results[0][0]);
             }
         })
@@ -39,9 +44,16 @@ router.get('/fetchQuiz/:id/:quizId', (req, res) => {
 
 // Submit Quiz testing Route
 
-router.post('/submitQuiz',(req,res,next)=>{
-    console.log(req.body)
-    res.send('Hi')
+router.post('/submitQuiz',(req,res)=>{
+    // console.log(JSON.stringify(req.body[0]))
+    // console.log(req.user)
+    // console.log(typeof(req.user.id))
+    req.db.query('insert into submitted_quiz( uid , qid , answers , marks ) values ( ? , ? , ? , ? )',[req.user.id,'quiz_id'+uuid.v4().slice(-10),JSON.stringify(req.body[0]),req.body[1].total])
+    .then(result=>console.log(result))
+    .catch(err => console.log(err));
+    res.json({
+        message:'Test Submitted Sucessfully !!!'
+    })
 });
 
 

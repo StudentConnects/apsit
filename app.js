@@ -151,6 +151,7 @@ try {
                                 isActive,
                                 isVerified,
                                 verificationCode
+                                
                             });
                         } else {
                             debug("Invalid Password");

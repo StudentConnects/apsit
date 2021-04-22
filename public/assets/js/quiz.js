@@ -80,14 +80,15 @@
       }
     });
     // show number of correct answers out of total
-    resultsContainer.innerHTML = answerContainers//`${numCorrect} out of ${myQuestions.length}`;
+    resultsContainer.innerHTML = `${numCorrect} out of ${myQuestions.length}`;
+    let marks ={ total: numCorrect }
     // console.log(answerobject)
     // const selector = `input[name=question_${0}]:checked`;
     // console.log(answerContainers[0])
     
     fetch("/users/student/submitQuiz", {
       method: "POST",
-      body: JSON.stringify(answerobject),
+      body: JSON.stringify([answerobject,marks]),
       headers: { "Content-type": "application/json; charset=UTF-8" },
     })
       .then((response) =>{response.json()})
@@ -162,12 +163,30 @@
   });
 })();
 
-function toggleQuiz() {
-  let quiz_question = document.getElementById("quiz_question_container");
-  let select_company = document.getElementById("select_company_quiz");
-  quiz_question.classList.toggle("hidden");
-  select_company.classList.toggle("hidden");
-  quizTimer();
+function toggleQuiz(id,quizid) {
+  // window.location.pathname = '/users/student/fetchQuiz/'+ id + '/' +quizid
+  // let quiz_question = document.getElementById("quiz_question_container");
+  // let select_company = document.getElementById("select_company_quiz");
+  // quiz_question.classList.toggle("hidden");
+  // select_company.classList.toggle("hidden");
+  quizTimer();   
+ 
+  fetch('/users/student/fetchQuiz/'+id+'/'+quizid,{
+    method: "GET",
+    headers: { "Content-type": "application/json; charset=UTF-8" }, 
+  })
+  .then((response) =>
+        response.json().then((text) => {
+          if (response.ok) {
+            console.log(text);
+            // append_json(text);
+            // let myQuestions = text
+          }
+          return response.status;
+        })
+      )
+  .then(result => console.log(result))
+  .catch((err) => console.log(err));
 }
 
 function quizTimer() {
@@ -223,8 +242,8 @@ document.addEventListener(
 function append_json(data) {
   var company = "";
 
-  var buttons =
-    '<button type="button" class="btn btn-success" onclick="toggleQuiz()" >Start Quiz</button>';
+  // var buttons =
+  //   '<button type="button" class="btn btn-success" onclick="toggleQuiz()" >Start Quiz</button>';
 
   // ITERATING THROUGH OBJECTS
   $.each(data, function (key, value) {
@@ -235,7 +254,7 @@ function append_json(data) {
     company += "<td>" + value.companyName + "</td>";
     company += "<td>" + value.quizName + "</td>";
     company += "<td>" + value.quiz_time + "</td>";
-    company += '<td class="td-actions">' + buttons + "</td>";
+    company += '<td class="td-actions">'+ '<button type="button" class="btn btn-success" onclick="toggleQuiz('+ "'" +value.id +"','"+ value.quizName+ "'" + ')" >Start Quiz</button>' + "</td>"; //
     company += "</tr>";
   });
 
