@@ -30,10 +30,27 @@ The above copyright notice and this permission notice shall be included in all c
     crossorigin="anonymous" />
   <!-- CSS Files -->
   <link href="/assets/css/material-dashboard.css?v=2.1.2" rel="stylesheet" />
-<<<<<<< HEAD
 
-=======
->>>>>>> bbfb54a5fdf79f894f1a8dfbe86635a2f7297d23
+    <style>
+      .logo_text {
+        font-family: "Roboto Slab", serif;
+        font-size: 36px;
+        font-weight: 700;
+        line-height: 0.75;
+        color: #000000;
+        vertical-align: middle;
+        margin-left: 7px;
+        -webkit-transition: all 200ms ease;
+        -moz-transition: all 200ms ease;
+        -ms-transition: all 200ms ease;
+        -o-transition: all 200ms ease;
+        transition: all 200ms ease;
+      }
+
+      .logo_text span {
+        color: #ffba00;
+      }
+    </style>
 
   <style>
     .logo_text {
@@ -215,6 +232,31 @@ The above copyright notice and this permission notice shall be included in all c
                     </table>
                   </div>
                   <div class="tab-pane fade" id="inactive_comp" role="tabpanel" aria-labelledby="inactive_tab">
+                    <table class="table" id="company_list">
+                      <thead>
+                        <th style="font-weight: bold">#</th>
+                        <th style="font-weight: bold">Company Name</th>
+                        <th style="font-weight: bold">Company Description</th>
+                        <th style="font-weight: bold">Edit</th>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>01</td>
+                          <td>Infosys</td>
+                          <td>Infosys Limited</td>
+                          <td class="text-primary">
+                            <button class="btn btn-success btn-fab btn-fab-mini btn-round">
+                              <i class="material-icons">edit</i>
+                            </button>
+                            <button class="btn btn-danger btn-fab btn-fab-mini btn-round">
+                              <i class="material-icons">delete</i>
+                            </button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
                       <table class="table" id="company_list">
                         <thead>
                           <th style="font-weight: bold">#</th>
@@ -529,6 +571,8 @@ The above copyright notice and this permission notice shall be included in all c
     </div>
   </div>
   <!--   Core JS Files   -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
+    integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg=="
   <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
     integrity="sha512-/DXTXr6nQodMUiq+IUJYCt2PPOUjrHJ9wFrqpJ3XkgPNOZVfMok7cRw6CSxyCQxXn6ozlESsSh1/sMCTF1rL/g=="
     crossorigin="anonymous"></script> -->
@@ -539,9 +583,15 @@ The above copyright notice and this permission notice shall be included in all c
     integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
     crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script
+    src='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/4.0.2/bootstrap-material-design.umd.min.js'
+    integrity='sha512-dG5ZzvFUfkBdjYdJbsKdGGh8tOa9fv9wHmiChCFJYHRIW1XgfxN2cGzt2HaEPeunXqbAQXBOJvSBQpGOl0qikw=='
+    crossorigin='anonymous'></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/1.5.0/perfect-scrollbar.min.js"
+    integrity="sha512-yUNtg0k40IvRQNR20bJ4oH6QeQ/mgs9Lsa6V+3qxTj58u2r+JiAYOhOW0o+ijuMmqCtCEg7LZRA+T4t84/ayVA=="
+    crossorigin="anonymous"></script>
   <script src='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/4.0.2/bootstrap-material-design.umd.min.js' integrity='sha512-dG5ZzvFUfkBdjYdJbsKdGGh8tOa9fv9wHmiChCFJYHRIW1XgfxN2cGzt2HaEPeunXqbAQXBOJvSBQpGOl0qikw==' crossorigin='anonymous'></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/1.5.0/perfect-scrollbar.min.js" integrity="sha512-yUNtg0k40IvRQNR20bJ4oH6QeQ/mgs9Lsa6V+3qxTj58u2r+JiAYOhOW0o+ijuMmqCtCEg7LZRA+T4t84/ayVA==" crossorigin="anonymous"></script>
-
   <script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
   <!-- Library for adding dinamically elements -->
 
