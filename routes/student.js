@@ -7,6 +7,7 @@ const uuid = require('uuid');
 router.get("/", (_req, res) => {
     res.sendFile(path.join(__dirname, "..", "public", "student", "user.html"));
 });
+
 router.get("/allQuiz", (req, res) => {
 
     req.db.query("Select quiz_list.id, c.name as companyName, quiz_list.quiz_id as quizName, quiz_list.quiz_time from quiz_list inner join company c on quiz_list.company_id = c.id where quiz_list.isActive=1 and c.active = 1;")
@@ -18,6 +19,18 @@ router.get("/allQuiz", (req, res) => {
             res.status(500).send(err);
         })
 });
+
+router.get("/listCompanies", (req, res) => {
+    req.db
+      .query("Select id, name, description, logo from company where active = 1;")
+      .then((results) => {
+        res.send(results[0]);
+      })
+      .catch((err) => {
+        debug(err);
+        res.status(500).send(err);
+      });
+  });
 
 router.get('/fetchQuiz/:id/:quizId', (req, res) => {
     // console.log(req.params)

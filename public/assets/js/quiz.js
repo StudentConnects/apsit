@@ -261,3 +261,34 @@ function append_json(data) {
   // INSERTING ROWS INTO TABLE
   $("#allQuiz").append(company);
 }
+
+
+document.addEventListener(
+  "DOMContentLoaded",
+  function () {
+    fetch("/users/student/listCompanies", {
+      method: "GET",
+      headers: { "Content-type": "application/json; charset=UTF-8" },
+    })
+      .then((response) =>
+        response.json().then((text) => {
+          if (response.ok) {
+            let select = document.getElementById("quizCompany");
+            let index;
+            console.log(text);
+            for (index in text) {
+              select.options[select.options.length] = new Option(
+                text[index].name,
+                text[index].id
+              );
+            }
+            $(".selectpicker").selectpicker("refresh");
+          }
+          return response.status;
+        })
+      )
+      .then((json) => console.log(json))
+      .catch((err) => console.log(err));
+  },
+  false
+);
