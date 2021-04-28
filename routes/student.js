@@ -56,6 +56,16 @@ router.post('/submitQuiz',(req,res)=>{
     })
 });
 
-
+router.get("/listCompanies", (req, res) => {
+  req.db
+    .query("Select id, name, description, logo from company where active = 1;")
+    .then((results) => {
+      res.send(results[0]);
+    })
+    .catch((err) => {
+      debug(err);
+      res.status(500).send(err);
+    });
+});
 router.use(express.static(path.join(__dirname, "..", "public", "student")));
 module.exports = router;

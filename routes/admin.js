@@ -255,17 +255,6 @@ checkSchema({
     });
 });
 
-router.get('/listInactiveCompany', (req, res) => {
-  req.db.query('select name, description, logo from company where active=0;')
-    .then(results => {
-      res.send(results);
-    })
-    .catch(err => {
-      debug(err);
-      res.status(500).send(err);
-    });
-});
-
 router.use(express.static(path.join(__dirname, "..", "public", "admin")));
 // debug(path.join(__dirname, "..", "public", "admin"))
 module.exports = router;

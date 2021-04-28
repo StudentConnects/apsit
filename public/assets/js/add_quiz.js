@@ -19,7 +19,7 @@
 document.addEventListener(
   "DOMContentLoaded",
   function () {
-    fetch("/users/admin/listCompanies", {
+    fetch("/users/admin/listActiveCompanies", {
       method: "GET",
       headers: { "Content-type": "application/json; charset=UTF-8" },
     })
@@ -28,7 +28,6 @@ document.addEventListener(
           if (response.ok) {
             let select = document.getElementById("quizCompany");
             let index;
-            console.log(text);
             for (index in text) {
               select.options[select.options.length] = new Option(
                 text[index].name,
