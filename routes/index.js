@@ -346,23 +346,36 @@ router.get('/companyQuizs', (req, res) => {
       });
 });
 
-router.get('/logout', (req,res)=>{
-    req.logOut()
-    req.allowedUserType='';
-    req.differentUserType = '';
-    req.user='';
-    req.session.destroy((err)=>{
+router.get('/logout' ,(req, res) => {
+    req.logOut();        
+    req.session.destroy((err) => {
         if(err){
             console.log(err);
         }
-        res.redirect('/')
-    })
+        req.user = '';
+        res.redirect('/');
+        req.allowedUserType = req.differentUserType = '';
+    });
     
-    // await req.logOut();
-    // req.session = null;
-    // res.clearCookie("cookie_id")
-    // return res.redirect('/')
-})
+});
+
+// router.get('/logout', (req,res)=>{
+//     req.logOut()
+//     req.allowedUserType='';
+//     req.differentUserType = '';
+//     req.user='';
+//     req.session.destroy((err)=>{
+//         if(err){
+//             console.log(err);
+//         }
+//         res.redirect('/')
+//     })
+    
+//     // await req.logOut();
+//     // req.session = null;
+//     // res.clearCookie("cookie_id")
+//     // return res.redirect('/')
+// })
 
 router.use("/images", express.static(path.join(__dirname, "..", "custom-images")));
 module.exports = router;

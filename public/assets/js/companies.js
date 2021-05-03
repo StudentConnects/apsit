@@ -6,12 +6,7 @@
 //       var company = '';
 
 //       var buttons =
-//         '<button class="btn btn-success btn-fab btn-fab-mini btn-round"
-//         onclick="editcompany()">' + '                          <i
-//         class="material-icons">edit</i>' + ' </button>' + ' <button
-//         class="btn btn-danger btn-fab btn-fab-mini btn-round"
-//         onclick="deletecompany()">' + '                          <i
-//         class="material-icons">delete</i>' + ' </button>';
+//         '<button class="btn btn-success btn-fab btn-fab-mini btn-round" onclick="editcompany()">' + '<i class="material-icons">edit</i>' + ' </button>' + ' <button class="btn btn-danger btn-fab btn-fab-mini btn-round" onclick="deletecompany()">' + '<i class="material-icons">delete</i>' + ' </button>';
 
 //       // ITERATING THROUGH OBJECTS
 //       $.each(data, function (key, value) {
@@ -30,6 +25,7 @@
 //       $('#company_list').append(company);
 //     });
 // });
+
 let compList;
 // let question_edit = false;
 
@@ -96,7 +92,7 @@ function comapany_add() {
 document.addEventListener(
   "DOMContentLoaded",
   function () {
-    fetch("/users/admin/listCompanies", {
+    fetch("/users/admin/listActiveCompanies", {
       method: "GET",
       headers: {
         "Content-type": "application/json; charset=UTF-8",
@@ -106,7 +102,7 @@ document.addEventListener(
         response.json().then((text) => {
           if (response.ok) {
             console.log(text);
-            append_json(text);
+            append_json_active(text);
           }
           return response.status;
         })
@@ -118,7 +114,7 @@ document.addEventListener(
 );
 
 // this function appends the json data to the table 'company_list'
-function append_json(data) {
+function append_json_active(data) {
   compList = data;
 
   var company = "";
@@ -143,7 +139,59 @@ function append_json(data) {
   });
 
   // INSERTING ROWS INTO TABLE
-  $("#company_list").append(company);
+  $("#activeCompany_list").append(company);
+}
+
+document.addEventListener(
+  "DOMContentLoaded",
+  function () {
+    fetch("/users/admin/listInactiveCompanies", {
+      method: "GET",
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    })
+      .then((response) =>
+        response.json().then((text) => {
+          if (response.ok) {
+            console.log(text);
+            append_json_inactive(text);
+          }
+          return response.status;
+        })
+      )
+      .then((json) => console.log(json))
+      .catch((err) => console.log(err));
+  },
+  false
+);
+
+function append_json_inactive(data) {
+  compList = data;
+
+  var company = "";
+  // ITERATING THROUGH OBJECTS
+  $.each(data, function (key, value) {
+    // Making Buttons
+    var buttons =
+      '<button class="btn btn-success btn-fab btn-fab-mini btn-round" onclick="editcompany(this)">' +
+      '                          <i class="material-icons">edit</i>' +
+      "                        </button>" +
+      '                        <button class="btn btn-danger btn-fab btn-fab-mini btn-round" onclick="deletecompany(this)">' +
+      '                          <i class="material-icons">delete</i>' +
+      "                        </button>";
+    // CONSTRUCTION OF ROWS HAVING
+    // DATA FROM JSON OBJECT
+    company += "<tr>";
+    company += "<td>" + (key + 1) + "</td>";
+    company += "<td>" + value.name + "</td>";
+    company += "<td>" + value.description + "</td>";
+    company += "<td>" + buttons + "</td>";
+    company += "</tr>";
+  });
+
+  // INSERTING ROWS INTO TABLE
+  $("#inactiveCompany_list").append(company);
 }
 
 function editcompany(x) {
