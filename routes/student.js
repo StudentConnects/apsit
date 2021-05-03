@@ -7,6 +7,7 @@ const uuid = require('uuid');
 router.get("/", (_req, res) => {
     res.sendFile(path.join(__dirname, "..", "public", "student", "user.html"));
 });
+
 router.get("/allQuiz", (req, res) => {
 
     req.db.query("Select quiz_list.id, c.name as companyName, quiz_list.quiz_id as quizName, quiz_list.quiz_time from quiz_list inner join company c on quiz_list.company_id = c.id where quiz_list.isActive=1 and c.active = 1;")
@@ -18,6 +19,18 @@ router.get("/allQuiz", (req, res) => {
             res.status(500).send(err);
         })
 });
+
+router.get("/listCompanies", (req, res) => {
+    req.db
+      .query("Select id, name, description, logo from company where active = 1;")
+      .then((results) => {
+        res.send(results[0]);
+      })
+      .catch((err) => {
+        debug(err);
+        res.status(500).send(err);
+      });
+  });
 
 router.get('/fetchQuiz/:id/:quizId', (req, res) => {
     // console.log(req.params)
@@ -42,7 +55,37 @@ router.get('/fetchQuiz/:id/:quizId', (req, res) => {
         // res.send({id, quizId});
 })
 
+router.get('/userdata',(req,res)=>{
+    // console.log(req.user)
+    req.db
+      .query('Select * from user where id = ?;', [req.user.id])
+      .then((results) => {
+        // console.log(results[0])
+        res.send(results[0]);
+      })
+      .catch((err) => {
+        debug(err);
+        res.status(500).send(err);
+      });
+  });
 // Submit Quiz testing Route
+
+router.post('/updateuserdata',(req,res)=>{
+    // console.log('here come')
+    console.log(req.body)
+    // console.log(req.body.email)
+    req.db
+      .query('UPDATE `user` SET `name`= ? ,`mobile`= ?,`address`= ? ,`city`= ?,`country`= ? ,`postalcode`= ? WHERE id = ?', [req.body.name,req.body.mobile,req.body.address,req.body.city,req.body.country,req.body.postal,req.user.id])
+      .then((results) => {
+        console.log(results[0])
+        res.redirect('/users/student')
+      })
+      .catch((err) => {
+        debug(err);
+        res.status(500).send(err);
+      });
+    // res.redirect('/users/student')
+})
 
 router.post('/submitQuiz',(req,res)=>{
     // console.log(JSON.stringify(req.body[0]))

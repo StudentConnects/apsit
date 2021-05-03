@@ -22,7 +22,7 @@ router.use("/admin", express.static(path.join(__dirname, "..", "public", "admin"
 router.use("/student", express.static(path.join(__dirname, "..", "public", "student")))
 
 function checkLogin(req, res, next) {
-    console.log(req.user)
+    // console.log(req.user)
     if (!req.user || !req.user.uType){
         res.redirect('/login')
     }else if(req.user.uType == req.allowedUserType) {
