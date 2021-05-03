@@ -1,33 +1,77 @@
-(function () {
+// Variables
+  quizid = '';
+  function variables(){
+  quizContainer = document.getElementById("quiz_questions");
+  quizQuestionsNo = document.getElementById("quiz_questions_no");
+  resultsContainer = document.getElementById("results");
+  submitButton = document.getElementById("submit");
+  currentSlide = 0;
+  slides = document.querySelectorAll(".slide");
+  myQuestions = [];
+}
+variables();
+  
+// (function () {
   // Functions
-  function buildQuiz() {
+  function buildQuiz(id, quiz_id) {
     // variable to store the HTML output
+    quizid = quiz_id;
     const output = [];
-
-    // for each question...
+  fetch('/users/student/fetchQuiz/'+id+'/'+quizid,{
+    method: "GET",
+    headers: { "Content-type": "application/json; charset=UTF-8" }, 
+  })
+  .then((response) =>
+        response.json().then((text) => {
+          if (response.ok) {
+            myQuestions = text;
+            // for each question...
     myQuestions.forEach((currentQuestion, questionNumber) => {
       // variable to store the list of possible answers
       const answers = [];
 
       // and for each available answer...
-      for (letter in currentQuestion.answers) {
-        // ...add an HTML radio button
-        answers.push(`<label class="container-checkbox">${letter} : ${currentQuestion.answers[letter]}
-                        <input type="checkbox" name="question_${questionNumber}" value="${letter}">
+      // for (letter in currentQuestion.answers) {
+      //   // ...add an HTML radio button
+      //   answers.push(`<label class="container-checkbox">${letter} : ${currentQuestion.answers[letter]}
+      //                   <input type="radio" name="question_${questionNumber}" value="${letter}">
+      //                   <span class="checkmark"></span>
+      //                   </label>`);
+      // }
+      answers.push(`<label class="container-checkbox"> A : ${currentQuestion.op1}
+                        <input type="radio" name="question_${questionNumber}" value="A">
                         <span class="checkmark"></span>
                         </label>`);
-      }
+      answers.push(`<label class="container-checkbox"> B : ${currentQuestion.op2}
+                        <input type="radio" name="question_${questionNumber}" value="B">
+                        <span class="checkmark"></span>
+                        </label>`);
+      answers.push(`<label class="container-checkbox"> C : ${currentQuestion.op3}
+                        <input type="radio" name="question_${questionNumber}" value="C">
+                        <span class="checkmark"></span>
+                        </label>`);
+      answers.push(`<label class="container-checkbox"> D : ${currentQuestion.op4}
+                        <input type="radio" name="question_${questionNumber}" value="D">
+                        <span class="checkmark"></span>
+                        </label>`);                  
 
       // add this question and its answers to the output
       output.push(`<div class="slide">
               <div class="question"> ${currentQuestion.question} </div>
               <div class="answers"> ${answers.join("")} </div>
-            </div>`);
+            </div>`);    
     });
 
     // finally combine our output list into one string of HTML and put it on the
     // page
     quizContainer.innerHTML = output.join("");
+          }
+          buildQuizNo();
+          return response.status;
+        })
+      )
+  .then(result => console.log(result))
+  .catch((err) => console.log(err));  
   }
 
   function buildQuizNo() {
@@ -44,6 +88,8 @@
     // finally combine our output list into one string of HTML and put it on the
     // page
     quizQuestionsNo.innerHTML = questionno.join("");
+    let currentSlide = 0;
+    showSlide(currentSlide);
   }
 
   function showResults() {
@@ -51,7 +97,6 @@
     let answerobject = {}
     // gather answer containers from our quiz
     const answerContainers = quizContainer.querySelectorAll(".answers");
-
     // keep track of user's answers
     let numCorrect = 0;
 
@@ -64,23 +109,24 @@
       
       // setting answer object to ship to backend
       answerobject[questionNumber+1] = userAnswer;
-      
-      // if answer is correct
-      if (userAnswer === currentQuestion.correctAnswer) {
-        // add to the number of correct answers
-        numCorrect++;
 
-        // color the answers green
-        answerContainers[questionNumber].style.color = "lightgreen";
-      }
-      // if answer is wrong or blank
-      else {
-        // color the answers red
-        answerContainers[questionNumber].style.color = "red";
-      }
+      // if answer is correct
+      // if (userAnswer === currentQuestion.correctAnswer) {
+      //   // add to the number of correct answers
+      //   numCorrect++;
+
+      //   // color the answers green
+      //   answerContainers[questionNumber].style.color = "lightgreen";
+      // }
+      // // if answer is wrong or blank
+      // else {
+      //   // color the answers red
+      //   answerContainers[questionNumber].style.color = "red";
+      // }
     });
     // show number of correct answers out of total
-    resultsContainer.innerHTML = `${numCorrect} out of ${myQuestions.length}`;
+    // resultsContainer.innerHTML = `${numCorrect} out of ${myQuestions.length}`;
+    // resultsContainer.innerHTML = `Score : ${numCorrect} / ${myQuestions.length}`;
     let marks ={ total: numCorrect }
     // console.log(answerobject)
     // const selector = `input[name=question_${0}]:checked`;
@@ -88,16 +134,23 @@
     
     fetch("/users/student/submitQuiz", {
       method: "POST",
-      body: JSON.stringify([answerobject,marks]),
+      body: JSON.stringify([quizid, answerobject, marks]),
       headers: { "Content-type": "application/json; charset=UTF-8" },
     })
-      .then((response) =>{response.json()})
+      .then((response) =>
+        response.json().then((text) => {
+          if (response.ok) {
+            console.log(text);
+          }
+          })
+      )
       .then((json) => console.log(json))
       .catch((err) => console.log(err));
 
   }
 
   function showSlide(n) {
+    const slides = document.querySelectorAll(".slide");
     slides[currentSlide].classList.remove("active-slide");
     slides[n].classList.add("active-slide");
     currentSlide = n;
@@ -112,44 +165,6 @@
     showSlide(n);
   }
 
-  // Variables
-  const quizContainer = document.getElementById("quiz_questions");
-  const quizQuestionsNo = document.getElementById("quiz_questions_no");
-  const resultsContainer = document.getElementById("results");
-  const submitButton = document.getElementById("submit");
-  const myQuestions = [
-    {
-      question: "Who invented JavaScript?",
-      answers: {
-        a: "Douglas Crockford",
-        b: "Sheryl Sandberg",
-        c: "Brendan Eich",
-      },
-      correctAnswer: "c",
-    },
-    {
-      question: "Which one of these is a JavaScript package manager?",
-      answers: { a: "Node.js", b: "TypeScript", c: "npm" },
-      correctAnswer: "c",
-    },
-    {
-      question: "Which tool can you use to ensure code quality?",
-      answers: { a: "Angular", b: "jQuery", c: "RequireJS", d: "ESLint" },
-      correctAnswer: "d",
-    },
-  ];
-
-  // Kick things off
-  buildQuiz();
-
-  buildQuizNo();
-  // Pagination
-  const slides = document.querySelectorAll(".slide");
-  let currentSlide = 0;
-
-  // Show the first slide
-  showSlide(currentSlide);
-
   // Event listeners
   submitButton.addEventListener("click", showResults);
 
@@ -161,38 +176,21 @@
     // console.dir(event.target.id);
     showIndexSlide(Number(event.target.value));
   });
-})();
+// })();
 
-function toggleQuiz(id,quizid) {
+function toggleQuiz() {
   // window.location.pathname = '/users/student/fetchQuiz/'+ id + '/' +quizid
-  // let quiz_question = document.getElementById("quiz_question_container");
-  // let select_company = document.getElementById("select_company_quiz");
-  // quiz_question.classList.toggle("hidden");
-  // select_company.classList.toggle("hidden");
+  let quiz_question = document.getElementById("quiz_question_container");
+  let select_company = document.getElementById("select_company_quiz");
+  quiz_question.classList.toggle("hidden");
+  select_company.classList.toggle("hidden");
   quizTimer();   
- 
-  fetch('/users/student/fetchQuiz/'+id+'/'+quizid,{
-    method: "GET",
-    headers: { "Content-type": "application/json; charset=UTF-8" }, 
-  })
-  .then((response) =>
-        response.json().then((text) => {
-          if (response.ok) {
-            console.log(text);
-            // append_json(text);
-            // let myQuestions = text
-          }
-          return response.status;
-        })
-      )
-  .then(result => console.log(result))
-  .catch((err) => console.log(err));
 }
 
 function quizTimer() {
   var sec = 1800,
     countDiv = document.getElementById("Quiztimer");
-  countDown = setInterval(function () {
+    countDown = setInterval(function () {
     "use strict";
     secpass();
   }, 1000);
@@ -240,7 +238,6 @@ document.addEventListener(
 // this function appends the json data to the table 'company_list'
 function append_json(data) {
   var company = "";
-
   // var buttons =
   //   '<button type="button" class="btn btn-success" onclick="toggleQuiz()" >Start Quiz</button>';
 
@@ -253,10 +250,9 @@ function append_json(data) {
     company += "<td>" + value.companyName + "</td>";
     company += "<td>" + value.quizName + "</td>";
     company += "<td>" + value.quiz_time + "</td>";
-    company += '<td class="td-actions">'+ '<button type="button" class="btn btn-success" onclick="toggleQuiz('+ "'" +value.id +"','"+ value.quizName+ "'" + ')" >Start Quiz</button>' + "</td>"; //
+    company += '<td class="td-actions">'+ '<button type="button" class="btn btn-success" onclick="toggleQuiz(); buildQuiz('+ "'" +value.id +"','"+ value.quizName+ "'" + ');" >Start Quiz</button>' + "</td>"; //
     company += "</tr>";
   });
-
   // INSERTING ROWS INTO TABLE
   $("#allQuiz").append(company);
 }
