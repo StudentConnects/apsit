@@ -266,6 +266,35 @@ router.get('/listInactiveCompany', (req, res) => {
     });
 });
 
+router.get('/userdata',(req,res)=>{
+  console.log(req.user)
+  req.db
+    .query('Select * from user where id = ?;', [req.user.id])
+    .then((results) => {
+      console.log(results[0])
+      res.send(results[0]);
+    })
+    .catch((err) => {
+      debug(err);
+      res.status(500).send(err);
+    });
+});
+
+router.post('/updateuserdata',(req,res)=>{
+  console.log(req.body)
+    // console.log(req.body.email)
+    req.db
+      .query('UPDATE `user` SET `name`= ? ,`mobile`= ?,`address`= ? ,`city`= ?,`country`= ? ,`postalcode`= ? WHERE id = ?', [req.body.name,req.body.mobile,req.body.address,req.body.city,req.body.country,req.body.postal,req.user.id])
+      .then((results) => {
+        console.log(results[0])
+        res.redirect('/users/admin')
+      })
+      .catch((err) => {
+        debug(err);
+        res.status(500).send(err);
+      });
+})
+
 router.use(express.static(path.join(__dirname, "..", "public", "admin")));
 // debug(path.join(__dirname, "..", "public", "admin"))
 module.exports = router;
