@@ -91,7 +91,9 @@ router.post('/submitQuiz',(req,res)=>{
     // console.log(JSON.stringify(req.body[0]))
     // console.log(req.user)
     // console.log(typeof(req.user.id))
-    req.db.query('insert into submitted_quiz( uid , qid , answers , marks ) values ( ? , ? , ? , ? )',[req.user.id,'quiz_id'+uuid.v4().slice(-10),JSON.stringify(req.body[0]),req.body[1].total])
+    // req.db.query('insert into submitted_quiz( uid , qid , answers , marks ) values ( ? , ? , ? , ? )',[req.user.id,'quiz_id'+uuid.v4().slice(-10),JSON.stringify(req.body[0]),req.body[1].total])
+    console.log(req.body[0], req.body[1]);
+    req.db.query('insert into submitted_quiz( uid , qid , answers , marks ) values ( ? , ? , ? , ? )',[req.user.id,req.body[0],JSON.stringify(req.body[1]),req.body[2].total])
     .then(result=>console.log(result))
     .catch(err => console.log(err));
     res.json({
@@ -99,6 +101,16 @@ router.post('/submitQuiz',(req,res)=>{
     })
 });
 
-
+router.get("/listCompanies", (req, res) => {
+  req.db
+    .query("Select id, name, description, logo from company where active = 1;")
+    .then((results) => {
+      res.send(results[0]);
+    })
+    .catch((err) => {
+      debug(err);
+      res.status(500).send(err);
+    });
+});
 router.use(express.static(path.join(__dirname, "..", "public", "student")));
 module.exports = router;
